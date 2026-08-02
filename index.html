@@ -3,12 +3,16 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Rising 7th Grade: Quest Academy</title>
+<title>Kids Learning: Quest Academy</title>
 <link rel="stylesheet" href="styles.css" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>" />
 </head>
 <body>
-<header class="hero">
+<div class="gradeSelector">
+  <button id="grade5Btn" onclick="switchGrade('5')">5th Grade — Seydina</button>
+  <button id="grade7Btn" onclick="switchGrade('7')">7th Grade — Cheikh</button>
+</div>
+<header class="hero" id="hero7">
   <div class="heroText">
     <p class="eyebrow">Rising 7th Grade Summer Prep</p>
     <h1>Quest Academy</h1>
@@ -16,6 +20,22 @@
     <div class="heroButtons"><button onclick="document.querySelector('#course').scrollIntoView({behavior:'smooth'})">Start a Quest</button><button class="secondary" onclick="document.querySelector('#focus').scrollIntoView({behavior:'smooth'})">Focus Timer</button></div>
   </div>
   <img src="assets/anime_learning_portals.png" alt="Anime-style learning adventure portals" />
+</header>
+<header class="hero hidden" id="hero5">
+  <div class="heroText">
+    <p class="eyebrow">5th Grade Prep</p>
+    <h1>Quest Academy</h1>
+    <p class="subtitle">A visual, game-style, short-sprint course with narration, progress tracking, quizzes, XP, badges, and parent coaching.</p>
+    <div class="heroButtons"><button onclick="document.querySelector('#course').scrollIntoView({behavior:'smooth'})">Start Learning</button><button class="secondary" onclick="document.querySelector('#progressTracker').scrollIntoView({behavior:'smooth'})">See Progress</button></div>
+  </div>
+  <div class="animeBoard">
+    <div class="portal p1">🧮</div>
+    <div class="portal p2">📚</div>
+    <div class="portal p3">✍️</div>
+    <div class="portal p4">🔬</div>
+    <div class="portal p5">🌍</div>
+    <div class="heroCard">Quest Map</div>
+  </div>
 </header>
 <main>
 <section class="dashboard">
@@ -45,7 +65,7 @@
     <div><h3>After</h3><p>“Tell me one thing that got easier and one thing to retry tomorrow.”</p></div>
   </div>
 </section>
-<section class="panel sources">
+<section class="panel sources" id="sources7">
   <h2>Source Map</h2>
   <ul>
     <li>Cobb County rising 7th packet topic list: ELA, math, reading, science, and social studies summer resources.</li>
@@ -54,7 +74,17 @@
     <li>National Geographic latitude/longitude interactive for geography practice.</li>
   </ul>
 </section>
+<section class="panel sources hidden" id="sources5">
+  <h2>Source Map</h2>
+  <ul>
+    <li>Khan Academy 5th grade math: decimals, fractions, volume, coordinate plane.</li>
+    <li>Grade 5 ELA: quoting accurately, theme, figurative language, context clues.</li>
+    <li>NGSS grade 5 science: matter, energy, ecosystems, Earth systems, space.</li>
+    <li>5th grade social studies: maps, timelines, civics, economics.</li>
+  </ul>
+</section>
 </main>
+<script src="data/grade5_data.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

@@ -5,6 +5,13 @@ button{border:0;border-radius:999px;padding:12px 18px;background:linear-gradient
 button:hover{transform:translateY(-2px);box-shadow:0 14px 30px #0008}
 button:active{transform:translateY(0)}
 .secondary{background:#263150;color:#eaf2ff;border:1px solid #51617f}
+.hidden{display:none!important}
+.gradeSelector{display:flex;gap:0;justify-content:center;padding:12px 20px 0;max-width:1280px;margin:0 auto}
+.gradeSelector button{border-radius:0;padding:10px 24px;font-size:15px}
+.gradeSelector button:first-child{border-radius:12px 0 0 12px}
+.gradeSelector button:last-child{border-radius:0 12px 12px 0}
+.gradeSelector button.active{background:linear-gradient(135deg,#22c55e,#38bdf8);color:#06101f}
+.gradeSelector button:not(.active){background:#263150;color:#b6c2d9;border:1px solid #51617f;box-shadow:none}
 .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:center;min-height:72vh;padding:40px;overflow:hidden}
 .hero img{width:100%;border-radius:32px;box-shadow:0 30px 80px #0008;animation:float 5s ease-in-out infinite}
 .eyebrow{color:#7dd3fc;text-transform:uppercase;letter-spacing:.18em;font-weight:800}
@@ -47,6 +54,11 @@ main{max-width:1280px;margin:auto}
 .confetti{position:fixed;width:10px;height:10px;border-radius:2px;pointer-events:none;z-index:9999;animation:confettiFall 1.2s ease-out forwards}
 @keyframes confettiFall{0%{transform:translate(0,0) rotate(0deg);opacity:1}100%{transform:translate(var(--dx),var(--dy)) rotate(720deg);opacity:0}}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.animeBoard{min-height:460px;border-radius:36px;background:radial-gradient(circle,#3b82f655,#111936 46%,#020617);position:relative;box-shadow:0 30px 80px #0008;overflow:hidden;border:1px solid #384a73}
+.portal{position:absolute;width:120px;height:120px;border-radius:50%;display:grid;place-items:center;font-size:52px;background:#0f172acc;border:3px solid #7dd3fc;box-shadow:0 0 32px #38bdf8;animation:float 5s ease-in-out infinite}
+.p1{left:10%;top:12%}.p2{right:12%;top:10%;animation-delay:.5s}.p3{left:18%;bottom:12%;animation-delay:1s}.p4{right:15%;bottom:14%;animation-delay:1.5s}.p5{left:40%;top:36%;animation-delay:2s}
+.heroCard{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:28px;border-radius:28px;background:#fef08a;color:#111827;font-weight:900;font-size:34px;box-shadow:0 18px 44px #0008}
+.moduleArtEmoji{display:flex;gap:16px;justify-content:center;align-items:center;padding:20px;font-size:48px;background:#0b1020;border-radius:26px;margin:20px auto;width:calc(100% - 40px);border:1px solid #435a85}
 @media(max-width:850px){.hero{grid-template-columns:1fr;padding:24px;min-height:auto}.dashboard{grid-template-columns:repeat(2,1fr);padding:0 24px 24px}.panel,.course{margin-left:24px;margin-right:24px;padding-left:18px;padding-right:18px}.timer{display:block}.timer span{display:block;margin-bottom:12px}.hero h1{font-size:52px}.moduleHead{flex-direction:column;align-items:flex-start;gap:8px}}
 @media(max-width:650px){.matchGrid label{grid-template-columns:1fr}.choiceGroup button{width:100%}.questGrid{grid-template-columns:1fr}.heroButtons button{width:100%}}
 
