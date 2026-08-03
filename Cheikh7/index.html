@@ -11,6 +11,8 @@
 <div class="gradeSelector">
   <button id="grade5Btn" onclick="switchGrade('5')">5th Grade — Seydina</button>
   <button id="grade7Btn" onclick="switchGrade('7')">7th Grade — Cheikh</button>
+  <a class="parentLink" href="parent.html">📊 Parent</a>
+  <span id="syncStatus" class="syncStatus"></span>
 </div>
 <header class="hero" id="hero7">
   <div class="heroText">
@@ -57,6 +59,7 @@
   <div class="voiceControls"><button onclick="stopNarration()">Stop Narration</button><button class="secondary" onclick="replayLastNarration()">Replay Last</button></div>
 </section>
 <section class="course" id="course"></section>
+<div id="weekly"></div>
 <section class="panel">
   <h2>Parent Coach Script</h2>
   <div class="coachGrid">
@@ -85,6 +88,9 @@
 </section>
 </main>
 <script src="data/grade5_data.js"></script>
+<script src="data/weekly_grade5.js"></script>
+<script src="data/weekly_grade7.js"></script>
 <script src="app.js"></script>
+<script src="weekly.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-modules = ["nodejs-20"]
+modules = ["nodejs-20", "postgresql-16"]
 [nix]
 channel = "stable-25_05"
 
@@ -20,9 +20,13 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npx --yes serve Cheikh7 -p 5000 -s"
+args = "node server.js"
 waitForPort = 5000
 
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[[ports]]
+localPort = 5055
+externalPort = 3000

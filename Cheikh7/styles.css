@@ -66,3 +66,32 @@ main{max-width:1280px;margin:auto}
 .moduleHead p{max-width:780px;color:#e0ecff;margin:8px 0 12px}.moduleArt{display:block;width:calc(100% - 40px);height:auto;max-height:360px;object-fit:cover;margin:20px auto 0;border-radius:26px;border:1px solid #435a85;box-shadow:0 18px 50px #0007}.audioPanel{background:linear-gradient(135deg,#111936cc,#1d2b58cc)}.voiceControls{display:flex;gap:12px;flex-wrap:wrap}.transcript{background:#0b1020;border-radius:14px;padding:10px 12px;margin:12px 0;color:#cfe1ff}.transcript summary{cursor:pointer;font-weight:800;color:#bae6fd}.transcript p{line-height:1.42}.questActions button:first-child{background:linear-gradient(135deg,#fef08a,#fb923c);color:#201000}
 
 .progressBar,.miniBar{height:18px;background:#071020;border-radius:999px;overflow:hidden;border:1px solid #42547a;margin:12px 0}.progressBar span,.miniBar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#22c55e,#38bdf8);border-radius:999px;transition:width .5s ease}.progressGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:18px}.progressCard{background:#0b1020;border:1px solid #344873;border-radius:20px;padding:16px}.questDots{display:flex;gap:6px;flex-wrap:wrap}.dot{width:14px;height:14px;border-radius:50%;background:#475569;border:1px solid #94a3b8}.dot.on{background:#22c55e;box-shadow:0 0 12px #22c55e}.exportBox{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}.interactiveQuiz{border:1px solid #314466}.quizItem{margin:12px 0;padding:12px;background:#111936;border-radius:14px}.choiceGroup{display:flex;gap:8px;flex-wrap:wrap}.choice{background:#253455;color:#eaf2ff;border:1px solid #51617f;box-shadow:none}.choice.selected{background:linear-gradient(135deg,#22c55e,#38bdf8);color:#06101f}.matchGrid{display:grid;gap:10px}.matchGrid label{display:grid;grid-template-columns:1fr 1.4fr;gap:10px;align-items:center}.matchGrid select{padding:10px;border-radius:12px;background:#071020;color:white;border:1px solid #52617e}@media(max-width:650px){.matchGrid label{grid-template-columns:1fr}.choiceGroup button{width:100%}}
+/* Parent link + sync status */
+.gradeSelector{align-items:center}
+.gradeSelector button#grade7Btn{border-radius:0 12px 12px 0}
+.parentLink{margin-left:14px;color:#7dd3fc;text-decoration:none;font-weight:600;font-size:14px;padding:8px 14px;border:1px solid rgba(125,211,252,.4);border-radius:12px}
+.parentLink:hover{background:rgba(125,211,252,.12)}
+.syncStatus{margin-left:10px;font-size:12px;opacity:.8}
+.syncStatus.ok{color:#22c55e}
+.syncStatus.off{color:#f59e0b}
+
+/* ===== Weekly Homework — Ohio Standards ===== */
+.weeklyModule{margin:22px 40px}
+.weeklyBody{padding:20px}
+.weekSelector{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.weekBtn{padding:9px 14px;font-size:14px;background:#263150;color:#cdd9f0;border:1px solid #51617f;box-shadow:none}
+.weekBtn.active{background:linear-gradient(135deg,#38bdf8,#818cf8);color:#06101f;border:0}
+.weekBtn.complete{border-color:#22c55e;color:#86efac}
+.weekBtn.active.complete{color:#06101f}
+.weekTitleRow{display:flex;align-items:baseline;justify-content:space-between;gap:14px;flex-wrap:wrap;margin:4px 0 12px}
+.weekTitle{margin:0;font-size:24px}
+.weekProgress{color:#fef08a;font-weight:800;white-space:nowrap}
+.printWeekBtn{display:inline-block;text-decoration:none;border-radius:999px;padding:12px 20px;margin-bottom:18px;background:linear-gradient(135deg,#fef08a,#fb923c);color:#201000;font-weight:800;box-shadow:0 10px 24px #0006}
+.printWeekBtn:hover{transform:translateY(-2px)}
+.weekGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+.weeklyCard .stdChip{background:#3b2f57;border-color:#7c6bb0;color:#e6dcff}
+.weeklyCard .wkQ{margin:6px 0;font-weight:700;color:#eaf2ff}
+.weeklyCard .choice.correct{background:linear-gradient(135deg,#22c55e,#4ade80);color:#06101f}
+.weeklyCard .choice.wrong{background:#7f1d1d;color:#fee2e2;border-color:#b91c1c}
+@media(max-width:850px){.weeklyModule{margin-left:24px;margin-right:24px}}
+@media(max-width:650px){.weekGrid{grid-template-columns:1fr}}

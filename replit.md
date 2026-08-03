@@ -4,20 +4,29 @@ A visual, game-style summer prep app for two students — Cheikh (rising 7th gra
 
 ## Stack
 
-- Pure HTML / CSS / JavaScript (static site)
-- Browser speech synthesis for audio narration
-- `localStorage` for progress, XP, badges, and streaks
-- Served with `npx serve` via Node.js 20
+- Vanilla HTML / CSS / JavaScript frontend (no build step) in `Cheikh7/`
+- Node.js 20 + Express (`server.js`) serving static files and a JSON API
+- PostgreSQL (Replit built-in) for persistent progress, event history, awards
+- Browser speech synthesis for audio narration; `localStorage` as offline fallback
 
 ## How to run
 
-The **Start application** workflow serves the app from the `Cheikh7/` folder on port 5000.
+The **Start application** workflow runs `node server.js` on port 5000.
 
-```
-npx --yes serve Cheikh7 -p 5000 -s
-```
+Key pages: `/` (app with grade switcher), `/parent.html` (parent dashboard),
+`/worksheet.html?grade=7&week=1` (printable weekly worksheet + answer key),
+`/deck.html` (parent/educator presentation).
 
-Open the preview — use the grade-switcher at the top to toggle between Cheikh (7th grade) and Seydina (5th grade).
+## Key features
+
+- Quest modules with XP, badges, streaks, quizzes, narration (original MVP)
+- 8-week Ohio Learning Standards-aligned weekly homework per grade
+  (`Cheikh7/data/weekly_grade5.js`, `weekly_grade7.js`, UI in `Cheikh7/weekly.js`)
+- Printable weekly worksheet with parent answer key (browser Print → Save as PDF)
+- Server-side persistence: sanitized merge-on-write state sync (`PUT /api/state/:id`,
+  union-merge prevents multi-device overwrites; `replace:true` only for explicit reset)
+- Parent dashboard + awards computed server-side from state and event history
+- PRD in `docs/PRD.md`, solution review in `docs/solution_review.md`
 
 ## Project structure
 

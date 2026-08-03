@@ -17,8 +17,73 @@ function getTotalQuests() {
 let STATE = JSON.parse(localStorage.getItem(getStateKey()) || '{"xp":0,"done":{},"last":"","streak":0,"quizScores":{},"quizBonuses":{}}');
 let LAST_NARRATION = '';
 
+// --- Server persistence ---
+function getProfileId() {
+  return currentGrade === '5' ? 'seydina' : 'cheikh';
+}
+
+let syncTimer = null;
+let MUTATION = 0; // bumped on every local change; guards against stale server responses
+
+function pushStateToServer(replace) {
+  clearTimeout(syncTimer);
+  const profileId = getProfileId();
+  const snapshot = JSON.stringify({ state: STATE, replace: !!replace });
+  syncTimer = setTimeout(() => {
+    fetch('/api/state/' + profileId, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: snapshot
+    }).then(r => setSyncStatus(r.ok)).catch(() => setSyncStatus(false));
+  }, replace ? 0 : 600);
+}
+
+function logEvent(eventType, detail, xpDelta) {
+  fetch('/api/event/' + getProfileId(), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ eventType, detail, xpDelta })
+  }).catch(() => {});
+}
+
+function setSyncStatus(ok) {
+  const el = document.getElementById('syncStatus');
+  if (!el) return;
+  el.textContent = ok ? '☁️ Saved' : '⚠️ Offline — saved on this device';
+  el.className = 'syncStatus ' + (ok ? 'ok' : 'off');
+}
+
+function isEmptyState(s) {
+  return !s || ((s.xp || 0) === 0 && Object.keys(s.done || {}).length === 0 && Object.keys(s.quizScores || {}).length === 0);
+}
+
+async function loadStateFromServer() {
+  const profileId = getProfileId();
+  const mutationAtRequest = MUTATION;
+  try {
+    const res = await fetch('/api/state/' + profileId);
+    if (!res.ok) throw new Error('bad response');
+    const data = await res.json();
+    // Discard stale responses: grade switched or local changes happened while fetching
+    if (getProfileId() !== profileId || MUTATION !== mutationAtRequest) return;
+    if (isEmptyState(data.state) && !isEmptyState(STATE)) {
+      // One-time import of existing local progress
+      pushStateToServer();
+    } else if (!isEmptyState(data.state)) {
+      STATE = data.state;
+      localStorage.setItem(getStateKey(), JSON.stringify(STATE));
+      buildCourse(getActiveData());
+    }
+    setSyncStatus(true);
+  } catch (e) {
+    setSyncStatus(false);
+  }
+}
+
 function save() {
+  MUTATION++;
   localStorage.setItem(getStateKey(), JSON.stringify(STATE));
+  pushStateToServer();
   updateStats();
   renderProgressTracker();
 }
@@ -91,7 +156,11 @@ function downloadProgress() {
 function resetProgressConfirm() {
   if (confirm('Reset all progress, XP, streak, and quiz scores?')) {
     STATE = { xp: 0, done: {}, last: '', streak: 0, quizScores: {}, quizBonuses: {} };
-    save();
+    MUTATION++;
+    localStorage.setItem(getStateKey(), JSON.stringify(STATE));
+    pushStateToServer(true); // full replace on explicit reset
+    updateStats();
+    renderProgressTracker();
     buildCourse(getActiveData());
   }
 }
@@ -111,6 +180,7 @@ function markDone(id, card) {
       STATE.last = today;
     }
     save();
+    logEvent('quest_done', { questId: id }, 25);
     burstConfetti(card);
   }
   card.classList.add('done');
@@ -218,11 +288,14 @@ function gradeInteractiveQuiz(id, box) {
   });
   let pct = Math.round(correct / Math.max(total, 1) * 100);
   STATE.quizScores[id] = pct;
+  let bonus = 0;
   if (pct >= 80 && !STATE.quizBonuses[id]) {
     STATE.quizBonuses[id] = true;
     STATE.xp += 15;
+    bonus = 15;
   }
   save();
+  logEvent('quiz_graded', { questId: id, score: pct }, bonus);
   let fb = document.getElementById(id + '-interactive-fb');
   fb.textContent = `Score: ${correct}/${total} (${pct}%). ${pct >= 80 ? (STATE.quizBonuses[id] ? 'Bonus XP awarded.' : 'Bonus XP already earned.') : 'Try again after reviewing the mission.'}`;
   fb.style.color = pct >= 80 ? '#22c55e' : '#f59e0b';
@@ -271,6 +344,7 @@ function buildCourse(modules) {
     course.appendChild(wrap);
   });
   renderProgressTracker();
+  if (typeof renderWeekly === 'function') renderWeekly();
 }
 
 function switchGrade(grade) {
@@ -288,6 +362,7 @@ function switchGrade(grade) {
   updateStats();
   renderTimer();
   buildCourse(getActiveData());
+  loadStateFromServer();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -306,3 +381,4 @@ if (currentGrade === '5') {
 updateStats();
 renderTimer();
 buildCourse(getActiveData());
+loadStateFromServer();
