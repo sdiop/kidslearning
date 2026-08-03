@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kids Learning: Quest Academy</title>
+<link rel="stylesheet" href="styles.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>" />
+</head>
+<body>
+<div class="gradeSelector">
+  <button id="grade5Btn" onclick="switchGrade('5')">5th Grade — Seydina</button>
+  <button id="grade7Btn" onclick="switchGrade('7')">7th Grade — Cheikh</button>
+</div>
+<header class="hero" id="hero7">
+  <div class="heroText">
+    <p class="eyebrow">Rising 7th Grade Summer Prep</p>
+    <h1>Quest Academy</h1>
+    <p class="subtitle">A visual, game-style, short-sprint course for a bright learner who benefits from movement, clear missions, and lots of visual cues.</p>
+    <div class="heroButtons"><button onclick="document.querySelector('#course').scrollIntoView({behavior:'smooth'})">Start a Quest</button><button class="secondary" onclick="document.querySelector('#focus').scrollIntoView({behavior:'smooth'})">Focus Timer</button></div>
+  </div>
+  <img src="assets/anime_learning_portals.png" alt="Anime-style learning adventure portals" />
+</header>
+<header class="hero hidden" id="hero5">
+  <div class="heroText">
+    <p class="eyebrow">5th Grade Prep</p>
+    <h1>Quest Academy</h1>
+    <p class="subtitle">A visual, game-style, short-sprint course with narration, progress tracking, quizzes, XP, badges, and parent coaching.</p>
+    <div class="heroButtons"><button onclick="document.querySelector('#course').scrollIntoView({behavior:'smooth'})">Start Learning</button><button class="secondary" onclick="document.querySelector('#progressTracker').scrollIntoView({behavior:'smooth'})">See Progress</button></div>
+  </div>
+  <div class="animeBoard">
+    <div class="portal p1">🧮</div>
+    <div class="portal p2">📚</div>
+    <div class="portal p3">✍️</div>
+    <div class="portal p4">🔬</div>
+    <div class="portal p5">🌍</div>
+    <div class="heroCard">Quest Map</div>
+  </div>
+</header>
+<main>
+<section class="dashboard">
+  <div class="stat"><span id="xp">0</span><label>XP</label></div>
+  <div class="stat"><span id="done">0</span><label>Quests Done</label></div>
+  <div class="stat"><span id="streak">0</span><label>Day Streak</label></div>
+  <div class="stat"><span id="badge">Starter</span><label>Badge</label></div>
+</section>
+<section class="panel" id="progressTracker"></section>
+<section class="panel" id="focus">
+  <h2>Focus Mode: 20-Minute Sprint</h2>
+  <p>For scattered attention: pick ONE quest, clear the desk, start the timer, and stop when the bell hits zero. Movement break after every sprint.</p>
+  <div class="timer"><span id="timer">20:00</span><div><button onclick="startTimer()">Start</button><button class="secondary" onclick="resetTimer()">Reset</button></div></div>
+  <div class="rules"><span>1. One tab only</span><span>2. One mission card</span><span>3. Pencil in hand</span><span>4. 3-minute break after</span></div>
+</section>
+<section class="panel audioPanel">
+  <h2>Audio Narration</h2>
+  <p>Use the narration controls on each quest card. The voice uses the browser's built-in speech engine, so no extra app is required. Internet is only needed for optional video links.</p>
+  <div class="voiceControls"><button onclick="stopNarration()">Stop Narration</button><button class="secondary" onclick="replayLastNarration()">Replay Last</button></div>
+</section>
+<section class="course" id="course"></section>
+<section class="panel">
+  <h2>Parent Coach Script</h2>
+  <div class="coachGrid">
+    <div><h3>Before</h3><p>“Pick your quest. What will finished look like?”</p></div>
+    <div><h3>During</h3><p>“Show me your next tiny step. Do not solve the whole thing in your head.”</p></div>
+    <div><h3>After</h3><p>“Tell me one thing that got easier and one thing to retry tomorrow.”</p></div>
+  </div>
+</section>
+<section class="panel sources" id="sources7">
+  <h2>Source Map</h2>
+  <ul>
+    <li>Cobb County rising 7th packet topic list: ELA, math, reading, science, and social studies summer resources.</li>
+    <li>CK-12 Characteristics of Life lesson for the science preview.</li>
+    <li>Khan Academy 7th grade readiness pathways for math practice.</li>
+    <li>National Geographic latitude/longitude interactive for geography practice.</li>
+  </ul>
+</section>
+<section class="panel sources hidden" id="sources5">
+  <h2>Source Map</h2>
+  <ul>
+    <li>Khan Academy 5th grade math: decimals, fractions, volume, coordinate plane.</li>
+    <li>Grade 5 ELA: quoting accurately, theme, figurative language, context clues.</li>
+    <li>NGSS grade 5 science: matter, energy, ecosystems, Earth systems, space.</li>
+    <li>5th grade social studies: maps, timelines, civics, economics.</li>
+  </ul>
+</section>
+</main>
+<script src="data/grade5_data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
