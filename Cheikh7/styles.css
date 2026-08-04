@@ -248,3 +248,66 @@ main{max-width:1280px;margin:auto}
   select.gradeSelectMobile{max-width:155px;font-size:12px}
   .progressMenuButton{padding:7px 9px}
 }
+
+/* ===== Full-width accordion layout ===== */
+body{overflow-x:hidden}
+main{max-width:1440px}
+.dashboard{padding-left:16px;padding-right:16px}
+.panel{margin-left:16px;margin-right:16px}
+.course{padding-left:16px;padding-right:16px}
+.weeklyModule{margin-left:16px;margin-right:16px}
+.subjectTabs{padding-left:16px;padding-right:16px}
+.questSummary{display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;list-style:none;min-height:68px}
+.questSummary::-webkit-details-marker{display:none}
+.questSummary h3{margin:0 0 8px;position:relative}
+.questSummary .chips{margin-top:0}
+.accordionChevron{flex:0 0 auto;color:#7dd3fc;font-size:24px;font-weight:800}
+.quest[open]>.questSummary .accordionChevron,
+.weeklyCard[open]>.questSummary .accordionChevron{font-size:0}
+.quest[open]>.questSummary .accordionChevron:after,
+.weeklyCard[open]>.questSummary .accordionChevron:after{content:"−";font-size:24px}
+.questBody{padding-top:2px}
+.questReveal{margin-top:12px;background:#0b1020;border-radius:14px;border:1px solid #263a60;overflow:hidden}
+.questReveal>summary{padding:12px 14px;cursor:pointer;list-style:none;color:#bae6fd;font-weight:800}
+.questReveal>summary::-webkit-details-marker{display:none}
+.questReveal>summary:after{content:"＋";float:right;color:#7dd3fc}
+.questReveal[open]>summary:after{content:"−"}
+.questReveal .task{margin:0;border-radius:0;border-left:0;border-top:1px solid #263a60}
+.questReveal .interactiveQuiz{margin:0;border:0;border-top:1px solid #263a60;border-radius:0}
+.weeklySummary .chips{margin-bottom:0}
+.weeklyCardBody>.chips{display:none}
+
+@media(max-width:650px){
+  .dashboard{padding-left:6px;padding-right:6px}
+  .panel{margin-left:6px;margin-right:6px;padding-left:12px;padding-right:12px}
+  .course{padding:3px 4px 24px}
+  .subjectTabs{padding-left:6px;padding-right:6px}
+  .module{margin:8px 0;border-radius:18px}
+  .moduleHead{padding:14px}
+  .moduleArt{width:calc(100% - 16px);margin:8px auto 0;border-radius:18px}
+  .questGrid{padding:6px;gap:8px}
+  .quest{padding:0;border-radius:18px}
+  .questSummary{padding:12px 12px;min-height:64px}
+  .questSummary h3{font-size:18px;margin-bottom:6px}
+  .questSummary .chip{padding:6px 9px;font-size:12px}
+  .questBody{padding:0 12px 12px}
+  .weeklyModule{margin:8px 4px}
+  .weeklyBody{padding:8px}
+  .weeklyCardBody>.chips{display:none}
+  .weeklySummary{padding:12px 10px}
+  .weeklySummary h3{font-size:18px}
+  .questReveal>summary{min-height:44px;display:flex;align-items:center;justify-content:space-between}
+  .questReveal>summary:after{float:none}
+}
+
+@media(max-width:480px){
+  .dashboard{gap:7px}
+  .stat{padding:10px 6px}
+  .moduleHead{padding:12px}
+  .questGrid{padding:4px}
+  .questSummary{padding:11px 10px}
+  .questBody{padding:0 10px 10px}
+  .questSummary h3{font-size:17px}
+  .weeklyModule{margin-left:2px;margin-right:2px}
+  .weeklyBody{padding:6px}
+}

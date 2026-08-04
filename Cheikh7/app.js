@@ -518,10 +518,10 @@ function buildCourse(modules) {
     m.quests.forEach((q, idx) => {
       let id = `${m.id}-${idx}`;
       let narr = q.narration || `Mission briefing. ${q.title}. ${q.mission} Your artifact is: ${q.task} First, open the explore link if needed. Then work for one focused sprint. When finished, explain your answer out loud and mark the quest done.`;
-      let card = document.createElement('article');
+      let card = document.createElement('details');
       card.className = 'quest' + (STATE.done[id] ? ' done' : '');
       let score = STATE.quizScores[id] !== undefined ? `<span class="chip">Quiz: ${STATE.quizScores[id]}%</span>` : '';
-      card.innerHTML = `<h3>${q.title}</h3><div class="chips"><span class="chip">${q.minutes} min</span><span class="chip">+25 XP</span><span class="chip">Audio Ready</span>${score}</div><p class="mission">${q.mission}</p><p class="task"><strong>Mission artifact:</strong> ${q.task}</p><details class="transcript"><summary>Narration transcript</summary><p>${narr}</p></details><div class="questActions"><button onclick='speak(${JSON.stringify(narr)})'>Play Narration</button><a class="link" target="_blank" href="${q.video}">Watch / Explore</a><button onclick="markDone('${id}',this.closest('.quest'))">Mark Done</button></div>${renderInteractiveQuiz(id, q)}`;
+      card.innerHTML = `<summary class="questSummary"><div><h3>${q.title}</h3><div class="chips"><span class="chip">${q.minutes} min</span><span class="chip">+25 XP</span><span class="chip">Audio Ready</span>${score}</div></div><span class="accordionChevron" aria-hidden="true">＋</span></summary><div class="questBody"><p class="mission">${q.mission}</p><details class="questReveal"><summary>🎯 Mission artifact</summary><p class="task">${q.task}</p></details><details class="transcript questReveal"><summary>🎙 Narration transcript</summary><p>${narr}</p></details><div class="questActions"><button onclick='speak(${JSON.stringify(narr)})'>Play Narration</button><a class="link" target="_blank" href="${q.video}">Watch / Explore</a><button onclick="markDone('${id}',this.closest('.quest'))">Mark Done</button></div><details class="questReveal quizReveal"><summary>🧠 Interactive Quiz</summary>${renderInteractiveQuiz(id, q)}</details></div>`;
       grid.appendChild(card);
     });
     course.appendChild(wrap);

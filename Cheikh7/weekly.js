@@ -159,8 +159,9 @@ function renderWeekly() {
     }
 
     cardsHtml += `
-      <article class="quest weeklyCard${done ? ' done' : ''}" data-week="${unit.week}" data-subject="${d.s}">
-        <h3>${d.emoji} ${d.day} — ${d.label}</h3>
+      <details class="quest weeklyCard${done ? ' done' : ''}" data-week="${unit.week}" data-subject="${d.s}">
+        <summary class="questSummary weeklySummary"><div><h3>${d.emoji} ${d.day} — ${d.label}</h3><div class="chips"><span class="chip">${weeklyEscHtml(subj.concept)}</span><span class="chip stdChip">${weeklyEscHtml(subj.std)}</span>${scoreChip}</div></div><span class="accordionChevron" aria-hidden="true">＋</span></summary>
+        <div class="questBody weeklyCardBody">
         <div class="chips"><span class="chip">${weeklyEscHtml(subj.concept)}</span><span class="chip stdChip">${weeklyEscHtml(subj.std)}</span>${scoreChip}</div>
         <p class="task"><strong>🎯 20-min Mission:</strong> ${weeklyEscHtml(subj.sprint)}</p>
         <div class="questActions">
@@ -173,7 +174,8 @@ function renderWeekly() {
            <button class="secondary" ${done || !eligible ? 'disabled' : ''} title="${done ? 'Day complete' : eligible ? 'Score is high enough to complete this day' : 'Finish the quick check with a final score of at least 90% first'}" onclick="weeklyMarkDone(this.closest('.weeklyCard'))">Mark Day Done ${done ? '✓' : ''}</button>
            ${!done && !eligible ? '<small class="completionHint">Complete the quick check with a final score of 90% or higher to unlock.</small>' : ''}
         </div>
-      </article>`;
+        </div>
+      </details>`;
   });
   cardsHtml += '</div>';
 
