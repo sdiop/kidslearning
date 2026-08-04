@@ -129,7 +129,7 @@ function renderProgressTracker() {
 function downloadProgress() {
   let gradeLabel = currentGrade === '5' ? '5th Grade' : 'Rising 7th Grade';
   let lines = [
-    gradeLabel + ' Quest Academy - Progress Report',
+    gradeLabel + ' Yaaba Academy - Progress Report',
     'Generated: ' + new Date().toLocaleString(),
     'XP: ' + STATE.xp,
     'Quests Done: ' + Object.keys(STATE.done).length + '/' + getTotalQuests(),

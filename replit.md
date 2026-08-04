@@ -1,4 +1,4 @@
-# Quest Academy
+# Yaaba Academy
 
 A visual, game-style summer prep app for two students — Cheikh (rising 7th grade) and Seydina (5th grade). No build step or external dependencies required.
 

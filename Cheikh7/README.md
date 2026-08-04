@@ -1,4 +1,4 @@
-# Rising 7th Grade Quest Academy
+# Rising 7th Grade Yaaba Academy
 
 Open `index.html` in a browser. No installation is required.
 

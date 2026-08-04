@@ -1,4 +1,4 @@
-# Quest Academy — Solution Review
+# Yaaba Academy — Solution Review
 
 An honest, end-to-end review of the built solution. This review feeds the "Known
 Limitations" section of `docs/PRD.md`.

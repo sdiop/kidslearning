@@ -1,4 +1,4 @@
-# Quest Academy — Product Requirements Document
+# Yaaba Academy — Product Requirements Document
 
 **Version:** 1.0 (Family MVP → multi-student roadmap)
 **Status:** Living document
@@ -9,7 +9,7 @@
 
 ## 1. Executive Summary
 
-Quest Academy is a visual, game-style summer-prep learning app built first for two
+Yaaba Academy is a visual, game-style summer-prep learning app built first for two
 students — **Cheikh** (rising 7th grade) and **Seydina** (5th grade) — who learn best
 with strong visual cues, short bursts of focus, and immediate feedback. The product
 turns "screen time" into structured learning time by wrapping standards-aligned
@@ -57,7 +57,7 @@ motivation, and format mismatch**:
   worksheet mills have restrictive licensing and can't be embedded into a
   self-contained product.
 
-Quest Academy addresses all five: it makes practice feel like play, leans visual and
+Yaaba Academy addresses all five: it makes practice feel like play, leans visual and
 short-sprint, keeps a steady weekly rhythm across the summer, and surfaces progress to
 parents automatically.
 
@@ -119,7 +119,7 @@ roadmap.
 
 ## 5. Curriculum & Standards Alignment Approach
 
-Quest Academy's Weekly Homework is authored **against Ohio Learning Standards**, using
+Yaaba Academy's Weekly Homework is authored **against Ohio Learning Standards**, using
 CCSS-style codes for Math and ELA (e.g. `7.NS.1`, `RL.7.4`) and plausible Ohio-style
 codes for Science and Social Studies (e.g. `7.LS.1`, `7.GEO.1`). Each week covers the
 four core subjects with a concept, a standard code, a 20-minute sprint mission, a small
@@ -174,7 +174,7 @@ This keeps the product legally clean, portable, and fully aligned.
 
 ## 7. Learning-Science Rationale
 
-Quest Academy's design choices map directly to established learning principles:
+Yaaba Academy's design choices map directly to established learning principles:
 
 - **Short sprints (20 minutes).** Bounded work aligns with limited attention spans and
   reduces avoidance; the visible timer externalizes time management.
@@ -198,7 +198,7 @@ Quest Academy's design choices map directly to established learning principles:
 
 ## 8. Architecture Overview
 
-Quest Academy is intentionally simple and **build-step-free**.
+Yaaba Academy is intentionally simple and **build-step-free**.
 
 - **Frontend:** vanilla HTML / CSS / JavaScript static site in `Cheikh7/`. No
   framework, no bundler. Content lives in `data/course_data.json`,
