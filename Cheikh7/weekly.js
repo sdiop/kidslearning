@@ -135,6 +135,7 @@ function renderWeekly() {
     const scoreKey = dkey;
     const score = STATE.quizScores[scoreKey];
     const scoreChip = (score !== undefined) ? `<span class="chip">Quiz: ${score}%</span>` : '';
+    const eligible = Number(score) >= 90;
     const exhausted = weeklyQuizExhausted(dkey);
     const attemptsArr = (STATE.quizAttempts && STATE.quizAttempts[dkey]) || [];
 
@@ -169,7 +170,8 @@ function renderWeekly() {
           ${quizInnerHtml}
         </div>
         <div class="questActions">
-          <button class="secondary" onclick="weeklyMarkDone(this.closest('.weeklyCard'))">Mark Day Done ${done ? '✓' : ''}</button>
+           <button class="secondary" ${done || !eligible ? 'disabled' : ''} title="${done ? 'Day complete' : eligible ? 'Score is high enough to complete this day' : 'Finish the quick check with a final score of at least 90% first'}" onclick="weeklyMarkDone(this.closest('.weeklyCard'))">Mark Day Done ${done ? '✓' : ''}</button>
+           ${!done && !eligible ? '<small class="completionHint">Complete the quick check with a final score of 90% or higher to unlock.</small>' : ''}
         </div>
       </article>`;
   });
@@ -295,6 +297,7 @@ function weeklyCheck(card) {
   if (fb) fb.textContent = `Final score: ${composite}% (composite of ${attempts.length} attempts).${xpAwarded ? ' +10 XP' : ''}`;
   if (typeof save === 'function') save();
   if (typeof logEvent === 'function') logEvent('weekly_quiz_graded', { week, subject, score: composite }, xpAwarded ? 10 : 0);
+  renderWeekly();
 }
 
 // Mark a day complete: +20 XP once, save, log event
@@ -303,6 +306,12 @@ function weeklyMarkDone(card) {
   const subject = card.getAttribute('data-subject');
   const key = weeklyDoneKey(week, subject);
   if (!STATE.weeklyDone) STATE.weeklyDone = {};
+  const score = Number(STATE.quizScores && STATE.quizScores[key]);
+  if (!Number.isFinite(score) || score < 90) {
+    const feedback = card.querySelector('.feedback');
+    if (feedback) feedback.textContent = 'Finish the quick check with a final score of at least 90% before marking this day done.';
+    return;
+  }
   if (!STATE.weeklyDone[key]) {
     STATE.weeklyDone[key] = true;
     STATE.xp = (STATE.xp || 0) + 20;
@@ -310,6 +319,7 @@ function weeklyMarkDone(card) {
     if (typeof logEvent === 'function') logEvent('weekly_day_done', { week, subject }, 20);
   }
   renderWeekly();
+  if (typeof showProgressSheet === 'function') setTimeout(showProgressSheet, 0);
 }
 
 // Initial render (weekly.js loads after app.js, so the first buildCourse ran before renderWeekly existed)

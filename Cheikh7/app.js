@@ -89,6 +89,32 @@ function save() {
   renderProgressTracker();
 }
 
+function showProgressSheet() {
+  const sheet = document.getElementById('progressTracker');
+  if (!sheet) return;
+  sheet.classList.remove('hidden');
+  sheet.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('sheetOpen');
+  const close = sheet.querySelector('.closeSheet');
+  if (close) close.focus();
+}
+
+function hideProgressSheet() {
+  const sheet = document.getElementById('progressTracker');
+  if (!sheet) return;
+  sheet.classList.add('hidden');
+  sheet.setAttribute('aria-hidden', 'true');
+  document.body.classList.remove('sheetOpen');
+}
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') hideProgressSheet();
+});
+
+function onGradeSelectChange(select) {
+  switchGrade(select.value);
+}
+
 function updateStats() {
   document.getElementById('xp').textContent = STATE.xp;
   document.getElementById('done').textContent = Object.keys(STATE.done).length;
@@ -116,13 +142,14 @@ function moduleStats(moduleId) {
 function renderProgressTracker() {
   const box = document.getElementById('progressTracker');
   if (!box) return;
-  let html = '<h2>Progress Tracker</h2><p>End each sprint here: check completion bars, quiz scores, XP, and export a progress report.</p><div class="progressBar"><span id="globalProgressBar"></span></div><strong id="globalProgressLabel"></strong><div class="progressGrid">';
+  let html = '<div class="sheetHeader"><div><p class="sheetEyebrow">YAABA ACADEMY</p><h2>Progress Report</h2></div><button class="secondary closeSheet" type="button" aria-label="Close progress report" onclick="hideProgressSheet()">Close</button></div><p>Check completion bars, quiz scores, XP, and export a progress report.</p><div class="progressBar"><span id="globalProgressBar"></span></div><strong id="globalProgressLabel"></strong><div class="progressGrid">';
   getActiveData().forEach(m => {
     let s = moduleStats(m.id);
     html += `<div class="progressCard"><h3>${m.emoji} ${m.name}</h3><div class="miniBar"><span style="width:${s.pct}%"></span></div><p>${s.done}/${s.total} quests complete | ${s.pct}%</p><div class="questDots">${m.quests.map((q, i) => `<span title="${q.title}" class="dot ${STATE.done[`${m.id}-${i}`] ? 'on' : ''}"></span>`).join('')}</div></div>`;
   });
   html += '</div><div class="exportBox"><button onclick="downloadProgress()">Download Progress Report</button><button class="secondary" onclick="resetProgressConfirm()">Reset Progress</button></div>';
   box.innerHTML = html;
+  box.setAttribute('aria-hidden', box.classList.contains('hidden') ? 'true' : 'false');
   updateStats();
 }
 
@@ -517,6 +544,8 @@ function switchGrade(grade) {
   document.getElementById('sources5').classList.toggle('hidden', grade !== '5');
   document.getElementById('grade5Btn').classList.toggle('active', grade === '5');
   document.getElementById('grade7Btn').classList.toggle('active', grade === '7');
+  const gradeSelect = document.getElementById('gradeSelect');
+  if (gradeSelect) gradeSelect.value = grade;
   resetTimer();
   updateStats();
   renderTimer();
@@ -532,6 +561,8 @@ if ('speechSynthesis' in window) {
 
 document.getElementById('grade5Btn').classList.toggle('active', currentGrade === '5');
 document.getElementById('grade7Btn').classList.toggle('active', currentGrade === '7');
+const initialGradeSelect = document.getElementById('gradeSelect');
+if (initialGradeSelect) initialGradeSelect.value = currentGrade;
 if (currentGrade === '5') {
   document.getElementById('hero7').classList.add('hidden');
   document.getElementById('hero5').classList.remove('hidden');
