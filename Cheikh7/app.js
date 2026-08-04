@@ -14,7 +14,8 @@ function getTotalQuests() {
   return getActiveData().reduce((n, m) => n + m.quests.length, 0);
 }
 
-let STATE = JSON.parse(localStorage.getItem(getStateKey()) || '{"xp":0,"done":{},"last":"","streak":0,"quizScores":{},"quizBonuses":{}}');
+let STATE = JSON.parse(localStorage.getItem(getStateKey()) || '{"xp":0,"done":{},"last":"","streak":0,"quizScores":{},"quizBonuses":{},"quizAttempts":{}}');
+if (!STATE.quizAttempts) STATE.quizAttempts = {};
 let LAST_NARRATION = '';
 
 // --- Server persistence ---
@@ -155,7 +156,7 @@ function downloadProgress() {
 
 function resetProgressConfirm() {
   if (confirm('Reset all progress, XP, streak, and quiz scores?')) {
-    STATE = { xp: 0, done: {}, last: '', streak: 0, quizScores: {}, quizBonuses: {} };
+    STATE = { xp: 0, done: {}, last: '', streak: 0, quizScores: {}, quizBonuses: {}, quizAttempts: {} };
     MUTATION++;
     localStorage.setItem(getStateKey(), JSON.stringify(STATE));
     pushStateToServer(true); // full replace on explicit reset
@@ -215,6 +216,27 @@ function resetTimer() {
   renderTimer();
 }
 
+// Cached British-voice pick. Note: true Cockney voices do NOT exist in browser
+// speechSynthesis engines — the nearest available is standard UK English, so we
+// prioritise the best-quality en-GB voices (Google UK, then Daniel/Arthur).
+let CHOSEN_VOICE = null;
+let VOICE_PICKED = false;
+
+function pickVoice() {
+  if (!('speechSynthesis' in window)) return null;
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices || !voices.length) return null;
+  CHOSEN_VOICE =
+    voices.find(v => /Google UK English Male/i.test(v.name)) ||
+    voices.find(v => /Google UK English Female/i.test(v.name)) ||
+    voices.find(v => /(Daniel|Arthur)/i.test(v.name) && /en-GB/i.test(v.lang || '')) ||
+    voices.find(v => /^en-GB/i.test(v.lang || '')) ||
+    voices.find(v => /English|US|Natural|Jenny|Aria/i.test(v.name)) ||
+    null;
+  VOICE_PICKED = true;
+  return CHOSEN_VOICE;
+}
+
 function speak(text) {
   LAST_NARRATION = text;
   if (!('speechSynthesis' in window)) {
@@ -226,9 +248,9 @@ function speak(text) {
   u.rate = .92;
   u.pitch = 1.05;
   u.volume = 1;
-  const voices = window.speechSynthesis.getVoices();
-  const preferred = voices.find(v => /English|US|Natural|Jenny|Aria/i.test(v.name));
-  if (preferred) u.voice = preferred;
+  u.lang = 'en-GB';
+  if (!VOICE_PICKED || !CHOSEN_VOICE) pickVoice();
+  if (CHOSEN_VOICE) u.voice = CHOSEN_VOICE;
   window.speechSynthesis.speak(u);
 }
 
@@ -255,9 +277,17 @@ function shuffleArray(arr) {
   return a;
 }
 
-function renderInteractiveQuiz(id, q) {
+const QUIZ_MAX_ATTEMPTS = 3;
+
+// A quiz is finished when it has 3 recorded attempts OR any attempt hit 100%.
+function quizIsExhausted(id) {
+  const arr = (STATE.quizAttempts && STATE.quizAttempts[id]) || [];
+  return arr.length >= QUIZ_MAX_ATTEMPTS || arr.some(p => p >= 100);
+}
+
+function quizItemsHtml(id, q) {
   let items = q.interactiveQuiz || [];
-  return `<div class="quiz interactiveQuiz"><strong>Interactive Quiz</strong>${items.map((item, i) => {
+  return items.map((item, i) => {
     if (item.type === 'multiple_choice') {
       return `<div class="quizItem" data-type="multiple_choice" data-answer="${item.answer}"><p>${i + 1}. ${item.question}</p><div class="choiceGroup">${shuffleArray(item.choices).map(c => `<button class="choice" onclick="selectChoice(this)" data-value="${c}">${c}</button>`).join('')}</div></div>`;
     }
@@ -269,37 +299,119 @@ function renderInteractiveQuiz(id, q) {
       return `<div class="quizItem matchItem" data-type="drag_match" data-pairs='${JSON.stringify(item.pairs)}'><p>${i + 1}. ${item.question}</p><div class="matchGrid">${item.pairs.map(p => `<label>${p[0]}<select><option value="">Choose clue</option>${shuffledClues.map(x => `<option value="${x}">${x}</option>`).join('')}</select></label>`).join('')}</div></div>`;
     }
     return '';
-  }).join('')}<button class="secondary" onclick="gradeInteractiveQuiz('${id}', this.closest('.interactiveQuiz'))">Grade Quiz</button><div class="feedback" id="${id}-interactive-fb"></div></div>`;
+  }).join('');
+}
+
+function renderInteractiveQuiz(id, q) {
+  // Locked/completed state on load: quiz exhausted -> show composite, no retry.
+  if (quizIsExhausted(id)) {
+    const attempts = (STATE.quizAttempts[id] || []);
+    const composite = STATE.quizScores[id] !== undefined
+      ? STATE.quizScores[id]
+      : Math.round(attempts.reduce((a, b) => a + b, 0) / Math.max(attempts.length, 1));
+    return `<div class="quiz interactiveQuiz quizLocked" data-quiz-id="${id}"><strong>Interactive Quiz</strong><div class="feedback" id="${id}-interactive-fb" style="color:#22c55e">Final score: ${composite}% (composite of ${attempts.length} attempt${attempts.length === 1 ? '' : 's'})</div></div>`;
+  }
+  return `<div class="quiz interactiveQuiz" data-quiz-id="${id}">${quizInnerHtml(id, q)}</div>`;
+}
+
+// Inner content (items + grade button + feedback) — reused for retries.
+function quizInnerHtml(id, q) {
+  const attemptNo = ((STATE.quizAttempts[id] || []).length) + 1;
+  return `<strong>Interactive Quiz</strong><div class="quizAttemptTag">Attempt ${attemptNo} of ${QUIZ_MAX_ATTEMPTS}</div>${quizItemsHtml(id, q)}<button class="secondary" onclick="gradeInteractiveQuiz('${id}', this.closest('.interactiveQuiz'))">Grade Quiz</button><div class="feedback" id="${id}-interactive-fb"></div>`;
+}
+
+// Look up the quest data object from a composite quest id like "math-2".
+function questById(id) {
+  const dash = id.lastIndexOf('-');
+  const modId = id.slice(0, dash);
+  const idx = parseInt(id.slice(dash + 1), 10);
+  const mod = getActiveData().find(m => m.id === modId);
+  return mod ? mod.quests[idx] : null;
+}
+
+function retryInteractiveQuiz(id) {
+  const q = questById(id);
+  const box = document.querySelector('.interactiveQuiz[data-quiz-id="' + id + '"]');
+  if (!q || !box) return;
+  box.classList.remove('quizLocked');
+  box.innerHTML = quizInnerHtml(id, q); // fresh shuffle
 }
 
 function gradeInteractiveQuiz(id, box) {
+  if (box.classList.contains('quizLocked')) return; // already graded/locked
   let items = [...box.querySelectorAll('.quizItem')];
   let correct = 0, total = items.length;
   items.forEach(item => {
     let type = item.dataset.type;
     if (type === 'multiple_choice' || type === 'true_false') {
       let selected = item.querySelector('.selected');
-      if (selected && selected.dataset.value.toLowerCase() === item.dataset.answer.toLowerCase()) correct++;
+      let ok = selected && selected.dataset.value.toLowerCase() === item.dataset.answer.toLowerCase();
+      if (ok) correct++;
+      // Lock choices and show correct/wrong classes
+      item.querySelectorAll('.choice').forEach(b => {
+        b.disabled = true;
+        if (b.dataset.value.toLowerCase() === item.dataset.answer.toLowerCase()) b.classList.add('correct');
+        else if (b.classList.contains('selected')) b.classList.add('wrong');
+      });
     } else if (type === 'drag_match') {
       let pairs = JSON.parse(item.dataset.pairs);
       let selects = [...item.querySelectorAll('select')];
       if (selects.every((sel, i) => sel.value === pairs[i][1])) correct++;
+      selects.forEach((sel, i) => {
+        sel.disabled = true;
+        sel.classList.add(sel.value === pairs[i][1] ? 'correct' : 'wrong');
+      });
     }
   });
   let pct = Math.round(correct / Math.max(total, 1) * 100);
-  STATE.quizScores[id] = pct;
+
+  // Record this attempt (max QUIZ_MAX_ATTEMPTS)
+  if (!STATE.quizAttempts[id]) STATE.quizAttempts[id] = [];
+  if (STATE.quizAttempts[id].length < QUIZ_MAX_ATTEMPTS) STATE.quizAttempts[id].push(pct);
+  const attempts = STATE.quizAttempts[id];
+  const attemptNo = attempts.length;
+
+  // Lock the attempt UI: disable the grade button, mark box locked
+  box.classList.add('quizLocked');
+  const gradeBtn = box.querySelector('button.secondary');
+  if (gradeBtn) gradeBtn.disabled = true;
+
+  logEvent('quiz_attempt', { quiz: id, attempt: attemptNo, score: pct }, 0);
+
+  let fb = document.getElementById(id + '-interactive-fb');
+  const finished = attempts.length >= QUIZ_MAX_ATTEMPTS || attempts.some(p => p >= 100);
+
+  if (!finished) {
+    // More attempts allowed
+    if (fb) {
+      fb.textContent = `Score: ${correct}/${total} (${pct}%). `;
+      fb.style.color = pct >= 80 ? '#22c55e' : '#f59e0b';
+    }
+    const retryBtn = document.createElement('button');
+    retryBtn.className = 'secondary retryQuizBtn';
+    retryBtn.textContent = `Retry (attempt ${attemptNo + 1} of ${QUIZ_MAX_ATTEMPTS})`;
+    retryBtn.onclick = () => retryInteractiveQuiz(id);
+    if (fb) fb.after(retryBtn);
+    save();
+    return;
+  }
+
+  // Final attempt -> composite score
+  const composite = Math.round(attempts.reduce((a, b) => a + b, 0) / attempts.length);
+  STATE.quizScores[id] = composite;
   let bonus = 0;
-  if (pct >= 80 && !STATE.quizBonuses[id]) {
+  if (composite >= 80 && !STATE.quizBonuses[id]) {
     STATE.quizBonuses[id] = true;
     STATE.xp += 15;
     bonus = 15;
   }
   save();
-  logEvent('quiz_graded', { questId: id, score: pct }, bonus);
-  let fb = document.getElementById(id + '-interactive-fb');
-  fb.textContent = `Score: ${correct}/${total} (${pct}%). ${pct >= 80 ? (STATE.quizBonuses[id] ? 'Bonus XP awarded.' : 'Bonus XP already earned.') : 'Try again after reviewing the mission.'}`;
-  fb.style.color = pct >= 80 ? '#22c55e' : '#f59e0b';
-  if (pct >= 80) speak('Excellent quiz work. You scored at least eighty percent and earned bonus XP.');
+  logEvent('quiz_graded', { questId: id, score: composite }, bonus);
+  if (fb) {
+    fb.textContent = `Final score: ${composite}% (composite of ${attempts.length} attempts). ${composite >= 80 ? (STATE.quizBonuses[id] ? 'Bonus XP awarded.' : 'Bonus XP already earned.') : 'Great effort — review the mission and try the next quest.'}`;
+    fb.style.color = composite >= 80 ? '#22c55e' : '#f59e0b';
+  }
+  if (composite >= 80) speak('Excellent quiz work. You scored at least eighty percent and earned bonus XP.');
 }
 
 function burstConfetti(target) {
@@ -320,12 +432,56 @@ function burstConfetti(target) {
   }
 }
 
+function courseSubjectKey() {
+  return 'qaSubject' + currentGrade;
+}
+
+function getSelectedSubject(modules) {
+  let sel = localStorage.getItem(courseSubjectKey());
+  const valid = ['__all__', ...modules.map(m => m.id)];
+  if (!sel || !valid.includes(sel)) {
+    // Default to first subject on mobile-width, "All" on desktop.
+    sel = (window.innerWidth <= 650 && modules.length) ? modules[0].id : '__all__';
+  }
+  return sel;
+}
+
+function selectSubject(id) {
+  localStorage.setItem(courseSubjectKey(), id);
+  applySubjectFilter(id);
+  renderSubjectTabs();
+  const course = document.getElementById('course');
+  if (course) course.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function applySubjectFilter(id) {
+  const course = document.getElementById('course');
+  if (!course) return;
+  course.querySelectorAll('.module').forEach(sec => {
+    const mid = sec.getAttribute('data-module-id');
+    sec.style.display = (id === '__all__' || id === mid) ? '' : 'none';
+  });
+}
+
+function renderSubjectTabs() {
+  const bar = document.getElementById('subjectTabs');
+  if (!bar) return;
+  const modules = getActiveData();
+  const sel = getSelectedSubject(modules);
+  let html = `<button class="subjectTab${sel === '__all__' ? ' active' : ''}" onclick="selectSubject('__all__')">🗂️ All</button>`;
+  modules.forEach(m => {
+    html += `<button class="subjectTab${sel === m.id ? ' active' : ''}" onclick="selectSubject('${m.id}')">${m.emoji} ${m.name}</button>`;
+  });
+  bar.innerHTML = html;
+}
+
 function buildCourse(modules) {
   let course = document.getElementById('course');
   course.innerHTML = '';
   modules.forEach(m => {
     let wrap = document.createElement('section');
     wrap.className = 'module';
+    wrap.setAttribute('data-module-id', m.id);
     wrap.style.setProperty('--mcolor', m.color);
     let artHtml = m.image
       ? `<img class="moduleArt" src="${m.image}" alt="Anime-style visual for ${m.name}" />`
@@ -343,6 +499,8 @@ function buildCourse(modules) {
     });
     course.appendChild(wrap);
   });
+  renderSubjectTabs();
+  applySubjectFilter(getSelectedSubject(modules));
   renderProgressTracker();
   if (typeof renderWeekly === 'function') renderWeekly();
 }
@@ -351,7 +509,8 @@ function switchGrade(grade) {
   if (grade === currentGrade) return;
   currentGrade = grade;
   localStorage.setItem('questAcademyGrade', grade);
-  STATE = JSON.parse(localStorage.getItem(getStateKey()) || '{"xp":0,"done":{},"last":"","streak":0,"quizScores":{},"quizBonuses":{}}');
+  STATE = JSON.parse(localStorage.getItem(getStateKey()) || '{"xp":0,"done":{},"last":"","streak":0,"quizScores":{},"quizBonuses":{},"quizAttempts":{}}');
+  if (!STATE.quizAttempts) STATE.quizAttempts = {};
   document.getElementById('hero7').classList.toggle('hidden', grade !== '7');
   document.getElementById('hero5').classList.toggle('hidden', grade !== '5');
   document.getElementById('sources7').classList.toggle('hidden', grade !== '7');
@@ -367,7 +526,8 @@ function switchGrade(grade) {
 }
 
 if ('speechSynthesis' in window) {
-  window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+  window.speechSynthesis.onvoiceschanged = () => { pickVoice(); };
+  pickVoice();
 }
 
 document.getElementById('grade5Btn').classList.toggle('active', currentGrade === '5');

@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Leaderboard — Quest Academy</title>
+<link rel="stylesheet" href="styles.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏆</text></svg>" />
+<style>
+  .lbWrap { max-width: 900px; margin: 0 auto; padding: 20px 16px 60px; }
+  .lbHead { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
+  .lbHead h1 { margin: 0; font-size: clamp(26px, 6vw, 40px); }
+  .lbHead .links { display: flex; gap: 14px; flex-wrap: wrap; }
+  .backLink { color: #7dd3fc; text-decoration: none; font-weight: 600; }
+  .lbCard { background: #111936cc; border: 1px solid #33405e; border-radius: 22px; padding: 18px; margin-bottom: 20px; box-shadow: 0 16px 40px #0004; }
+  .lbCard h2 { margin: 0 0 14px; font-size: 22px; color: #fef08a; }
+  .rankRow { display: flex; align-items: center; gap: 12px; background: #0b1020; border: 1px solid #344873; border-radius: 16px; padding: 12px 14px; margin-bottom: 10px; }
+  .rankMedal { font-size: 28px; width: 40px; text-align: center; flex-shrink: 0; }
+  .rankMain { flex: 1; min-width: 0; }
+  .rankName { font-weight: 800; font-size: 17px; }
+  .rankSub { color: #b6c2d9; font-size: 13px; margin-top: 2px; }
+  .rankVal { font-weight: 900; font-size: 22px; color: #38bdf8; white-space: nowrap; }
+  .rankVal small { display: block; font-size: 11px; color: #b6c2d9; font-weight: 600; text-align: right; }
+  .kidBlock { background: #0b1020; border: 1px solid #344873; border-radius: 16px; padding: 14px 16px; margin-bottom: 12px; }
+  .kidBlock h3 { margin: 0 0 10px; font-size: 18px; }
+  .kidStats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 12px; }
+  .kidStats .box { background: #101a37; border: 1px solid #33405e; border-radius: 12px; padding: 10px 6px; text-align: center; }
+  .kidStats .box b { display: block; font-size: 1.2rem; color: #fef08a; }
+  .kidStats .box span { font-size: .72rem; color: #b6c2d9; }
+  .barLabel { display: flex; justify-content: space-between; font-size: 13px; color: #b6c2d9; margin: 8px 0 4px; }
+  .bar { height: 16px; background: #071020; border-radius: 999px; overflow: hidden; border: 1px solid #42547a; }
+  .bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #22c55e, #38bdf8); border-radius: 999px; transition: width .5s ease; }
+  .loading { text-align: center; opacity: .7; padding: 60px 0; }
+  @media (max-width: 480px) {
+    .kidStats { grid-template-columns: repeat(2, 1fr); }
+    .rankVal { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+<div class="lbWrap">
+  <div class="lbHead">
+    <h1>🏆 Leaderboard</h1>
+    <div class="links">
+      <a class="backLink" href="parent.html">📊 Parent</a>
+      <a class="backLink" href="index.html">← Quest Academy</a>
+    </div>
+  </div>
+  <div id="lb"><div class="loading">Loading standings…</div></div>
+</div>
+<script>
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function medal(i) { return i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : (i + 1) + '.'; }
+function gradeLabel(g) { return g === '7' ? 'Rising 7th Grade' : g === '5' ? '5th Grade' : 'Grade ' + g; }
+
+fetch('/api/leaderboard').then(r => r.json()).then(kids => {
+  const lb = document.getElementById('lb');
+  if (!Array.isArray(kids) || !kids.length) {
+    lb.innerHTML = '<div class="loading">No profiles yet.</div>';
+    return;
+  }
+  const byXp = [...kids].sort((a, b) => (b.xp || 0) - (a.xp || 0));
+  const byWeek = [...kids].sort((a, b) => (b.weekXp || 0) - (a.weekXp || 0));
+  const maxDays = Math.max(1, ...kids.map(k => k.weeklyDaysDone || 0));
+
+  let html = '';
+
+  // 1) Overall standings by total XP
+  html += '<div class="lbCard"><h2>Overall Standings</h2>';
+  byXp.forEach((k, i) => {
+    html += `<div class="rankRow">
+      <div class="rankMedal">${medal(i)}</div>
+      <div class="rankMain">
+        <div class="rankName">${esc(k.name)}</div>
+        <div class="rankSub">${gradeLabel(k.grade)} · 🎯 ${k.questsDone} quests · 🔥 ${k.streak} streak</div>
+      </div>
+      <div class="rankVal">${k.xp}<small>XP</small></div>
+    </div>`;
+  });
+  html += '</div>';
+
+  // 2) This Week by XP earned this ISO week
+  html += '<div class="lbCard"><h2>⚡ This Week</h2>';
+  byWeek.forEach((k, i) => {
+    html += `<div class="rankRow">
+      <div class="rankMedal">${medal(i)}</div>
+      <div class="rankMain">
+        <div class="rankName">${esc(k.name)}</div>
+        <div class="rankSub">${gradeLabel(k.grade)}</div>
+      </div>
+      <div class="rankVal">${k.weekXp || 0}<small>XP this week</small></div>
+    </div>`;
+  });
+  html += '</div>';
+
+  // 3) Per-kid weekly progress + quiz average
+  html += '<div class="lbCard"><h2>Weekly Progress & Quiz Average</h2>';
+  kids.forEach(k => {
+    const daysPct = Math.round((k.weeklyDaysDone || 0) / maxDays * 100);
+    const quizAvg = k.quizAvg === null || k.quizAvg === undefined ? null : k.quizAvg;
+    html += `<div class="kidBlock">
+      <h3>${k.grade === '7' ? '⚔️' : '🛡️'} ${esc(k.name)}</h3>
+      <div class="kidStats">
+        <div class="box"><b>${k.xp}</b><span>XP</span></div>
+        <div class="box"><b>${k.questsDone}</b><span>Quests</span></div>
+        <div class="box"><b>${k.weeklyDaysDone || 0}</b><span>Weekly days</span></div>
+        <div class="box"><b>${quizAvg === null ? '—' : quizAvg + '%'}</b><span>Quiz avg (${k.quizCount || 0})</span></div>
+      </div>
+      <div class="barLabel"><span>Weekly days done</span><span>${k.weeklyDaysDone || 0} days</span></div>
+      <div class="bar"><span style="width:${daysPct}%"></span></div>
+      <div class="barLabel"><span>Composite quiz average</span><span>${quizAvg === null ? 'No quizzes yet' : quizAvg + '%'}</span></div>
+      <div class="bar"><span style="width:${quizAvg === null ? 0 : quizAvg}%"></span></div>
+    </div>`;
+  });
+  html += '</div>';
+
+  lb.innerHTML = html;
+}).catch(() => {
+  document.getElementById('lb').innerHTML = '<div class="loading">Could not load leaderboard. Is the server running?</div>';
+});
+</script>
+</body>
+</html>

@@ -12,7 +12,7 @@ app.use((req, res, next) => {
   next();
 });
 
-const EMPTY_STATE = { xp: 0, done: {}, last: '', streak: 0, quizScores: {}, quizBonuses: {}, weeklyDone: {} };
+const EMPTY_STATE = { xp: 0, done: {}, last: '', streak: 0, quizScores: {}, quizBonuses: {}, weeklyDone: {}, quizAttempts: {} };
 
 const GRADE_TO_PROFILE = { '5': 'seydina', '7': 'cheikh' };
 
@@ -72,6 +72,19 @@ function normalizeState(raw) {
     }
     return out;
   };
+  // Map of quiz key -> array of attempt percentages (0-100), max 3 entries.
+  const attemptsMap = (obj) => {
+    const out = {};
+    if (obj && typeof obj === 'object') {
+      for (const k of Object.keys(obj)) {
+        if (Object.keys(out).length >= 500) break; // bound total keys
+        if (typeof k === 'string' && k.length <= 60 && Array.isArray(obj[k])) {
+          out[k] = obj[k].slice(0, 3).map(v => clampNum(v, 100));
+        }
+      }
+    }
+    return out;
+  };
   return {
     xp: clampNum(s.xp, 1000000),
     done: boolMap(s.done),
@@ -79,7 +92,8 @@ function normalizeState(raw) {
     streak: clampNum(s.streak, 100000),
     quizScores: scoreMap(s.quizScores),
     quizBonuses: boolMap(s.quizBonuses),
-    weeklyDone: boolMap(s.weeklyDone)
+    weeklyDone: boolMap(s.weeklyDone),
+    quizAttempts: attemptsMap(s.quizAttempts)
   };
 }
 
@@ -94,10 +108,19 @@ function mergeStates(current, incoming) {
     streak: Math.max(cur.streak, inc.streak),
     quizScores: { ...cur.quizScores },
     quizBonuses: { ...cur.quizBonuses, ...inc.quizBonuses },
-    weeklyDone: { ...cur.weeklyDone, ...inc.weeklyDone }
+    weeklyDone: { ...cur.weeklyDone, ...inc.weeklyDone },
+    quizAttempts: { ...cur.quizAttempts }
   };
   for (const k of Object.keys(inc.quizScores)) {
     merged.quizScores[k] = Math.max(merged.quizScores[k] || 0, inc.quizScores[k]);
+  }
+  // Merge attempts by taking the strictly LONGER array (more attempts = more
+  // progress). On equal length, keep what the server already has — a stale
+  // device must not overwrite an equally-long, possibly newer sequence.
+  for (const k of Object.keys(inc.quizAttempts)) {
+    const curArr = merged.quizAttempts[k] || [];
+    const incArr = inc.quizAttempts[k] || [];
+    if (incArr.length > curArr.length) merged.quizAttempts[k] = incArr;
   }
   return merged;
 }
@@ -187,6 +210,47 @@ app.get('/api/dashboard', async (req, res) => {
         lastActive: st ? st.updated_at : null,
         weekly,
         awards: computeAwards(state, weekly)
+      });
+    }
+    res.json(out);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+app.get('/api/leaderboard', async (req, res) => {
+  try {
+    const profiles = (await pool.query('SELECT id, name, grade FROM profiles ORDER BY grade DESC')).rows;
+    const out = [];
+    for (const p of profiles) {
+      const st = (await pool.query('SELECT state, updated_at FROM progress_state WHERE profile_id=$1', [p.id])).rows[0];
+      const state = normalizeState((st && st.state && Object.keys(st.state).length) ? st.state : EMPTY_STATE);
+      // Reuse the same weekly rollup logic as /api/dashboard: XP earned per ISO week.
+      const weekly = (await pool.query(
+        `SELECT to_char(date_trunc('week', created_at), 'YYYY-MM-DD') AS week,
+                count(*)::int AS events, sum(xp_delta)::int AS xp
+         FROM progress_events WHERE profile_id=$1
+         GROUP BY 1 ORDER BY 1 DESC LIMIT 8`, [p.id])).rows;
+      // Composite quiz average = average of stored composite scores
+      const scores = Object.values(state.quizScores || {});
+      const quizAvg = scores.length ? Math.round(scores.reduce((a, b) => a + b, 0) / scores.length) : null;
+      // Weekly days done: count of true keys in weeklyDone
+      const weeklyDaysDone = Object.keys(state.weeklyDone || {}).length;
+      // XP earned this ISO week (most recent week bucket == current week if any events)
+      const weekXpThisWeek = (await pool.query(
+        `SELECT COALESCE(sum(xp_delta),0)::int AS xp
+         FROM progress_events
+         WHERE profile_id=$1 AND date_trunc('week', created_at) = date_trunc('week', now())`, [p.id])).rows[0].xp;
+      out.push({
+        id: p.id, name: p.name, grade: p.grade,
+        xp: state.xp || 0,
+        questsDone: Object.keys(state.done || {}).length,
+        streak: state.streak || 0,
+        quizAvg,
+        quizCount: scores.length,
+        weeklyDaysDone,
+        weekXp: weekXpThisWeek,
+        weekly
       });
     }
     res.json(out);

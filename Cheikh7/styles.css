@@ -95,3 +95,121 @@ main{max-width:1280px;margin:auto}
 .weeklyCard .choice.wrong{background:#7f1d1d;color:#fee2e2;border-color:#b91c1c}
 @media(max-width:850px){.weeklyModule{margin-left:24px;margin-right:24px}}
 @media(max-width:650px){.weekGrid{grid-template-columns:1fr}}
+
+/* ===== Subject tab bar (main course + weekly) ===== */
+.subjectTabs{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:12px 40px;margin:0 auto;max-width:1280px;scrollbar-width:thin}
+.subjectTabs::-webkit-scrollbar{height:6px}
+.subjectTabs::-webkit-scrollbar-thumb{background:#33405e;border-radius:999px}
+.subjectTab{flex:0 0 auto;padding:10px 16px;font-size:14px;background:#263150;color:#cdd9f0;border:1px solid #51617f;box-shadow:none;white-space:nowrap;min-height:44px}
+.subjectTab.active{background:linear-gradient(135deg,#38bdf8,#818cf8);color:#06101f;border:0}
+.weeklySubjectTabs{padding:12px 0;margin:4px 0 6px}
+
+/* ===== Week dropdown selector ===== */
+.weekSelectRow{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.weekSelectLabel{font-weight:800;color:#fef08a;font-size:15px}
+.weekSelect{padding:12px 16px;min-height:44px;border-radius:14px;background:#263150;color:#eaf2ff;border:1px solid #51617f;font-weight:700;font-size:15px;cursor:pointer}
+.weekSelect:focus{outline:2px solid #38bdf8}
+
+/* ===== Quiz integrity: attempt tag, locked, correct/wrong ===== */
+.quizAttemptTag{display:inline-block;margin:8px 0 4px;padding:4px 10px;border-radius:999px;background:#203056;border:1px solid #42547a;color:#d9e5fb;font-size:12px;font-weight:700}
+.quizLocked{opacity:.98}
+.interactiveQuiz .choice.correct,.weeklyCard .choice.correct{background:linear-gradient(135deg,#22c55e,#4ade80);color:#06101f;border-color:#22c55e}
+.interactiveQuiz .choice.wrong,.weeklyCard .choice.wrong{background:#7f1d1d;color:#fee2e2;border-color:#b91c1c}
+.interactiveQuiz .choice:disabled,.weeklyCard .choice:disabled{cursor:default;opacity:1}
+.matchGrid select.correct{border-color:#22c55e;color:#86efac}
+.matchGrid select.wrong{border-color:#b91c1c;color:#fecaca}
+.retryQuizBtn{margin-top:10px}
+
+/* ===================================================================== */
+/* ===== MOBILE LAYOUT REORGANIZATION (colors unchanged) ============= */
+/* Uses existing color variables/values only — layout & sizing only.   */
+/* ===================================================================== */
+
+/* Header link icon-only toggle helpers (default: show full label) */
+.parentLink .linkIcon{display:none}
+.parentLink .linkFull{display:inline}
+
+@media(max-width:650px){
+  /* Grade selector bar: wrap, compact, no overflow */
+  .gradeSelector{flex-wrap:wrap;justify-content:center;gap:6px;padding:10px 12px 0;align-items:center}
+  .gradeSelector button{padding:9px 12px;font-size:13px}
+  .gradeSelector button:first-child{border-radius:12px 0 0 12px}
+  .gradeSelector button#grade7Btn,.gradeSelector button:last-child{border-radius:0 12px 12px 0}
+  /* Icon-only Parent/Leaderboard links on phones */
+  .parentLink{padding:8px 10px;margin-left:6px;font-size:16px}
+  .parentLink .linkFull{display:none}
+  .parentLink .linkIcon{display:inline}
+  .syncStatus{flex-basis:100%;text-align:center;margin:6px 0 0}
+
+  /* Hero: stack with image below text, reduced height */
+  .hero{grid-template-columns:1fr;min-height:auto;padding:20px 16px;gap:16px}
+  .hero .heroText{order:1}
+  .hero img{order:2;max-height:220px;object-fit:cover;border-radius:24px}
+  .hero h1{font-size:clamp(34px,11vw,46px)}
+  .subtitle{font-size:16px}
+  .animeBoard{order:2;min-height:280px}
+  .heroButtons{margin-top:16px}
+  .heroButtons button{width:100%;min-height:48px}
+
+  /* Stat dashboard: 2x2 grid */
+  .dashboard{grid-template-columns:repeat(2,1fr);gap:12px;padding:0 16px 16px}
+  .stat{padding:14px}
+  .stat span{font-size:26px}
+
+  /* Panels & course: tighter padding */
+  .panel{margin:14px 16px;padding:18px;border-radius:22px}
+  .course{padding:6px 16px 30px}
+  .subjectTabs{padding:10px 16px}
+
+  /* Modules & quest cards: full-width comfortable tap targets */
+  .moduleHead{padding:18px}
+  .moduleHead h2{font-size:24px}
+  .questGrid{grid-template-columns:1fr;padding:14px;gap:14px}
+  .quest{padding:16px}
+  .questActions{gap:8px}
+  .questActions button,.questActions .link{width:100%;min-height:44px;text-align:center}
+  .link{padding:12px}
+
+  /* Quiz areas full width & tappable */
+  .choiceGroup{flex-direction:column}
+  .choiceGroup .choice{width:100%;min-height:44px}
+  .matchGrid label{grid-template-columns:1fr}
+  .matchGrid select{min-height:44px}
+  .interactiveQuiz button,.weeklyCard button{width:100%;min-height:44px}
+
+  /* Weekly section spacing */
+  .weeklyModule{margin:14px 16px}
+  .weeklyBody{padding:14px}
+  .weekTitle{font-size:20px}
+
+  /* Timer stacks and stays readable */
+  .timer{display:block}
+  .timer span{display:block;margin-bottom:12px;font-size:40px}
+  .timer button{min-height:44px}
+}
+
+/* <480px refinement pass */
+@media(max-width:480px){
+  .gradeSelector button{padding:8px 9px;font-size:12px}
+  .hero{padding:16px 12px}
+  .hero h1{font-size:clamp(28px,12vw,38px)}
+  .subtitle{font-size:15px}
+  .hero img{max-height:180px}
+  .dashboard{padding:0 12px 12px;gap:10px}
+  .stat{padding:12px;border-radius:18px}
+  .stat span{font-size:22px}
+  .stat label{font-size:12px}
+  .panel{margin:12px 12px;padding:14px}
+  .course{padding:4px 12px 24px}
+  .subjectTabs{padding:8px 12px}
+  .subjectTab{padding:9px 13px;font-size:13px}
+  .moduleHead{padding:14px}
+  .moduleHead h2{font-size:20px}
+  .questGrid{padding:12px}
+  .quest{padding:14px;border-radius:20px}
+  .quest h3{font-size:18px}
+  .weeklyModule{margin:12px 12px}
+  .weeklyBody{padding:12px}
+  .weekSelect{width:100%}
+  .timer span{font-size:34px}
+}

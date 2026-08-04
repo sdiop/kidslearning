@@ -11,7 +11,8 @@
 <div class="gradeSelector">
   <button id="grade5Btn" onclick="switchGrade('5')">5th Grade — Seydina</button>
   <button id="grade7Btn" onclick="switchGrade('7')">7th Grade — Cheikh</button>
-  <a class="parentLink" href="parent.html">📊 Parent</a>
+  <a class="parentLink" href="parent.html"><span class="linkFull">📊 Parent</span><span class="linkIcon">📊</span></a>
+  <a class="parentLink" href="leaderboard.html"><span class="linkFull">🏆 Leaderboard</span><span class="linkIcon">🏆</span></a>
   <span id="syncStatus" class="syncStatus"></span>
 </div>
 <header class="hero" id="hero7">
@@ -58,6 +59,7 @@
   <p>Use the narration controls on each quest card. The voice uses the browser's built-in speech engine, so no extra app is required. Internet is only needed for optional video links.</p>
   <div class="voiceControls"><button onclick="stopNarration()">Stop Narration</button><button class="secondary" onclick="replayLastNarration()">Replay Last</button></div>
 </section>
+<nav class="subjectTabs" id="subjectTabs" aria-label="Subject navigation"></nav>
 <section class="course" id="course"></section>
 <div id="weekly"></div>
 <section class="panel">
