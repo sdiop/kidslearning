@@ -263,4 +263,4 @@ app.get('/api/leaderboard', async (req, res) => {
 app.use(express.static(path.join(__dirname, 'Cheikh7')));
 
 const port = process.env.PORT || 5000;
-app.listen(port, '0.0.0.0', () => console.log(`Yaaba Academy server on ${port}`));
+app.listen(port, '0.0.0.0', () => console.log(`Diop Yaba Academy server on ${port}`));

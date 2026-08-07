@@ -1,4 +1,4 @@
-# Rising 7th Grade Yaaba Academy
+# Rising 7th Grade Diop Yaba Academy
 
 Open `index.html` in a browser. No installation is required.
 

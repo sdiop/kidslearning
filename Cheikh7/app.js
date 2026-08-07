@@ -142,7 +142,7 @@ function moduleStats(moduleId) {
 function renderProgressTracker() {
   const box = document.getElementById('progressTracker');
   if (!box) return;
-  let html = '<div class="sheetHeader"><div><p class="sheetEyebrow">YAABA ACADEMY</p><h2>Progress Report</h2></div><button class="secondary closeSheet" type="button" aria-label="Close progress report" onclick="hideProgressSheet()">Close</button></div><p>Check completion bars, quiz scores, XP, and export a progress report.</p><div class="progressBar"><span id="globalProgressBar"></span></div><strong id="globalProgressLabel"></strong><div class="progressGrid">';
+  let html = '<div class="sheetHeader"><div><p class="sheetEyebrow">DIOP YABA ACADEMY</p><h2>Progress Report</h2></div><button class="secondary closeSheet" type="button" aria-label="Close progress report" onclick="hideProgressSheet()">Close</button></div><p>Check completion bars, quiz scores, XP, and export a progress report.</p><div class="progressBar"><span id="globalProgressBar"></span></div><strong id="globalProgressLabel"></strong><div class="progressGrid">';
   getActiveData().forEach(m => {
     let s = moduleStats(m.id);
     html += `<div class="progressCard"><h3>${m.emoji} ${m.name}</h3><div class="miniBar"><span style="width:${s.pct}%"></span></div><p>${s.done}/${s.total} quests complete | ${s.pct}%</p><div class="questDots">${m.quests.map((q, i) => `<span title="${q.title}" class="dot ${STATE.done[`${m.id}-${i}`] ? 'on' : ''}"></span>`).join('')}</div></div>`;
@@ -156,7 +156,7 @@ function renderProgressTracker() {
 function downloadProgress() {
   let gradeLabel = currentGrade === '5' ? '5th Grade' : 'Rising 7th Grade';
   let lines = [
-    gradeLabel + ' Yaaba Academy - Progress Report',
+    gradeLabel + ' Diop Yaba Academy - Progress Report',
     'Generated: ' + new Date().toLocaleString(),
     'XP: ' + STATE.xp,
     'Quests Done: ' + Object.keys(STATE.done).length + '/' + getTotalQuests(),
