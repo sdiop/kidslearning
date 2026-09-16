@@ -304,12 +304,12 @@ function shuffleArray(arr) {
   return a;
 }
 
-const QUIZ_MAX_ATTEMPTS = 3;
+const QUIZ_MAX_ATTEMPTS = QuizRules.MAX_ATTEMPTS;
 
 // A quiz is finished when it has 3 recorded attempts OR any attempt hit 100%.
 function quizIsExhausted(id) {
   const arr = (STATE.quizAttempts && STATE.quizAttempts[id]) || [];
-  return arr.length >= QUIZ_MAX_ATTEMPTS || arr.some(p => p >= 100);
+  return QuizRules.isExhausted(arr);
 }
 
 function quizItemsHtml(id, q) {
@@ -335,7 +335,7 @@ function renderInteractiveQuiz(id, q) {
     const attempts = (STATE.quizAttempts[id] || []);
     const composite = STATE.quizScores[id] !== undefined
       ? STATE.quizScores[id]
-      : Math.round(attempts.reduce((a, b) => a + b, 0) / Math.max(attempts.length, 1));
+      : QuizRules.compositeScore(attempts);
     return `<div class="quiz interactiveQuiz quizLocked" data-quiz-id="${id}"><strong>Interactive Quiz</strong><div class="feedback" id="${id}-interactive-fb" style="color:#22c55e">Final score: ${composite}% (composite of ${attempts.length} attempt${attempts.length === 1 ? '' : 's'})</div></div>`;
   }
   return `<div class="quiz interactiveQuiz" data-quiz-id="${id}">${quizInnerHtml(id, q)}</div>`;
@@ -406,7 +406,7 @@ function gradeInteractiveQuiz(id, box) {
   logEvent('quiz_attempt', { quiz: id, attempt: attemptNo, score: pct }, 0);
 
   let fb = document.getElementById(id + '-interactive-fb');
-  const finished = attempts.length >= QUIZ_MAX_ATTEMPTS || attempts.some(p => p >= 100);
+  const finished = QuizRules.isExhausted(attempts);
 
   if (!finished) {
     // More attempts allowed
@@ -424,13 +424,12 @@ function gradeInteractiveQuiz(id, box) {
   }
 
   // Final attempt -> composite score
-  const composite = Math.round(attempts.reduce((a, b) => a + b, 0) / attempts.length);
+  const composite = QuizRules.compositeScore(attempts);
   STATE.quizScores[id] = composite;
-  let bonus = 0;
-  if (composite >= 80 && !STATE.quizBonuses[id]) {
+  const bonus = QuizRules.xpAwardFor(composite, STATE.quizBonuses[id], 80, 15);
+  if (bonus) {
     STATE.quizBonuses[id] = true;
-    STATE.xp += 15;
-    bonus = 15;
+    STATE.xp += bonus;
   }
   save();
   logEvent('quiz_graded', { questId: id, score: composite }, bonus);

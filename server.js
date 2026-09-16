@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const { Pool } = require('pg');
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+let pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const app = express();
 app.use(express.json({ limit: '1mb' }));
 
@@ -262,5 +262,17 @@ app.get('/api/leaderboard', async (req, res) => {
 // --- Static app ---
 app.use(express.static(path.join(__dirname, 'Cheikh7')));
 
-const port = process.env.PORT || 5000;
-app.listen(port, '0.0.0.0', () => console.log(`Diop Yaba Academy server on ${port}`));
+if (require.main === module) {
+  const port = process.env.PORT || 5000;
+  app.listen(port, '0.0.0.0', () => console.log(`Diop Yaba Academy server on ${port}`));
+}
+
+module.exports = {
+  app,
+  EMPTY_STATE,
+  normalizeState,
+  mergeStates,
+  setPoolForTests(testPool) {
+    pool = testPool;
+  }
+};

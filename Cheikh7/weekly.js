@@ -89,11 +89,11 @@ function weeklyDoneKey(week, subject) {
   return 'wk' + currentGrade + '-' + week + '-' + subject;
 }
 
-const WEEKLY_MAX_ATTEMPTS = 3;
+const WEEKLY_MAX_ATTEMPTS = QuizRules.MAX_ATTEMPTS;
 
 function weeklyQuizExhausted(key) {
   const arr = (STATE.quizAttempts && STATE.quizAttempts[key]) || [];
-  return arr.length >= WEEKLY_MAX_ATTEMPTS || arr.some(p => p >= 100);
+  return QuizRules.isExhausted(arr);
 }
 
 function renderWeekly() {
@@ -143,7 +143,7 @@ function renderWeekly() {
     if (exhausted) {
       // Locked/completed state on load: show composite, no retry.
       const composite = (score !== undefined) ? score
-        : Math.round(attemptsArr.reduce((a, b) => a + b, 0) / Math.max(attemptsArr.length, 1));
+        : QuizRules.compositeScore(attemptsArr);
       quizInnerHtml = `<strong>Quick Check</strong><div class="feedback" id="wkfb-${d.s}" style="color:#22c55e">Final score: ${composite}% (composite of ${attemptsArr.length} attempt${attemptsArr.length === 1 ? '' : 's'})</div>`;
     } else {
       let qcHtml = '';
@@ -274,7 +274,7 @@ function weeklyCheck(card) {
 
   if (typeof logEvent === 'function') logEvent('quiz_attempt', { quiz: key, attempt: attemptNo, score: pct }, 0);
 
-  const finished = attempts.length >= WEEKLY_MAX_ATTEMPTS || attempts.some(p => p >= 100);
+  const finished = QuizRules.isExhausted(attempts);
 
   if (!finished) {
     if (fb) fb.textContent = `You got ${correct}/${total} (${pct}%).`;
@@ -288,17 +288,17 @@ function weeklyCheck(card) {
   }
 
   // Final: composite score
-  const composite = Math.round(attempts.reduce((a, b) => a + b, 0) / attempts.length);
+  const composite = QuizRules.compositeScore(attempts);
   const prev = STATE.quizScores[key];
   STATE.quizScores[key] = composite;
-  let xpAwarded = false;
-  if (composite >= 100 && !(prev >= 100)) {
-    STATE.xp = (STATE.xp || 0) + 10;
-    xpAwarded = true;
+  const xpBonus = QuizRules.xpAwardFor(composite, prev >= 100, 100, 10);
+  if (xpBonus) {
+    STATE.xp = (STATE.xp || 0) + xpBonus;
   }
+  const xpAwarded = xpBonus > 0;
   if (fb) fb.textContent = `Final score: ${composite}% (composite of ${attempts.length} attempts).${xpAwarded ? ' +10 XP' : ''}`;
   if (typeof save === 'function') save();
-  if (typeof logEvent === 'function') logEvent('weekly_quiz_graded', { week, subject, score: composite }, xpAwarded ? 10 : 0);
+  if (typeof logEvent === 'function') logEvent('weekly_quiz_graded', { week, subject, score: composite }, xpBonus);
   renderWeekly();
 }
 
@@ -309,7 +309,7 @@ function weeklyMarkDone(card) {
   const key = weeklyDoneKey(week, subject);
   if (!STATE.weeklyDone) STATE.weeklyDone = {};
   const score = Number(STATE.quizScores && STATE.quizScores[key]);
-  if (!Number.isFinite(score) || score < 90) {
+  if (!QuizRules.isMastered(score, 90)) {
     const feedback = card.querySelector('.feedback');
     if (feedback) feedback.textContent = 'Finish the quick check with a final score of at least 90% before marking this day done.';
     return;

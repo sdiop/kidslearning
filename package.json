@@ -3,9 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "npm run test:unit && npm run test:api && npm run test:curriculum && npm run test:browser",
+    "test:unit": "node --test test/unit",
+    "test:api": "node --test test/api",
+    "test:curriculum": "node --test test/curriculum",
+    "test:browser": "playwright test"
   },
   "dependencies": {
+    "@playwright/test": "^1.63.0",
     "express": "^4.19.0",
     "pg": "^8.11.0"
   }
