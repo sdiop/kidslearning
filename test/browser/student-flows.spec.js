@@ -13,6 +13,20 @@ async function stubApi(page) {
   });
 }
 
+async function downloadProgressReport(page) {
+  await page.getByRole('button', { name: 'Open progress report' }).click();
+  const downloadPromise = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Download Progress Report' }).click();
+  const download = await downloadPromise;
+  const stream = await download.createReadStream();
+  const chunks = [];
+  for await (const chunk of stream) chunks.push(chunk);
+  return {
+    filename: download.suggestedFilename(),
+    text: Buffer.concat(chunks).toString('utf8')
+  };
+}
+
 test.beforeEach(async ({ page }) => {
   await stubApi(page);
   await page.goto('/');
@@ -36,6 +50,73 @@ test('grade switching, accordions, and progress sheet work', async ({ page }, te
   await expect(page.getByRole('heading', { name: 'Progress Report' })).toBeVisible();
   await page.getByRole('button', { name: 'Close progress report' }).click();
   await expect(page.locator('#progressTracker')).toBeHidden();
+});
+
+test('downloaded progress reports keep each grade results isolated', async ({ page }, testInfo) => {
+  await page.evaluate(() => {
+    localStorage.setItem('questAcademyState', JSON.stringify({
+      xp: 75,
+      done: { 'ela-0': true, 'math-1': true },
+      last: '',
+      streak: 3,
+      quizScores: { 'ela-0': 92, 'math-1': 88 },
+      quizBonuses: {},
+      quizAttempts: {}
+    }));
+    localStorage.setItem('grade5QuestState', JSON.stringify({
+      xp: 40,
+      done: { 'math-0': true },
+      last: '',
+      streak: 1,
+      quizScores: { 'math-0': 100 },
+      quizBonuses: {},
+      quizAttempts: {}
+    }));
+  });
+  await page.reload();
+
+  const grade7Total = await page.evaluate(() =>
+    COURSE_DATA.reduce((total, module) => total + module.quests.length, 0)
+  );
+  const grade7 = await downloadProgressReport(page);
+  expect(grade7.filename).toBe('grade7_quest_progress_report.txt');
+  expect(grade7.text).toContain('Rising 7th Grade Diop Yaba Academy - Progress Report');
+  expect(grade7.text).toContain('XP: 75');
+  expect(grade7.text).toContain(`Quests Done: 2/${grade7Total}`);
+  expect(grade7.text).toContain('[DONE] Figurative Language Anime Detective | Quiz: 92%');
+  expect(grade7.text).toContain('[DONE] Ratio Ramen Shop | Quiz: 88%');
+  expect(grade7.text).not.toContain('XP: 40');
+
+  await page.getByRole('button', { name: 'Close progress report' }).click();
+  if (testInfo.project.name === 'mobile') {
+    await page.getByLabel('Choose grade').selectOption('5');
+  } else {
+    await page.getByRole('button', { name: '5th Grade — Seydina' }).click();
+  }
+  const grade5Total = await page.evaluate(() =>
+    GRADE5_DATA.reduce((total, module) => total + module.quests.length, 0)
+  );
+  const grade5 = await downloadProgressReport(page);
+  expect(grade5.filename).toBe('grade5_quest_progress_report.txt');
+  expect(grade5.text).toContain('5th Grade Diop Yaba Academy - Progress Report');
+  expect(grade5.text).toContain('XP: 40');
+  expect(grade5.text).toContain(`Quests Done: 1/${grade5Total}`);
+  expect(grade5.text).toContain('[DONE] Decimal Place Value Portal | Quiz: 100%');
+  expect(grade5.text).toContain('[ ] Fraction Forge');
+  expect(grade5.text).not.toContain('XP: 75');
+  expect(grade5.text).not.toContain('Figurative Language Anime Detective');
+
+  await page.getByRole('button', { name: 'Close progress report' }).click();
+  if (testInfo.project.name === 'mobile') {
+    await page.getByLabel('Choose grade').selectOption('7');
+  } else {
+    await page.getByRole('button', { name: '7th Grade — Cheikh' }).click();
+  }
+  const grade7Again = await downloadProgressReport(page);
+  expect(grade7Again.filename).toBe('grade7_quest_progress_report.txt');
+  expect(grade7Again.text).toContain('XP: 75');
+  expect(grade7Again.text).toContain('[DONE] Figurative Language Anime Detective | Quiz: 92%');
+  expect(grade7Again.text).not.toContain('Decimal Place Value Portal');
 });
 
 test('weekly quiz locks, retries, limits attempts, and blocks completion below 90%', async ({ page }) => {
