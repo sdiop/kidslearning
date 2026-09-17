@@ -91,7 +91,7 @@ for (const grade of ['5', '7']) {
       await expect(page.locator('.printActions')).toBeHidden();
       await expect(page.locator('.backLink')).toBeHidden();
       await expect(page.locator('.answerKeyPage')).toHaveCSS('break-before', 'page');
-      await expect(page.locator('.answerKeyPage')).toBeVisible();
+      await expect(page.locator('.answerKeyPage')).toBeHidden();
 
       const horizontalOverflow = await page.evaluate(
         () => document.documentElement.scrollWidth > document.documentElement.clientWidth
@@ -112,9 +112,9 @@ test('print choices include or exclude the answer key', async ({ page }) => {
   await expect(page.locator('.answerKeyPage')).toBeHidden();
   await page.evaluate(() => {
     window.print = () => {
-      window.lastPrintMode = document.body.classList.contains('print-worksheet-only')
-        ? 'worksheet-only'
-        : 'with-answers';
+      window.lastPrintMode = document.body.classList.contains('print-with-answers')
+        ? 'with-answers'
+        : 'worksheet-only';
     };
   });
 
@@ -140,13 +140,14 @@ test('answer key controls and both print choices remain usable on a mobile viewp
   await page.goto('/worksheet.html?grade=7&week=1');
 
   const printButtons = page.locator('.printActions .printBtn');
-  await expect(printButtons).toHaveCount(3);
+  await expect(printButtons).toHaveCount(4);
   await expect(printButtons.nth(0)).toBeVisible();
   await expect(printButtons.nth(1)).toBeVisible();
   await expect(printButtons.nth(2)).toBeVisible();
+  await expect(printButtons.nth(3)).toBeVisible();
 
   const answerKey = page.locator('.answerKeyPage');
-  const answerKeyToggle = page.getByRole('button', { name: 'Show answer key (parents/educators)' });
+  const answerKeyToggle = page.locator('.answerKeyToggle');
   await expect(answerKey).toBeHidden();
   await answerKeyToggle.click();
   await expect(answerKey).toBeVisible();
@@ -155,7 +156,7 @@ test('answer key controls and both print choices remain usable on a mobile viewp
 
   await page.evaluate(() => {
     window.print = () => {
-      window.printedWithAnswers = !document.body.classList.contains('print-worksheet-only');
+      window.printedWithAnswers = document.body.classList.contains('print-with-answers');
     };
   });
   await page.getByRole('button', { name: 'Print with answer key' }).click();
@@ -167,4 +168,101 @@ test('answer key controls and both print choices remain usable on a mobile viewp
     () => document.documentElement.scrollWidth > document.documentElement.clientWidth
   );
   expect(horizontalOverflow).toBe(false);
+});
+
+test('parent check blocks an incorrect desktop reveal and accepts the correct PIN', async ({ page }) => {
+  await page.goto('/worksheet.html?grade=5&week=1');
+
+  const parentCheck = page.getByRole('button', { name: 'Turn on parent check' });
+  page.once('dialog', dialog => dialog.accept('2468'));
+  await parentCheck.click();
+  await expect(page.getByRole('button', { name: 'Parent check: on' })).toHaveAttribute('aria-pressed', 'true');
+
+  const answerKeyToggle = page.locator('.answerKeyToggle');
+  const handleIncorrectPin = async dialog => {
+    if (dialog.type() === 'prompt') {
+      await dialog.accept('1111');
+    } else {
+      await dialog.accept();
+    }
+  };
+  page.on('dialog', handleIncorrectPin);
+  await answerKeyToggle.click();
+  page.off('dialog', handleIncorrectPin);
+  await expect(page.locator('.answerKeyPage')).toBeHidden();
+  await expect(answerKeyToggle).toHaveAttribute('aria-expanded', 'false');
+
+  page.once('dialog', dialog => dialog.accept('2468'));
+  await answerKeyToggle.click();
+  await expect(page.locator('.answerKeyPage')).toBeVisible();
+  await expect(answerKeyToggle).toHaveAttribute('aria-expanded', 'true');
+});
+
+test('parent check blocks and allows answer access on a mobile viewport', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 667 });
+  await page.goto('/worksheet.html?grade=7&week=1');
+
+  page.once('dialog', dialog => dialog.accept('1357'));
+  await page.getByRole('button', { name: 'Turn on parent check' }).click();
+
+  const answerKey = page.locator('.answerKeyPage');
+  const reveal = page.getByRole('button', { name: 'Show answer key (parents/educators)' });
+  page.once('dialog', dialog => dialog.dismiss());
+  await reveal.click();
+  await expect(answerKey).toBeHidden();
+
+  page.once('dialog', dialog => dialog.accept('1357'));
+  await reveal.click();
+  await expect(answerKey).toBeVisible();
+
+  await page.getByRole('button', { name: 'Hide answer key' }).click();
+  await expect(answerKey).toBeHidden();
+});
+
+test('native printing stays worksheet-only and protected printing requires the parent PIN', async ({ page }) => {
+  await page.goto('/worksheet.html?grade=5&week=1');
+  const answerKey = page.locator('.answerKeyPage');
+
+  page.once('dialog', dialog => dialog.accept('2468'));
+  await page.getByRole('button', { name: 'Turn on parent check' }).click();
+  await page.emulateMedia({ media: 'print' });
+  await expect(answerKey).toBeHidden();
+  await page.emulateMedia({ media: 'screen' });
+
+  await page.evaluate(() => {
+    window.print = () => {
+      window.printWasCalled = true;
+      window.printedWithAnswers = document.body.classList.contains('print-with-answers');
+    };
+  });
+
+  const printWithAnswers = page.getByRole('button', { name: 'Print with answer key' });
+  const handleIncorrectPin = async dialog => {
+    await dialog.accept(dialog.type() === 'prompt' ? '1111' : undefined);
+  };
+  page.on('dialog', handleIncorrectPin);
+  await printWithAnswers.click();
+  page.off('dialog', handleIncorrectPin);
+  await expect.poll(() => page.evaluate(() => window.printWasCalled || false)).toBe(false);
+
+  page.once('dialog', dialog => dialog.accept('2468'));
+  await printWithAnswers.click();
+  await expect.poll(() => page.evaluate(() => window.printedWithAnswers)).toBe(true);
+  await page.emulateMedia({ media: 'print' });
+  await expect(answerKey).toBeVisible();
+});
+
+test('turning on the parent check immediately hides a visible answer key', async ({ page }) => {
+  await page.goto('/worksheet.html?grade=7&week=1');
+  const answerKey = page.locator('.answerKeyPage');
+  const answerKeyToggle = page.locator('.answerKeyToggle');
+
+  await answerKeyToggle.click();
+  await expect(answerKey).toBeVisible();
+
+  page.once('dialog', dialog => dialog.accept('1357'));
+  await page.getByRole('button', { name: 'Turn on parent check' }).click();
+  await expect(answerKey).toBeHidden();
+  await expect(answerKeyToggle).toHaveAttribute('aria-expanded', 'false');
+  await expect(answerKeyToggle).toHaveAccessibleName('Show answer key (parents/educators)');
 });

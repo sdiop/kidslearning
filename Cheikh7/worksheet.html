@@ -34,20 +34,21 @@
   .printActions { position: fixed; right: 20px; bottom: 20px; display: flex; gap: 10px; z-index: 999; }
   .printBtn { padding: 14px 18px; font-size: 15px; font-weight: bold; background: #111; color: #fff; border: 1px solid #111; border-radius: 8px; cursor: pointer; box-shadow: 0 6px 18px rgba(0,0,0,.3); }
   .printBtn.secondary { background: #fff; color: #111; }
+  .parentCheckToggle[aria-pressed="true"] { border-width: 2px; }
   .backLink { position: fixed; left: 20px; bottom: 20px; font-size: 14px; color: #333; text-decoration: none; border: 1px solid #999; border-radius: 8px; padding: 10px 16px; background: #fff; z-index: 999; }
   .missionNote { font-style: italic; font-size: 13px; color: #444; margin: 2px 0 10px; }
   .err { color: #900; font-size: 16px; }
   @media (max-width: 720px) {
     .sheet { padding: 24px 20px 150px; }
     .printActions { left: 12px; right: 12px; bottom: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-    .answerKeyToggle { grid-column: 1 / -1; }
+    .answerKeyToggle, .parentCheckToggle { grid-column: 1 / -1; }
     .printBtn { padding: 12px 8px; font-size: 13px; }
     .backLink { position: static; display: block; width: fit-content; margin: 0 20px 20px; }
   }
   @media print {
     .printActions, .backLink { display: none !important; }
-    body.print-worksheet-only .answerKeyPage { display: none !important; }
-    body:not(.print-worksheet-only) .answerKeyPage { display: block !important; }
+    .answerKeyPage { display: none !important; }
+    body.print-with-answers .answerKeyPage { display: block !important; }
     .sheet { padding: 0; max-width: none; }
     body { font-size: 12pt; }
   }
@@ -58,6 +59,7 @@
 <a class="backLink" href="index.html">← Back to Diop Yaba Academy</a>
 <div class="printActions" aria-label="Worksheet controls">
   <button class="printBtn secondary answerKeyToggle" type="button" aria-controls="answer-key" aria-expanded="false">Show answer key (parents/educators)</button>
+  <button class="printBtn secondary parentCheckToggle" type="button" aria-pressed="false">Turn on parent check</button>
   <button class="printBtn" type="button" data-print-mode="worksheet-only">🖨️ Print worksheet only</button>
   <button class="printBtn secondary" type="button" data-print-mode="with-answers">Print with answer key</button>
 </div>
@@ -146,18 +148,93 @@
   document.title = 'Worksheet — ' + gradeLabel + ' Week ' + unit.week;
 
   var answerKeyToggle = document.querySelector('.answerKeyToggle');
+  var parentCheckToggle = document.querySelector('.parentCheckToggle');
   var answerKey = document.getElementById('answer-key');
-  answerKeyToggle.addEventListener('click', function () {
-    var isVisible = document.body.classList.toggle('answer-key-visible');
+  var PARENT_PIN_KEY = 'diop-yaba-answer-key-parent-pin';
+
+  function getParentPin() {
+    try {
+      return window.localStorage.getItem(PARENT_PIN_KEY) || '';
+    } catch (error) {
+      return '';
+    }
+  }
+
+  function setParentPin(pin) {
+    try {
+      if (pin) {
+        window.localStorage.setItem(PARENT_PIN_KEY, pin);
+      } else {
+        window.localStorage.removeItem(PARENT_PIN_KEY);
+      }
+      return true;
+    } catch (error) {
+      window.alert('This browser could not save the parent check setting.');
+      return false;
+    }
+  }
+
+  function updateParentCheckControl() {
+    var isEnabled = Boolean(getParentPin());
+    parentCheckToggle.setAttribute('aria-pressed', String(isEnabled));
+    parentCheckToggle.textContent = isEnabled
+      ? 'Parent check: on'
+      : 'Turn on parent check';
+  }
+
+  function parentCheckPasses() {
+    var savedPin = getParentPin();
+    if (!savedPin) return true;
+    var enteredPin = window.prompt('Parent check: enter the 4-digit PIN to access answers.');
+    if (enteredPin === savedPin) return true;
+    if (enteredPin !== null) {
+      window.alert('That PIN did not match. The answers will stay hidden.');
+    }
+    return false;
+  }
+
+  function setAnswerKeyVisibility(isVisible) {
+    document.body.classList.toggle('answer-key-visible', isVisible);
     answerKeyToggle.setAttribute('aria-expanded', String(isVisible));
     answerKeyToggle.textContent = isVisible
       ? 'Hide answer key'
       : 'Show answer key (parents/educators)';
     answerKey.setAttribute('aria-hidden', String(!isVisible));
+  }
+
+  answerKeyToggle.addEventListener('click', function () {
+    var isCurrentlyVisible = document.body.classList.contains('answer-key-visible');
+    if (!isCurrentlyVisible && !parentCheckPasses()) return;
+    setAnswerKeyVisibility(!isCurrentlyVisible);
+  });
+
+  parentCheckToggle.addEventListener('click', function () {
+    var savedPin = getParentPin();
+    if (savedPin) {
+      var enteredPin = window.prompt('Enter the current 4-digit PIN to turn off the parent check.');
+      if (enteredPin !== savedPin) {
+        if (enteredPin !== null) window.alert('That PIN did not match. The parent check is still on.');
+        return;
+      }
+      if (setParentPin('')) updateParentCheckControl();
+      return;
+    }
+
+    var newPin = window.prompt('Choose a 4-digit PIN for parents and educators.');
+    if (newPin === null) return;
+    if (!/^\d{4}$/.test(newPin)) {
+      window.alert('Please enter exactly 4 digits.');
+      return;
+    }
+    if (setParentPin(newPin)) {
+      setAnswerKeyVisibility(false);
+      updateParentCheckControl();
+    }
   });
 
   function printWorksheet(mode) {
-    document.body.classList.toggle('print-worksheet-only', mode === 'worksheet-only');
+    if (mode === 'with-answers' && !parentCheckPasses()) return;
+    document.body.classList.toggle('print-with-answers', mode === 'with-answers');
     window.print();
   }
 
@@ -168,8 +245,10 @@
   });
 
   window.addEventListener('afterprint', function () {
-    document.body.classList.remove('print-worksheet-only');
+    document.body.classList.remove('print-with-answers');
   });
+
+  updateParentCheckControl();
 })();
 </script>
 </body>
