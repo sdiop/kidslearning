@@ -24,7 +24,8 @@
   ol.problems li { margin: 0 0 16px; }
   ol.problems .qtext { display: block; margin-bottom: 8px; }
   .answerLine { display: block; border-bottom: 1px solid #111; height: 1.4em; width: 100%; }
-  .answerKeyPage { break-before: page; page-break-before: always; padding-top: 20px; }
+  .answerKeyPage { display: none; break-before: page; page-break-before: always; padding-top: 20px; }
+  body.answer-key-visible .answerKeyPage { display: block; }
   .answerKeyPage h1 { font-size: 24px; border-bottom: 3px solid #111; padding-bottom: 8px; }
   .answerKeyPage .subject h2 { border-bottom: 1px solid #ccc; }
   ol.keyList { margin: 0; padding-left: 26px; }
@@ -39,12 +40,14 @@
   @media (max-width: 720px) {
     .sheet { padding: 24px 20px 150px; }
     .printActions { left: 12px; right: 12px; bottom: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .answerKeyToggle { grid-column: 1 / -1; }
     .printBtn { padding: 12px 8px; font-size: 13px; }
     .backLink { position: static; display: block; width: fit-content; margin: 0 20px 20px; }
   }
   @media print {
     .printActions, .backLink { display: none !important; }
     body.print-worksheet-only .answerKeyPage { display: none !important; }
+    body:not(.print-worksheet-only) .answerKeyPage { display: block !important; }
     .sheet { padding: 0; max-width: none; }
     body { font-size: 12pt; }
   }
@@ -53,7 +56,8 @@
 <body>
 <div class="sheet" id="sheet"></div>
 <a class="backLink" href="index.html">← Back to Diop Yaba Academy</a>
-<div class="printActions" aria-label="Print options">
+<div class="printActions" aria-label="Worksheet controls">
+  <button class="printBtn secondary answerKeyToggle" type="button" aria-controls="answer-key" aria-expanded="false">Show answer key (parents/educators)</button>
   <button class="printBtn" type="button" data-print-mode="worksheet-only">🖨️ Print worksheet only</button>
   <button class="printBtn secondary" type="button" data-print-mode="with-answers">Print with answer key</button>
 </div>
@@ -124,7 +128,7 @@
   });
 
   // Answer key page
-  html += '<div class="answerKeyPage">' +
+  html += '<div class="answerKeyPage" id="answer-key" aria-hidden="true">' +
     '<h1>Answer Key — ' + gradeLabel + ' Week ' + unit.week + '</h1>' +
     '<p class="missionNote">For parents/educators. Answers are sample responses for open-ended items.</p>';
   subjects.forEach(function (subj) {
@@ -140,6 +144,17 @@
 
   sheet.innerHTML = html;
   document.title = 'Worksheet — ' + gradeLabel + ' Week ' + unit.week;
+
+  var answerKeyToggle = document.querySelector('.answerKeyToggle');
+  var answerKey = document.getElementById('answer-key');
+  answerKeyToggle.addEventListener('click', function () {
+    var isVisible = document.body.classList.toggle('answer-key-visible');
+    answerKeyToggle.setAttribute('aria-expanded', String(isVisible));
+    answerKeyToggle.textContent = isVisible
+      ? 'Hide answer key'
+      : 'Show answer key (parents/educators)';
+    answerKey.setAttribute('aria-hidden', String(!isVisible));
+  });
 
   function printWorksheet(mode) {
     document.body.classList.toggle('print-worksheet-only', mode === 'worksheet-only');

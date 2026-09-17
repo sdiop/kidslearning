@@ -46,6 +46,15 @@ for (const grade of ['5', '7']) {
       const subjects = orderedSubjects(unit);
       await expect(page.locator('#sheet > .subject')).toHaveCount(subjects.length);
       await expect(page.locator('.answerKeyPage .subject')).toHaveCount(subjects.length);
+      await expect(page.locator('.answerKeyPage')).toBeHidden();
+
+      const answerKeyToggle = page.locator('.answerKeyToggle');
+      await expect(answerKeyToggle).toHaveAccessibleName('Show answer key (parents/educators)');
+      await expect(answerKeyToggle).toHaveAttribute('aria-expanded', 'false');
+      await answerKeyToggle.click();
+      await expect(answerKeyToggle).toHaveAccessibleName('Hide answer key');
+      await expect(answerKeyToggle).toHaveAttribute('aria-expanded', 'true');
+      await expect(page.locator('.answerKeyPage')).toBeVisible();
 
       for (let subjectIndex = 0; subjectIndex < subjects.length; subjectIndex++) {
         const subject = subjects[subjectIndex];
@@ -100,6 +109,7 @@ test('invalid worksheet selections fall back to grade 7 week 1', async ({ page }
 
 test('print choices include or exclude the answer key', async ({ page }) => {
   await page.goto('/worksheet.html?grade=5&week=1');
+  await expect(page.locator('.answerKeyPage')).toBeHidden();
   await page.evaluate(() => {
     window.print = () => {
       window.lastPrintMode = document.body.classList.contains('print-worksheet-only')
@@ -125,14 +135,33 @@ test('print choices include or exclude the answer key', async ({ page }) => {
   await expect(page.locator('.answerKeyPage')).toBeVisible();
 });
 
-test('both print choices remain usable on a mobile viewport', async ({ page }) => {
+test('answer key controls and both print choices remain usable on a mobile viewport', async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 667 });
   await page.goto('/worksheet.html?grade=7&week=1');
 
   const printButtons = page.locator('.printActions .printBtn');
-  await expect(printButtons).toHaveCount(2);
+  await expect(printButtons).toHaveCount(3);
   await expect(printButtons.nth(0)).toBeVisible();
   await expect(printButtons.nth(1)).toBeVisible();
+  await expect(printButtons.nth(2)).toBeVisible();
+
+  const answerKey = page.locator('.answerKeyPage');
+  const answerKeyToggle = page.getByRole('button', { name: 'Show answer key (parents/educators)' });
+  await expect(answerKey).toBeHidden();
+  await answerKeyToggle.click();
+  await expect(answerKey).toBeVisible();
+  await page.getByRole('button', { name: 'Hide answer key' }).click();
+  await expect(answerKey).toBeHidden();
+
+  await page.evaluate(() => {
+    window.print = () => {
+      window.printedWithAnswers = !document.body.classList.contains('print-worksheet-only');
+    };
+  });
+  await page.getByRole('button', { name: 'Print with answer key' }).click();
+  await expect.poll(() => page.evaluate(() => window.printedWithAnswers)).toBe(true);
+  await page.emulateMedia({ media: 'print' });
+  await expect(answerKey).toBeVisible();
 
   const horizontalOverflow = await page.evaluate(
     () => document.documentElement.scrollWidth > document.documentElement.clientWidth
