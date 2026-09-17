@@ -572,3 +572,87 @@ updateStats();
 renderTimer();
 buildCourse(getActiveData());
 loadStateFromServer();
+
+// --- Accessible first-visit guide ------------------------------------------------
+const GUIDE_DISMISSAL_KEY = 'diopYabaUserGuideDismissed';
+let guideReturnFocus = null;
+
+function guideStorageHasDismissed() {
+  try { return window.localStorage.getItem(GUIDE_DISMISSAL_KEY) === 'true'; }
+  catch (error) { return false; }
+}
+
+function rememberGuideDismissal() {
+  try { window.localStorage.setItem(GUIDE_DISMISSAL_KEY, 'true'); }
+  catch (error) { /* Private browsing or blocked storage must not block the app. */ }
+}
+
+function openUserGuide() {
+  const dialog = document.getElementById('userGuideDialog');
+  if (!dialog) return;
+  guideReturnFocus = document.activeElement;
+  if (typeof dialog.showModal === 'function') dialog.showModal();
+  else dialog.setAttribute('open', '');
+  const close = dialog.querySelector('.guideClose');
+  if (close) close.focus();
+}
+
+function closeUserGuide() {
+  const dialog = document.getElementById('userGuideDialog');
+  if (!dialog) return;
+  rememberGuideDismissal();
+  const video = document.getElementById('userGuideVideo');
+  if (video) video.pause();
+  if (dialog.open && typeof dialog.close === 'function') dialog.close();
+  else dialog.removeAttribute('open');
+  if (guideReturnFocus && typeof guideReturnFocus.focus === 'function') guideReturnFocus.focus();
+  guideReturnFocus = null;
+}
+
+function startExploring() {
+  rememberGuideDismissal();
+  closeUserGuide();
+}
+
+function watchUserGuide() {
+  rememberGuideDismissal();
+  const video = document.getElementById('userGuideVideo');
+  if (!video) return;
+  video.focus();
+  const playAttempt = video.play();
+  if (playAttempt && typeof playAttempt.catch === 'function') playAttempt.catch(() => showGuideFallback());
+}
+
+function showGuideFallback() {
+  const fallback = document.getElementById('guideFallback');
+  if (fallback) fallback.hidden = false;
+}
+
+function initUserGuide() {
+  const dialog = document.getElementById('userGuideDialog');
+  const video = document.getElementById('userGuideVideo');
+  if (!dialog) return;
+  if (video) video.addEventListener('error', showGuideFallback);
+  dialog.addEventListener('cancel', (event) => {
+    event.preventDefault();
+    closeUserGuide();
+  });
+  dialog.addEventListener('click', (event) => {
+    if (event.target === dialog) closeUserGuide();
+  });
+  dialog.querySelectorAll('[data-guide-time]').forEach((chapter) => {
+    chapter.addEventListener('click', () => {
+      const time = Number(chapter.dataset.guideTime);
+      if (!video) return;
+      video.currentTime = time;
+      video.focus();
+    });
+  });
+  if (!guideStorageHasDismissed()) openUserGuide();
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initUserGuide, { once: true });
+} else {
+  initUserGuide();
+}

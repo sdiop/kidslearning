@@ -23,10 +23,45 @@
     <option value="7">7th Grade — Cheikh</option>
   </select>
   <button class="progressMenuButton" type="button" aria-label="Open progress report" title="Progress report" onclick="showProgressSheet()">📈</button>
+   <button class="guideTrigger" type="button" onclick="openUserGuide()">How to use this app</button>
   <a class="parentLink" href="parent.html"><span class="linkFull">📊 Parent</span><span class="linkIcon">📊</span></a>
   <a class="parentLink" href="leaderboard.html"><span class="linkFull">🏆 Leaderboard</span><span class="linkIcon">🏆</span></a>
   <span id="syncStatus" class="syncStatus"></span>
 </div>
+<dialog id="userGuideDialog" class="userGuideDialog" aria-labelledby="userGuideTitle" aria-describedby="userGuideIntro">
+  <div class="guideDialogInner">
+    <button class="guideClose" type="button" aria-label="Close user guide" onclick="closeUserGuide()">×</button>
+    <p class="eyebrow">A quick tour</p>
+    <h2 id="userGuideTitle">Welcome to Diop Yaba Academy</h2>
+    <p id="userGuideIntro">See how to choose a quest, earn XP, and find help whenever you need it.</p>
+    <div class="guidePlayer" id="guidePlayerWrap">
+      <video id="userGuideVideo" controls preload="metadata" poster="/assets/user-guide-poster.jpg" playsinline>
+        <source src="/assets/user-guide.mp4" type="video/mp4" />
+        <track kind="captions" src="/assets/user-guide.vtt" srclang="en" label="English captions" default />
+        Your browser cannot play this video.
+      </video>
+      <div id="guideFallback" class="guideFallback" hidden>
+        <strong>The video is not available right now.</strong>
+        <p>Use the chapter guide below to start exploring. The app still works without the video.</p>
+      </div>
+    </div>
+    <nav class="guideChapters" aria-label="Guide chapters">
+      <h3>Jump to a chapter</h3>
+      <button type="button" data-guide-time="0">Choose your grade</button>
+      <button type="button" data-guide-time="14.548">Start a quest</button>
+      <button type="button" data-guide-time="55.371">Use quizzes and earn XP</button>
+      <button type="button" data-guide-time="88.161">Progress and focus timer</button>
+      <button type="button" data-guide-time="122.080">Weekly work and worksheets</button>
+      <button type="button" data-guide-time="167.016">Parent views and leaderboard</button>
+      <button type="button" data-guide-time="191.509">Offline use and installation</button>
+      <button type="button" data-guide-time="212.180">Reopen this guide</button>
+    </nav>
+    <div class="guideActions">
+      <button type="button" onclick="watchUserGuide()">Watch the guide</button>
+      <button type="button" class="secondary" onclick="startExploring()">Start exploring</button>
+    </div>
+  </div>
+</dialog>
 <header class="hero" id="hero7">
   <div class="heroText">
     <p class="eyebrow">Rising 7th Grade Summer Prep</p>

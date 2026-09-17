@@ -1,4 +1,4 @@
-const CACHE_NAME = 'diop-yaba-academy-v1';
+const CACHE_NAME = 'diop-yaba-academy-v2';
 const APP_SHELL = [
   '/',
   '/index.html',
@@ -21,6 +21,8 @@ const APP_SHELL = [
   '/assets/anime_world_explorer.png',
   '/assets/icon-192.png',
   '/assets/icon-512.png',
+  '/assets/user-guide-poster.jpg',
+  '/assets/user-guide.vtt',
   '/manifest.json'
 ];
 
@@ -52,6 +54,21 @@ self.addEventListener('fetch', event => {
     requestUrl.origin !== self.location.origin ||
     requestUrl.pathname.startsWith('/api/')
   ) {
+    return;
+  }
+
+  // The guide is intentionally runtime-cached only after a successful request.
+  // Keeping the MP4 out of APP_SHELL makes first install light and reliable.
+  if (requestUrl.pathname === '/assets/user-guide.mp4') {
+    event.respondWith(
+      caches.match(event.request).then(cached => cached || fetch(event.request).then(response => {
+        if (response && response.ok) {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy));
+        }
+        return response;
+      }))
+    );
     return;
   }
 

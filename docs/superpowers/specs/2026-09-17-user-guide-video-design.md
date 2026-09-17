@@ -9,6 +9,7 @@ Create a kid-friendly user guide video that demonstrates the real app, covers ev
 - Primary audience: children using the grade 5 and rising grade 7 learning experiences.
 - Secondary audience: parents helping with setup, progress, worksheets, and answer keys.
 - Narration: a friendly synthetic child-style British voice with a Cockney accent. It must not imitate or claim to be a real child.
+- Pronunciation: say **Diop** as “Jowb” and **Yaba** as “yaaba” in narration; captions and on-screen product text retain “Diop Yaba”.
 - Language: short sentences, concrete instructions, encouraging tone, and no unexplained technical terms.
 
 ## Video format

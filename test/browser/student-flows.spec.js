@@ -30,6 +30,7 @@ async function downloadProgressReport(page) {
 test.beforeEach(async ({ page }) => {
   await stubApi(page);
   await page.goto('/');
+  await page.getByRole('button', { name: 'Start exploring' }).click();
 });
 
 test('grade switching, accordions, and progress sheet work', async ({ page }, testInfo) => {

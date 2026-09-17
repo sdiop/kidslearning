@@ -214,6 +214,28 @@ main{max-width:1280px;margin:auto}
   .timer span{font-size:34px}
 }
 
+/* ===== First-visit user guide ===== */
+.guideTrigger{margin-left:10px;background:#fef08a;color:#241b05;box-shadow:none;border:1px solid #eab308;min-height:44px}
+.guideTrigger:hover{background:#fde68a}
+.userGuideDialog{width:min(900px,calc(100% - 24px));max-height:calc(100dvh - 24px);padding:0;border:1px solid #526b99;border-radius:28px;background:#101a37;color:var(--text);box-shadow:0 30px 100px #000c}
+.userGuideDialog::backdrop{background:#020617cc;backdrop-filter:blur(4px)}
+.guideDialogInner{position:relative;padding:clamp(20px,4vw,38px);overflow:auto;max-height:calc(100dvh - 24px)}
+.guideClose{position:absolute;right:18px;top:16px;padding:6px 14px;background:#263150;color:#eaf2ff;border:1px solid #51617f;box-shadow:none;font-size:25px;line-height:1}
+.userGuideDialog h2{font-size:clamp(28px,5vw,48px);margin:4px 48px 8px 0}
+.userGuideDialog .eyebrow{margin:0}
+.guidePlayer{margin:22px 0 16px;background:#050816;border-radius:20px;overflow:hidden;border:1px solid #42547a}
+.guidePlayer video{display:block;width:100%;aspect-ratio:16/9;max-height:58vh;background:#050816}
+.guideFallback{padding:18px;color:#fef08a;border-top:1px solid #42547a}
+.guideFallback p{color:#dbeafe;margin-bottom:0}
+.guideChapters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0 22px}
+.guideChapters h3{flex-basis:100%;font-size:16px;margin:0 0 2px;color:#bae6fd}
+.guideChapters button{padding:9px 12px;background:#263150;color:#eaf2ff;border:1px solid #51617f;box-shadow:none}
+.guideChapters button:hover,.guideChapters button:focus-visible{border-color:#fef08a;color:#fef08a}
+.guideActions{display:flex;gap:12px;flex-wrap:wrap}
+.guideActions button{min-height:48px}
+@media(max-width:650px){.guideTrigger{margin-left:0;width:100%}.userGuideDialog{border-radius:22px}.guideDialogInner{padding:22px 16px}.guideActions button{width:100%}.guideChapters button{flex:1 1 calc(50% - 8px);min-height:44px}}
+@media(prefers-reduced-motion:reduce){.hero img,.portal{animation:none}.guideTrigger:hover,button:hover{transform:none}}
+
 /* ===== Progress sheet, mobile grade menu, and collapsible guidance ===== */
 .gradeSelectMobile{display:none}
 .progressMenuButton{display:inline-grid;place-items:center;padding:8px 12px;min-width:44px;min-height:44px;background:#263150;color:#eaf2ff;border:1px solid #51617f;box-shadow:none}
