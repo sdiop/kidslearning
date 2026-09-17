@@ -1,0 +1,1 @@
+After pages load, saved lessons, quizzes, progress, worksheets, and the timer remain useful offline; outside links need internet.

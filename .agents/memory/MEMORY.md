@@ -1,1 +1,2 @@
 - [Curriculum question quality](curriculum-question-quality.md) — use explicit lesson problems; fact-restatement templates do not provide valid practice or assessment.
+- [User-guide synchronization](user-guide-synchronization.md) — build narration and visuals per chapter, then derive captions and chapter links from measured media durations.

@@ -35,5 +35,5 @@ test('the permanent guide control reopens the player and Escape closes it', asyn
 test('chapter controls seek the real guide video', async ({ page }) => {
   const video = page.locator('#userGuideVideo');
   await page.getByRole('button', { name: 'Offline use and installation' }).click();
-  await expect.poll(() => video.evaluate(element => element.currentTime)).toBeCloseTo(191.509, 1);
+  await expect.poll(() => video.evaluate(element => element.currentTime)).toBeCloseTo(122.324, 1);
 });

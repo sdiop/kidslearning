@@ -39,7 +39,7 @@ test('guide supports Escape, focus restoration, chapter seeking, and media fallb
   assert.match(app, /video\.currentTime = time/);
   assert.match(app, /showGuideFallback/);
   assert.match(html, /id="guideFallback"[^>]+hidden/);
-  assert.match(html, /data-guide-time="212\.180">Reopen this guide/);
+  assert.match(html, /data-guide-time="139\.845">Reopen this guide/);
 });
 
 test('service worker precaches lightweight guide assets but runtime-caches the MP4', () => {
