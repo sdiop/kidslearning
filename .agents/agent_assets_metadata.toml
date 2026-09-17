@@ -1,0 +1,16 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "J0_8u04BlXvjYmPIV2BJQ"
+uri = "file://Cheikh7/assets/user-guide.mp4"
+type = "video"
+title = "Diop Yaba Academy User Guide"
+description = "A 3 minute 43 second, 720p narrated walkthrough covering the app's student and parent features, with the requested name pronunciations."
+logical_id = "cc526467-beac-4f2f-a19a-86c99644745e"
+content_hash = "sha256:4e8f2f1863a5e716f3d653b1f98e57801948839afa71f1aea0635fb7775d4a6f"
+size = 6082666
+mtime_ms = 1789623004827
+storage_uri = "gcs://replit-rams-assets-riker/rams/assets/repl:5a374c22-25df-4e59-be5c-939cdceb7a7a/cc526467-beac-4f2f-a19a-86c99644745e/f3005e30-4bc7-4b3c-a15a-d8da61a4a9e0"
+storage_version_token = "1789623338258933"
+content_type = "video/mp4"
