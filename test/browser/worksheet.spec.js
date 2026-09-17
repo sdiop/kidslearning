@@ -79,7 +79,7 @@ for (const grade of ['5', '7']) {
       }
 
       await page.emulateMedia({ media: 'print' });
-      await expect(page.locator('.printBtn')).toBeHidden();
+      await expect(page.locator('.printActions')).toBeHidden();
       await expect(page.locator('.backLink')).toBeHidden();
       await expect(page.locator('.answerKeyPage')).toHaveCSS('break-before', 'page');
       await expect(page.locator('.answerKeyPage')).toBeVisible();
@@ -96,4 +96,46 @@ test('invalid worksheet selections fall back to grade 7 week 1', async ({ page }
   await page.goto('/worksheet.html?grade=99&week=99');
   await expect(page).toHaveTitle('Worksheet — 7th Grade Week 1');
   await expect(page.locator('.wsHeader .wk')).toContainText('7th Grade · Week 1');
+});
+
+test('print choices include or exclude the answer key', async ({ page }) => {
+  await page.goto('/worksheet.html?grade=5&week=1');
+  await page.evaluate(() => {
+    window.print = () => {
+      window.lastPrintMode = document.body.classList.contains('print-worksheet-only')
+        ? 'worksheet-only'
+        : 'with-answers';
+    };
+  });
+
+  const worksheetOnly = page.getByRole('button', { name: 'Print worksheet only' });
+  const withAnswers = page.getByRole('button', { name: 'Print with answer key' });
+  await expect(worksheetOnly).toBeVisible();
+  await expect(withAnswers).toBeVisible();
+
+  await worksheetOnly.click();
+  await expect.poll(() => page.evaluate(() => window.lastPrintMode)).toBe('worksheet-only');
+  await page.emulateMedia({ media: 'print' });
+  await expect(page.locator('.answerKeyPage')).toBeHidden();
+
+  await page.emulateMedia({ media: 'screen' });
+  await withAnswers.click();
+  await expect.poll(() => page.evaluate(() => window.lastPrintMode)).toBe('with-answers');
+  await page.emulateMedia({ media: 'print' });
+  await expect(page.locator('.answerKeyPage')).toBeVisible();
+});
+
+test('both print choices remain usable on a mobile viewport', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 667 });
+  await page.goto('/worksheet.html?grade=7&week=1');
+
+  const printButtons = page.locator('.printActions .printBtn');
+  await expect(printButtons).toHaveCount(2);
+  await expect(printButtons.nth(0)).toBeVisible();
+  await expect(printButtons.nth(1)).toBeVisible();
+
+  const horizontalOverflow = await page.evaluate(
+    () => document.documentElement.scrollWidth > document.documentElement.clientWidth
+  );
+  expect(horizontalOverflow).toBe(false);
 });

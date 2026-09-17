@@ -30,12 +30,21 @@
   ol.keyList { margin: 0; padding-left: 26px; }
   ol.keyList li { margin: 0 0 6px; font-size: 14px; }
   ol.keyList .a { font-weight: bold; }
-  .printBtn { position: fixed; right: 20px; bottom: 20px; padding: 14px 22px; font-size: 16px; font-weight: bold; background: #111; color: #fff; border: 0; border-radius: 8px; cursor: pointer; box-shadow: 0 6px 18px rgba(0,0,0,.3); z-index: 999; }
+  .printActions { position: fixed; right: 20px; bottom: 20px; display: flex; gap: 10px; z-index: 999; }
+  .printBtn { padding: 14px 18px; font-size: 15px; font-weight: bold; background: #111; color: #fff; border: 1px solid #111; border-radius: 8px; cursor: pointer; box-shadow: 0 6px 18px rgba(0,0,0,.3); }
+  .printBtn.secondary { background: #fff; color: #111; }
   .backLink { position: fixed; left: 20px; bottom: 20px; font-size: 14px; color: #333; text-decoration: none; border: 1px solid #999; border-radius: 8px; padding: 10px 16px; background: #fff; z-index: 999; }
   .missionNote { font-style: italic; font-size: 13px; color: #444; margin: 2px 0 10px; }
   .err { color: #900; font-size: 16px; }
+  @media (max-width: 720px) {
+    .sheet { padding: 24px 20px 150px; }
+    .printActions { left: 12px; right: 12px; bottom: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .printBtn { padding: 12px 8px; font-size: 13px; }
+    .backLink { position: static; display: block; width: fit-content; margin: 0 20px 20px; }
+  }
   @media print {
-    .printBtn, .backLink { display: none !important; }
+    .printActions, .backLink { display: none !important; }
+    body.print-worksheet-only .answerKeyPage { display: none !important; }
     .sheet { padding: 0; max-width: none; }
     body { font-size: 12pt; }
   }
@@ -44,7 +53,10 @@
 <body>
 <div class="sheet" id="sheet"></div>
 <a class="backLink" href="index.html">← Back to Diop Yaba Academy</a>
-<button class="printBtn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+<div class="printActions" aria-label="Print options">
+  <button class="printBtn" type="button" data-print-mode="worksheet-only">🖨️ Print worksheet only</button>
+  <button class="printBtn secondary" type="button" data-print-mode="with-answers">Print with answer key</button>
+</div>
 
 <script src="data/weekly_grade5.js"></script>
 <script src="data/weekly_grade7.js"></script>
@@ -128,6 +140,21 @@
 
   sheet.innerHTML = html;
   document.title = 'Worksheet — ' + gradeLabel + ' Week ' + unit.week;
+
+  function printWorksheet(mode) {
+    document.body.classList.toggle('print-worksheet-only', mode === 'worksheet-only');
+    window.print();
+  }
+
+  document.querySelectorAll('[data-print-mode]').forEach(function (button) {
+    button.addEventListener('click', function () {
+      printWorksheet(button.getAttribute('data-print-mode'));
+    });
+  });
+
+  window.addEventListener('afterprint', function () {
+    document.body.classList.remove('print-worksheet-only');
+  });
 })();
 </script>
 </body>
