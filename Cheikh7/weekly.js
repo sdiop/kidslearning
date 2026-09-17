@@ -1,5 +1,5 @@
 // Weekly Homework — Ohio Standards
-// Renders an 8-week homework section for the active grade using WEEKLY_G5 / WEEKLY_G7.
+// Renders full-year homework for the active grade using WEEKLY_G5 / WEEKLY_G7.
 // Called after buildCourse(); uses globals currentGrade, STATE, save(), logEvent().
 
 const WEEKLY_DAYS = [
@@ -34,8 +34,9 @@ function weeklyShuffle(arr) {
 
 function getSelectedWeek() {
   const key = 'qaWeek' + currentGrade;
+  const validWeeks = weeklyData().map(unit => unit.week);
   let n = parseInt(localStorage.getItem(key) || '1', 10);
-  if (!Number.isFinite(n) || n < 1 || n > 8) n = 1;
+  if (!Number.isFinite(n) || !validWeeks.includes(n)) n = validWeeks[0] || 1;
   return n;
 }
 
@@ -111,12 +112,10 @@ function renderWeekly() {
 
   // Week selector dropdown (styled to match)
   let optionsHtml = '';
-  for (let i = 1; i <= 8; i++) {
-    const u = data.find(w => w.week === i);
-    if (!u) continue;
-    const doneCount = WEEKLY_DAYS.filter(d => STATE.weeklyDone[weeklyDoneKey(i, d.s)]).length;
-    optionsHtml += `<option value="${i}"${i === unit.week ? ' selected' : ''}>Week ${i}${doneCount === 4 ? ' ✓' : ''}</option>`;
-  }
+  data.forEach(u => {
+    const doneCount = WEEKLY_DAYS.filter(d => STATE.weeklyDone[weeklyDoneKey(u.week, d.s)]).length;
+    optionsHtml += `<option value="${u.week}"${u.week === unit.week ? ' selected' : ''}>Week ${u.week}${doneCount === 4 ? ' ✓' : ''}</option>`;
+  });
   const selectorHtml = `<div class="weekSelectRow"><label class="weekSelectLabel" for="weekSelect">Week</label><select id="weekSelect" class="weekSelect" onchange="onWeekSelectChange(this)">${optionsHtml}</select></div>`;
 
   // Subject tab bar (Mon Math / Tue ELA / Wed Science / Thu Social + All)
@@ -181,7 +180,7 @@ function renderWeekly() {
 
   box.innerHTML = `
     <div class="module weeklyModule">
-      <div class="moduleHead"><div><h2>📅 Weekly Homework — Ohio Standards</h2><p>Four days, four subjects. Each mission is a quick 20-minute sprint aligned to Ohio Learning Standards.</p></div><span>8 weeks</span></div>
+      <div class="moduleHead"><div><h2>📅 Weekly Homework — Ohio Standards</h2><p>Four days, four subjects. Each mission is a quick 20-minute sprint aligned to Ohio Learning Standards.</p></div><span>${data.length} weeks</span></div>
       <div class="weeklyBody">
         ${selectorHtml}
         <div class="weekTitleRow">

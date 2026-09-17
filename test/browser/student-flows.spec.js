@@ -53,6 +53,30 @@ test('grade switching, accordions, and progress sheet work', async ({ page }, te
   await expect(page.locator('#progressTracker')).toBeHidden();
 });
 
+test('weekly selector is data-driven and rejects a saved week that is invalid for the active grade', async ({ page }, testInfo) => {
+  const selector = page.getByLabel('Week', { exact: true });
+  await expect(selector.locator('option')).toHaveCount(36);
+  await expect(selector.locator('option').first()).toHaveText('Week 1');
+  await expect(selector.locator('option').last()).toHaveText('Week 36');
+
+  await selector.selectOption('36');
+  await expect(page.locator('.weekTitle')).toContainText('Week 36:');
+  await expect(page.locator('.printWeekBtn')).toHaveAttribute('href', 'worksheet.html?grade=7&week=36');
+
+  await page.evaluate(() => localStorage.setItem('qaWeek5', '99'));
+  if (testInfo.project.name === 'mobile') {
+    await page.getByLabel('Choose grade').selectOption('5');
+  } else {
+    await page.getByRole('button', { name: '5th Grade — Seydina' }).click();
+  }
+  await expect(selector.locator('option')).toHaveCount(36);
+  await expect(selector).toHaveValue('1');
+  await expect(page.locator('.weekTitle')).toContainText('Week 1:');
+
+  await selector.selectOption('36');
+  await expect(page.locator('.printWeekBtn')).toHaveAttribute('href', 'worksheet.html?grade=5&week=36');
+});
+
 test('downloaded progress reports keep each grade results isolated', async ({ page }, testInfo) => {
   await page.evaluate(() => {
     localStorage.setItem('questAcademyState', JSON.stringify({

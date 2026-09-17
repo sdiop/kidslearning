@@ -152,7 +152,7 @@ Each quest must provide:
 
 For each grade:
 
-- Eight weeks of content.
+- Thirty-six weeks of school-year content.
 - Four days per week: Math, ELA, Science, and Social Studies.
 - One standard code, concept, mission, video, problem set, answer set, and quick-check per subject/day.
 - Printable weekly worksheet.
@@ -171,7 +171,7 @@ For each grade:
 | FR-07 | Quiz controls | Lock submitted answers and allow no more than three attempts. | Shipped |
 | FR-08 | Composite scores | Average recorded attempts and persist the final score. | Shipped |
 | FR-09 | Mastery gate | Require a weekly score of at least 90% before daily completion. | Shipped |
-| FR-10 | Weekly curriculum | Provide eight Ohio-aligned weeks for grades 5 and 7. | Shipped |
+| FR-10 | Weekly curriculum | Provide 36 Ohio-aligned weeks for grades 5 and 7. | Shipped |
 | FR-11 | Worksheets | Print a weekly worksheet and separate answer key. | Shipped |
 | FR-12 | Persistent state | Store normalized profile state in PostgreSQL and mirror it locally. | Shipped |
 | FR-13 | Progress events | Log quiz attempts, completions, and XP changes. | Shipped |
@@ -181,7 +181,7 @@ For each grade:
 | FR-17 | Authentication | Protect student and family data with signed-in accounts. | Planned |
 | FR-18 | Family authorization | Ensure families can access only their own profiles. | Planned |
 | FR-19 | PWA | Support installability and structured offline caching. | Planned |
-| FR-20 | Curriculum scale | Add additional grades, weeks, and question variants. | Planned |
+| FR-20 | Curriculum scale | Add additional grades and question variants beyond the 36-week grades 5 and 7 program. | Planned |
 | FR-21 | Educator tools | Add rosters, assignments, and educator reporting. | Later |
 
 ## 9. Architecture Requirements

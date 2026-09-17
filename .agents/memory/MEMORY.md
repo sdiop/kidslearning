@@ -1,0 +1,1 @@
+- [Curriculum question quality](curriculum-question-quality.md) — use explicit lesson problems; fact-restatement templates do not provide valid practice or assessment.

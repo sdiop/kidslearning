@@ -292,7 +292,7 @@ Weekly curriculum data is structured by:
 
 Curriculum content must pass structural validation:
 
-- Eight weeks per supported grade.
+- Thirty-six school-year weeks per supported grade.
 - Four required subjects per week.
 - Every question has an answer.
 - Every multiple-choice answer exists in its choice list.

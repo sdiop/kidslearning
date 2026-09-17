@@ -67,7 +67,7 @@ You can download a plain-text progress report. Reset progress clears XP, streaks
 The Focus Mode card is a twenty-minute sprint. Press Start when you are ready, and Reset to return to twenty minutes. Pick one quest, then take a movement break when the timer ends.
 
 ### 12 Weekly week and subject
-Weekly Homework has eight weeks. Choose a week, then use All or a subject tab to filter maths, ELA, science, or social studies.
+Weekly Homework has 36 school-year weeks. Choose a week, then use All or a subject tab to filter maths, ELA, science, or social studies.
 
 ### 13 Daily assignment
 Open a day card to read its mission. Use its Watch or Learn link if you like, complete the quick check, retry when the app offers it, and mark the day done after the required final score.

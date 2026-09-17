@@ -27,17 +27,17 @@ const WEEKLY_G7 = [
         ]
       },
       {
-        s: "science", concept: "Characteristics of Life", std: "Ohio 7.LS.1",
+        s: "science", concept: "Energy Flow in Ecosystems", std: "Ohio 7.LS.1",
         video: "https://flexbooks.ck12.org/cbook/ck-12-middle-school-life-science-2.0/section/1.8/primary/lesson/characteristics-of-life-ms-ls/",
-        sprint: "Score fire, a robot, and a mushroom against the 5 characteristics of life on a quick T-chart.",
-        problems: [["Name two characteristics of living things.", "made of cells; use energy; grow; respond; reproduce"], ["Is a virus made of cells?", "no"], ["Keeping a stable internal state is called ___", "homeostasis"], ["Smallest unit of life?", "cell"]],
+        sprint: "Trace energy and matter through a four-organism food web and explain what happens when one population changes.",
+        problems: [["Most ecosystem energy begins with the ___", "sun"], ["Plants are ___ that capture light energy", "producers"], ["Arrows in a food web show the transfer of ___", "energy and matter"], ["Decomposers return matter to the ___", "environment"]],
         qc: [
-          { q: "All living things are made of...", choices: ["cells", "bones", "water only", "metal"], a: "cells" },
-          { q: "Homeostasis means...", choices: ["stable internal state", "fast growth", "eating food", "sleeping"], a: "stable internal state" }
+          { q: "Energy enters most food webs through...", choices: ["producers", "decomposers", "predators", "soil"], a: "producers" },
+          { q: "Food-web arrows show...", choices: ["energy and matter transfer", "animal size", "water depth", "population age"], a: "energy and matter transfer" }
         ]
       },
       {
-        s: "social", concept: "Latitude & Longitude", std: "Ohio 7.GEO.1",
+        s: "social", concept: "Latitude & Longitude", std: "Ohio Social Studies 7.12",
         video: "https://education.nationalgeographic.org/resource/mapmaker-latitude-longitude/",
         sprint: "Find your city's coordinates, then pin 3 world cities on a map like map markers in a game.",
         problems: [["Latitude measures distance from the ___", "equator"], ["Longitude measures distance from the ___", "prime meridian"], ["0 degrees latitude is called the ___", "equator"], ["Which comes first in coordinates?", "latitude"]],
@@ -71,17 +71,17 @@ const WEEKLY_G7 = [
         ]
       },
       {
-        s: "science", concept: "Cells & Levels of Organization", std: "Ohio 7.LS.2",
+        s: "science", concept: "Biotic and Abiotic Factors", std: "Ohio 7.LS.2",
         video: "https://www.khanacademy.org/science/ms-biology/x0c5bb03129646fd6:cells-and-organisms",
-        sprint: "Draw a cell and label 4 parts, then build the level-up ladder: cell → tissue → organ → system.",
-        problems: [["The control center of the cell is the ___", "nucleus"], ["Powerhouse of the cell?", "mitochondria"], ["Order: cell, tissue, organ, ___", "organ system"], ["Plant cells have a cell ___ that animal cells lack.", "wall"]],
+        sprint: "Choose a biome and make a two-column chart of four biotic and four abiotic factors that limit populations.",
+        problems: [["Living parts of an ecosystem are ___ factors", "biotic"], ["Nonliving conditions are ___ factors", "abiotic"], ["Water availability can limit population ___", "growth"], ["Temperature and rainfall help define a ___", "biome"]],
         qc: [
-          { q: "Which is largest?", choices: ["organ system", "cell", "tissue", "organ"], a: "organ system" },
-          { q: "The nucleus...", choices: ["controls the cell", "makes energy", "stores water", "moves the cell"], a: "controls the cell" }
+          { q: "Which is an abiotic factor?", choices: ["rainfall", "grass", "insects", "fungi"], a: "rainfall" },
+          { q: "Population survival depends on...", choices: ["biotic and abiotic factors", "only predators", "only sunlight", "only soil"], a: "biotic and abiotic factors" }
         ]
       },
       {
-        s: "social", concept: "Factors Affecting Climate", std: "Ohio 7.GEO.3",
+        s: "social", concept: "Factors Affecting Climate", std: "Ohio Social Studies 7.13",
         video: "https://www.youtube.com/results?search_query=factors+that+affect+climate+middle+school",
         sprint: "Pick two cities and compare their latitude, elevation, and distance from water in a mini scoreboard.",
         problems: [["Higher elevation usually means temperature is ___", "cooler"], ["Places near the equator get more direct ___", "sunlight"], ["Being near a large body of water makes climate more ___", "mild"], ["Name one factor that affects climate.", "latitude, elevation, water, or wind"]],
@@ -115,7 +115,7 @@ const WEEKLY_G7 = [
         ]
       },
       {
-        s: "science", concept: "Energy Flow in Ecosystems", std: "Ohio 7.LS.3",
+        s: "science", concept: "Energy Flow in Ecosystems", std: "Ohio 7.LS.1",
         video: "https://www.youtube.com/results?search_query=energy+flow+food+chain+middle+school",
         sprint: "Draw a 4-step energy comic: Sun → plant → animal → decomposer, with arrows showing energy flow.",
         problems: [["Most energy in an ecosystem starts from the ___", "sun"], ["Organisms that make their own food are ___", "producers"], ["Organisms that break down dead matter are ___", "decomposers"], ["Arrows in a food chain show the direction of ___", "energy"]],
@@ -125,7 +125,7 @@ const WEEKLY_G7 = [
         ]
       },
       {
-        s: "social", concept: "Ancient Greece", std: "Ohio 7.HIS.2",
+        s: "social", concept: "Ancient Greece", std: "Ohio Social Studies 7.2",
         video: "https://www.youtube.com/results?search_query=ancient+greece+for+kids+overview",
         sprint: "Design a mini city-state map with Athens and Sparta and label one thing each was famous for.",
         problems: [["Government by the people, invented in Athens, is ___", "democracy"], ["A Greek city-state was called a ___", "polis"], ["Sparta was famous for its strong ___", "military"], ["Name one Greek philosopher.", "Socrates, Plato, or Aristotle"]],
@@ -169,7 +169,7 @@ const WEEKLY_G7 = [
         ]
       },
       {
-        s: "social", concept: "Ancient Rome", std: "Ohio 7.HIS.3",
+        s: "social", concept: "Ancient Rome", std: "Ohio Social Studies 7.2",
         video: "https://www.youtube.com/results?search_query=ancient+rome+for+kids+overview",
         sprint: "Build a timeline card: Roman Republic → Empire, and note one Roman invention still used today.",
         problems: [["Rome's early government where citizens elected leaders was the ___", "republic"], ["Rome's first emperor was ___", "Augustus"], ["Roman roads and ___ moved water to cities.", "aqueducts"], ["A written set of Roman laws was the Twelve ___", "Tables"]],
@@ -213,7 +213,7 @@ const WEEKLY_G7 = [
         ]
       },
       {
-        s: "social", concept: "Medieval Europe & Feudalism", std: "Ohio 7.HIS.4",
+        s: "social", concept: "Medieval Europe & Feudalism", std: "Ohio Social Studies 7.3",
         video: "https://www.youtube.com/results?search_query=feudalism+middle+ages+for+kids",
         sprint: "Draw the feudal pyramid: king, lords, knights, peasants, and label each level's job.",
         problems: [["The system of land for loyalty was ___", "feudalism"], ["A warrior who served a lord was a ___", "knight"], ["Peasants who farmed the land were ___", "serfs"], ["A fortified home of a lord was a ___", "castle"]],
@@ -247,7 +247,7 @@ const WEEKLY_G7 = [
         ]
       },
       {
-        s: "science", concept: "Photosynthesis & Respiration", std: "Ohio 7.LS.4",
+        s: "science", concept: "Photosynthesis, Respiration & Energy Flow", std: "Ohio 7.LS.1",
         video: "https://www.youtube.com/results?search_query=photosynthesis+cellular+respiration+middle+school",
         sprint: "Draw a two-arrow loop showing photosynthesis and respiration swapping O2 and CO2.",
         problems: [["Plants make food using sunlight by ___", "photosynthesis"], ["Photosynthesis makes glucose and ___", "oxygen"], ["Cells release energy from food during ___", "respiration"], ["Respiration uses oxygen and gives off ___", "carbon dioxide"]],
@@ -257,7 +257,7 @@ const WEEKLY_G7 = [
         ]
       },
       {
-        s: "social", concept: "Silk Road Trade", std: "Ohio 7.ECO.1",
+        s: "social", concept: "Silk Road Trade", std: "Ohio Social Studies 7.14",
         video: "https://www.youtube.com/results?search_query=silk+road+trade+for+kids",
         sprint: "Map a Silk Road route and list 3 goods and 1 idea that traveled between East and West.",
         problems: [["The trade network linking Asia and Europe was the ___ Road", "Silk"], ["One famous good traded was ___", "silk"], ["Buying and selling across regions is ___", "trade"], ["Ideas and religion that spread along it show cultural ___", "diffusion"]],
@@ -291,17 +291,17 @@ const WEEKLY_G7 = [
         ]
       },
       {
-        s: "science", concept: "Human Body Systems", std: "Ohio 7.LS.5",
-        video: "https://www.youtube.com/results?search_query=human+body+systems+middle+school",
-        sprint: "Match 4 body systems to their main job in a quick game: circulatory, respiratory, digestive, skeletal.",
-        problems: [["The system that pumps blood is the ___", "circulatory"], ["The system that takes in oxygen is the ___", "respiratory"], ["The system that breaks down food is the ___", "digestive"], ["The system that supports the body is the ___", "skeletal"]],
+        s: "science", concept: "Atmospheric Layers & Properties", std: "Ohio 7.ESS.3",
+        video: "https://www.youtube.com/results?search_query=atmospheric+layers+properties+middle+school",
+        sprint: "Draw and label the troposphere and stratosphere, then graph how air pressure changes with elevation.",
+        problems: [["Most weather occurs in the ___", "troposphere"], ["Air pressure generally ___ as elevation increases", "decreases"], ["The atmosphere is a mixture of ___", "gases"], ["The ozone layer is mainly in the ___", "stratosphere"]],
         qc: [
-          { q: "The heart belongs to the...", choices: ["circulatory system", "digestive system", "skeletal system", "nervous system"], a: "circulatory system" },
-          { q: "Lungs belong to the...", choices: ["respiratory system", "digestive system", "muscular system", "skeletal system"], a: "respiratory system" }
+          { q: "As elevation rises, air pressure usually...", choices: ["decreases", "increases", "stays identical", "becomes solid"], a: "decreases" },
+          { q: "Weather occurs mainly in the...", choices: ["troposphere", "stratosphere", "mesosphere", "thermosphere"], a: "troposphere" }
         ]
       },
       {
-        s: "social", concept: "World Religions & Regions", std: "Ohio 7.GEO.4",
+        s: "social", concept: "World Religions & Regions", std: "Ohio Social Studies 7.14",
         video: "https://www.youtube.com/results?search_query=world+religions+overview+for+kids",
         sprint: "Make a quick chart matching 4 world religions to the region where each began.",
         problems: [["A religion that began in India is ___", "Hinduism or Buddhism"], ["A religion centered in Mecca is ___", "Islam"], ["Judaism, Christianity, and Islam all began in ___ Asia", "Southwest"], ["A belief in one god is called ___", "monotheism"]],
@@ -335,17 +335,17 @@ const WEEKLY_G7 = [
         ]
       },
       {
-        s: "science", concept: "Scientific Method", std: "Ohio 7.SI.1",
-        video: "https://www.youtube.com/results?search_query=scientific+method+steps+middle+school",
-        sprint: "Design a mini experiment: write a question, hypothesis, and one variable you would change.",
-        problems: [["A testable prediction is a ___", "hypothesis"], ["The factor you change is the ___ variable", "independent"], ["The factor you measure is the ___ variable", "dependent"], ["Steps you repeat to test are a ___", "procedure"]],
+        s: "science", concept: "Elements Organized by Properties", std: "Ohio 7.PS.1",
+        video: "https://www.youtube.com/results?search_query=periodic+table+element+properties+middle+school",
+        sprint: "Use a periodic table to compare four elements by symbol, atomic number, state, and metal or nonmetal classification.",
+        problems: [["Elements are organized in the periodic ___", "table"], ["The number of protons is the atomic ___", "number"], ["Elements in the same group have similar ___", "properties"], ["O is the symbol for ___", "oxygen"]],
         qc: [
-          { q: "A hypothesis is a...", choices: ["testable prediction", "final answer", "random guess", "conclusion"], a: "testable prediction" },
-          { q: "The variable you change is the...", choices: ["independent", "dependent", "control", "constant"], a: "independent" }
+          { q: "Atomic number equals the number of...", choices: ["protons", "neutrons only", "energy levels", "compounds"], a: "protons" },
+          { q: "Elements in one periodic-table group often share...", choices: ["similar properties", "the same atomic number", "the same symbol", "identical masses"], a: "similar properties" }
         ]
       },
       {
-        s: "social", concept: "Economics: Specialization & Trade", std: "Ohio 7.ECO.2",
+        s: "social", concept: "Economics: Specialization & Trade", std: "Ohio Social Studies 7.20",
         video: "https://www.youtube.com/results?search_query=specialization+and+trade+economics+for+kids",
         sprint: "Design a mini country: pick one thing it makes best and trade with a partner for what it lacks.",
         problems: [["Focusing on what you produce best is ___", "specialization"], ["Exchanging goods across borders is ___", "trade"], ["Goods a country sells to others are ___", "exports"], ["Goods a country buys from others are ___", "imports"]],
@@ -356,4 +356,4 @@ const WEEKLY_G7 = [
       }
     ]
   }
-];
+].concat(typeof ANNUAL_G7 !== 'undefined' ? ANNUAL_G7 : []);

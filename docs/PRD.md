@@ -21,7 +21,7 @@ The MVP already ships two complementary modes:
 1. **Quest modules** — anime-styled, subject-based quests (ELA, Math, Reading,
    Science, Social Studies) with a focus timer, browser narration, and interactive
    quizzes.
-2. **Weekly Homework** — an 8-week program aligned to **Ohio Learning Standards**,
+2. **Weekly Homework** — a 36-week school-year program aligned to **Ohio Learning Standards**,
    with four 20-minute daily sprint missions per week (Math, ELA, Science, Social
    Studies), curated Khan Academy / YouTube video links, in-app quick-checks that earn
    XP, and a printable weekly worksheet that includes a parent answer key.
@@ -93,7 +93,7 @@ roadmap.
 **Product goals**
 
 - Keep both children doing light, consistent, standards-aligned practice across an
-  8-week summer.
+  36-week school year.
 - Make practice intrinsically motivating enough that kids return without nagging.
 - Give the parent honest, low-effort visibility.
 - Build a foundation that generalizes to more students, grades, and eventually
@@ -105,8 +105,8 @@ roadmap.
 | --- | --- |
 | Weekly engagement | Each child completes ≥ 3 of 4 daily sprints most weeks |
 | Streak health | Multi-day streaks sustained through the summer |
-| Quick-check quality | Rising quiz average per subject over the 8 weeks |
-| Coverage | All 8 weeks × 4 subjects attempted by end of summer |
+| Quick-check quality | Rising quiz average per subject over the 36 weeks |
+| Coverage | All 36 weeks × 4 subjects attempted by the end of the school year |
 | Parent visibility | Dashboard checked without prompting the kids |
 
 **Success metrics (product ambition)**
@@ -154,7 +154,7 @@ This keeps the product legally clean, portable, and fully aligned.
 | Browser speech narration | Web Speech narration of mission briefings for lower-friction starts and accessibility. | Shipped |
 | Interactive quizzes | Multiple-choice, true/false, and drag-match items with immediate feedback. | Shipped |
 | Grade switcher | Toggle between Cheikh (7th) and Seydina (5th) content and progress. | Shipped |
-| Weekly Homework (8 weeks) | Ohio-aligned program: 4 subjects/week, one 20-min daily sprint each, curated video, quick-check, XP. | Shipped |
+| Weekly Homework (36 weeks) | Ohio-aligned school-year program: 4 subjects/week, one 20-min daily sprint each, instructional video, quick-check, and XP. | Shipped |
 | Curated concept videos | Per-mission links to Khan Academy / CK-12 / Nat Geo / YouTube for concept acquisition. | Shipped |
 | Printable weekly worksheet | Per-week, per-grade printable sheet (`worksheet.html`) with a separate **parent answer key** page. | Shipped |
 | Server persistence & profiles | PostgreSQL-backed profiles (`cheikh`, `seydina`) with saved state. | Shipped |
@@ -168,7 +168,7 @@ This keeps the product legally clean, portable, and fully aligned.
 | Classrooms / roster | Educator view assigning weeks to many scholars. | Planned |
 | Adaptive difficulty | Quick-checks that adjust based on performance. | Planned |
 | PWA / installable | Offline-capable, home-screen installable app. | Planned |
-| More grades / weeks | Beyond 5th & 7th and beyond 8 weeks. | Planned |
+| More grades / variants | Grades beyond 5th and 7th, plus more question variants. | Planned |
 
 ---
 
@@ -247,8 +247,8 @@ No client build step means the app is trivially deployable and easy to reason ab
   deployment, blocking for multi-tenant use.
 - **Family-only profiles.** The profile set is fixed in code; there's no self-service
   account creation.
-- **Hand-curated 8 weeks.** Weekly content is authored by hand for two grades and caps
-  at 8 weeks. Scaling grades/weeks is a content-authoring effort.
+- **Maintaining 36 weeks.** Weekly content covers a full school year for two grades.
+  Adding grades or richer question variants remains a content-authoring effort.
 - **Quick-checks are not adaptive.** Each subject/day has two fixed questions; there's
   no difficulty adjustment or item bank rotation.
 - **Events are fire-and-forget.** The client posts events without retry; a failed POST
@@ -271,7 +271,7 @@ These feed directly into the roadmap below and into `docs/solution_review.md`.
 **Phase 2 — Educator & scale.**
 - Classroom / roster view: assign weeks to many scholars, review progress, bulk-print
   worksheets.
-- More grades (K–8) and more than 8 weeks of content; a content-authoring pipeline.
+- More grades (K–8), question variants, and a content-authoring pipeline.
 
 **Phase 3 — Smarter practice.**
 - Adaptive difficulty and item banks for quick-checks.

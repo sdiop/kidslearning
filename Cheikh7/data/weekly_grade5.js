@@ -37,7 +37,7 @@ const WEEKLY_G5 = [
         ]
       },
       {
-        s: "social", concept: "Maps of the Western Hemisphere", std: "Ohio 5.GEO.1",
+        s: "social", concept: "Maps of the Western Hemisphere", std: "Ohio Social Studies 5.4",
         video: "https://www.youtube.com/results?search_query=western+hemisphere+map+for+kids",
         sprint: "Label a Western Hemisphere map with North America, South America, and the equator.",
         problems: [["The half of Earth west of the prime meridian is the ___ Hemisphere", "Western"], ["Two continents in the Western Hemisphere are ___", "North and South America"], ["The imaginary line at 0° latitude is the ___", "equator"], ["A map key is also called a ___", "legend"]],
@@ -81,7 +81,7 @@ const WEEKLY_G5 = [
         ]
       },
       {
-        s: "social", concept: "Native American Cultures", std: "Ohio 5.HIS.1",
+        s: "social", concept: "Native American Cultures", std: "Ohio Social Studies 5.8",
         video: "https://www.youtube.com/results?search_query=native+american+cultures+regions+for+kids",
         sprint: "Match 3 Native American groups to their region and one way they used their environment.",
         problems: [["Native peoples used local ___ to meet their needs", "resources"], ["Plains groups often hunted the ___", "buffalo"], ["Homes and food often depended on the ___", "environment"], ["People living somewhere first are called ___ peoples", "indigenous"]],
@@ -125,7 +125,7 @@ const WEEKLY_G5 = [
         ]
       },
       {
-        s: "social", concept: "European Explorers", std: "Ohio 5.HIS.2",
+        s: "social", concept: "European Explorers", std: "Ohio Social Studies 5.3",
         video: "https://www.youtube.com/results?search_query=european+explorers+for+kids",
         sprint: "Trace one explorer's route on a map and note what they were looking for.",
         problems: [["Explorers crossed the ___ Ocean to reach the Americas", "Atlantic"], ["Columbus sailed for ___ in 1492", "Spain"], ["Explorers searched for new trade ___", "routes"], ["Meeting of two worlds' plants and animals is the Columbian ___", "Exchange"]],
@@ -169,7 +169,7 @@ const WEEKLY_G5 = [
         ]
       },
       {
-        s: "social", concept: "Colonial Settlement", std: "Ohio 5.HIS.3",
+        s: "social", concept: "Colonial Settlement", std: "Ohio Social Studies 5.3",
         video: "https://www.youtube.com/results?search_query=13+colonies+for+kids",
         sprint: "Sort 3 facts into New England, Middle, or Southern colonies on a quick chart.",
         problems: [["Early settlements set up by another country are ___", "colonies"], ["The first lasting English colony was ___", "Jamestown"], ["Colonists came for freedom and ___", "opportunity"], ["The three colonial regions were New England, Middle, and ___", "Southern"]],
@@ -203,7 +203,7 @@ const WEEKLY_G5 = [
         ]
       },
       {
-        s: "science", concept: "Force & Motion", std: "Ohio 5.PS.3",
+        s: "science", concept: "Force & Motion", std: "Ohio 5.PS.1",
         video: "https://www.youtube.com/results?search_query=force+and+motion+5th+grade",
         sprint: "Roll a toy car and test how a bigger push changes its speed and distance. Record your results.",
         problems: [["A push or pull is a ___", "force"], ["A force that slows sliding objects is ___", "friction"], ["The force pulling objects down is ___", "gravity"], ["A bigger force usually makes a bigger ___", "change in motion"]],
@@ -213,13 +213,13 @@ const WEEKLY_G5 = [
         ]
       },
       {
-        s: "social", concept: "US Government Basics", std: "Ohio 5.GOV.1",
-        video: "https://www.youtube.com/results?search_query=three+branches+of+government+for+kids",
-        sprint: "Draw the 3 branches of government and write one job for each branch.",
-        problems: [["The branch that makes laws is the ___", "legislative"], ["The branch that carries out laws is the ___", "executive"], ["The branch that decides if laws are fair is the ___", "judicial"], ["The plan for the US government is the ___", "Constitution"]],
+        s: "social", concept: "Forms of Government", std: "Ohio Social Studies 5.12",
+        video: "https://www.youtube.com/results?search_query=democracy+dictatorship+monarchy+for+kids",
+        sprint: "Make a three-column chart comparing who holds power in a democracy, dictatorship, and monarchy.",
+        problems: [["In a democracy, authority comes from the ___", "people"], ["Rule by one person with unchecked power is a ___", "dictatorship"], ["A government led by a king or queen is a ___", "monarchy"], ["Citizens vote for leaders in a ___", "democracy"]],
         qc: [
-          { q: "The President leads which branch?", choices: ["executive", "legislative", "judicial", "state"], a: "executive" },
-          { q: "Congress belongs to the ___ branch.", choices: ["legislative", "executive", "judicial", "royal"], a: "legislative" }
+          { q: "In which government do citizens choose leaders?", choices: ["democracy", "dictatorship", "absolute monarchy", "empire"], a: "democracy" },
+          { q: "A king or queen leads a...", choices: ["monarchy", "democracy", "republic only", "council"], a: "monarchy" }
         ]
       }
     ]
@@ -257,7 +257,7 @@ const WEEKLY_G5 = [
         ]
       },
       {
-        s: "social", concept: "Latitude, Longitude & Regions", std: "Ohio 5.GEO.2",
+        s: "social", concept: "Latitude, Longitude & Regions", std: "Ohio Social Studies 5.5",
         video: "https://education.nationalgeographic.org/resource/mapmaker-latitude-longitude/",
         sprint: "Use a map grid to find 3 cities using latitude and longitude, like reading game coordinates.",
         problems: [["Lines that run east-west measuring north/south are ___", "latitude"], ["Lines that run north-south measuring east/west are ___", "longitude"], ["0° latitude is the ___", "equator"], ["An area with common features is a ___", "region"]],
@@ -301,7 +301,7 @@ const WEEKLY_G5 = [
         ]
       },
       {
-        s: "social", concept: "Goods, Services & Trade", std: "Ohio 5.ECO.1",
+        s: "social", concept: "Goods, Services & Trade", std: "Ohio Social Studies 5.17",
         video: "https://www.youtube.com/results?search_query=goods+services+trade+for+kids",
         sprint: "List 5 things around you and label each as a good or a service, then name one trade you make.",
         problems: [["Things you can touch and buy are ___", "goods"], ["Work someone does for you is a ___", "service"], ["Exchanging goods or money is ___", "trade"], ["A haircut is a ___", "service"]],
@@ -335,17 +335,17 @@ const WEEKLY_G5 = [
         ]
       },
       {
-        s: "science", concept: "Designing Investigations", std: "Ohio 5.SI.1",
-        video: "https://www.youtube.com/results?search_query=designing+a+science+investigation+5th+grade",
-        sprint: "Plan a fair test: write a question, one thing you'll change, and one thing you'll keep the same.",
-        problems: [["A test that changes only one thing at a time is a ___ test", "fair"], ["A testable idea is a ___", "hypothesis"], ["The thing you change is the ___ variable", "independent"], ["Things you keep the same are ___", "constants"]],
+        s: "science", concept: "Energy for Organism Processes", std: "Ohio 5.LS.2",
+        video: "https://www.youtube.com/results?search_query=energy+for+organisms+ecosystems+5th+grade",
+        sprint: "Trace energy from sunlight to a plant and then to an animal. Label how each organism uses that energy.",
+        problems: [["Plants capture energy from ___", "sunlight"], ["Animals get energy by eating ___", "food"], ["Organisms need energy to grow, repair, and ___", "reproduce"], ["Energy enters most ecosystems through ___", "plants"]],
         qc: [
-          { q: "A fair test changes...", choices: ["one variable at a time", "everything", "nothing", "the tester"], a: "one variable at a time" },
-          { q: "A hypothesis is a...", choices: ["testable prediction", "final answer", "guess with no reason", "conclusion"], a: "testable prediction" }
+          { q: "Most ecosystem energy begins as...", choices: ["sunlight", "soil", "wind", "moonlight"], a: "sunlight" },
+          { q: "Organisms require energy for...", choices: ["life processes", "changing planets", "making rocks", "stopping gravity"], a: "life processes" }
         ]
       },
       {
-        s: "social", concept: "Western Hemisphere Review", std: "Ohio 5.GEO.3",
+        s: "social", concept: "Western Hemisphere Review", std: "Ohio Social Studies 5.6",
         video: "https://www.youtube.com/results?search_query=western+hemisphere+review+for+kids",
         sprint: "Label a Western Hemisphere map with 2 continents, 2 oceans, and the equator from memory.",
         problems: [["The two continents in the Western Hemisphere are ___", "North and South America"], ["The ocean to the east of the Americas is the ___", "Atlantic"], ["The ocean to the west of the Americas is the ___", "Pacific"], ["0° latitude is the ___", "equator"]],
@@ -356,4 +356,4 @@ const WEEKLY_G5 = [
       }
     ]
   }
-];
+].concat(typeof ANNUAL_G5 !== 'undefined' ? ANNUAL_G5 : []);

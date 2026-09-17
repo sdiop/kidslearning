@@ -7,7 +7,7 @@ Limitations" section of `docs/PRD.md`.
 
 - Quest modules and gamification (`Cheikh7/app.js`, `data/course_data.json`,
   `data/grade5_data.js`)
-- Weekly Homework, 8 weeks × 2 grades (`Cheikh7/weekly.js`,
+- Weekly Homework, 36 weeks × 2 grades (`Cheikh7/weekly.js`,
   `data/weekly_grade7.js`, `data/weekly_grade5.js`)
 - Printable worksheet + answer key (`Cheikh7/worksheet.html`)
 - Server persistence, sync, awards, dashboard (`server.js`, `Cheikh7/parent.html`)
@@ -39,7 +39,7 @@ Limitations" section of `docs/PRD.md`.
   `seydina`); anyone with the URL can read and write state. Fine for a private family
   deployment, blocking for anyone else.
 - **Fixed profile set.** No self-service account creation.
-- **Content is hand-curated and capped at 8 weeks / 2 grades.** Scaling is a content
+- **Content covers 36 weeks but remains capped at 2 grades.** Scaling is a content
   effort, not a code change.
 - **Quick-checks are static (2 fixed items each).** No adaptivity or item rotation.
 - **Events are fire-and-forget.** `logEvent()` posts without retry; a dropped POST

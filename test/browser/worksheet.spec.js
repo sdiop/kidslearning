@@ -13,9 +13,19 @@ const SUBJECT_ORDER = ['math', 'ela', 'science', 'social'];
 
 function loadCurriculum(fileName, variableName) {
   const filePath = path.join(__dirname, '../../Cheikh7/data', fileName);
+  const prefix = variableName === 'WEEKLY_G5' ? 'annual_g5_' : 'annual_g7_';
+  const subjectSources = ['math', 'ela', 'science', 'social']
+    .map(subject => fs.readFileSync(path.join(__dirname, '../../Cheikh7/data', `${prefix}${subject}.js`), 'utf8'))
+    .join('\n');
+  const annualPath = path.join(
+    __dirname,
+    '../../Cheikh7/data',
+    variableName === 'WEEKLY_G5' ? 'annual_grade5.js' : 'annual_grade7.js'
+  );
+  const annual = fs.readFileSync(annualPath, 'utf8');
   const source = fs.readFileSync(filePath, 'utf8');
   const context = {};
-  vm.runInNewContext(`${source}\nthis.result = ${variableName};`, context, {
+  vm.runInNewContext(`${subjectSources}\n${annual}\n${source}\nthis.result = ${variableName};`, context, {
     filename: filePath
   });
   return JSON.parse(JSON.stringify(context.result));

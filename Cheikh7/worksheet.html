@@ -64,6 +64,16 @@
   <button class="printBtn secondary" type="button" data-print-mode="with-answers">Print with answer key</button>
 </div>
 
+<script src="data/annual_g5_math.js"></script>
+<script src="data/annual_g5_ela.js"></script>
+<script src="data/annual_g5_science.js"></script>
+<script src="data/annual_g5_social.js"></script>
+<script src="data/annual_grade5.js"></script>
+<script src="data/annual_g7_math.js"></script>
+<script src="data/annual_g7_ela.js"></script>
+<script src="data/annual_g7_science.js"></script>
+<script src="data/annual_g7_social.js"></script>
+<script src="data/annual_grade7.js"></script>
 <script src="data/weekly_grade5.js"></script>
 <script src="data/weekly_grade7.js"></script>
 <script>
@@ -77,11 +87,12 @@
   var params = new URLSearchParams(window.location.search);
   var grade = params.get('grade') === '5' ? '5' : '7';
   var week = parseInt(params.get('week') || '1', 10);
-  if (!(week >= 1 && week <= 8)) week = 1;
 
   var data = grade === '5'
     ? (typeof WEEKLY_G5 !== 'undefined' ? WEEKLY_G5 : [])
     : (typeof WEEKLY_G7 !== 'undefined' ? WEEKLY_G7 : []);
+  var validWeeks = data.map(function (item) { return item.week; });
+  if (validWeeks.indexOf(week) === -1) week = validWeeks[0] || 1;
   var gradeLabel = grade === '5' ? '5th Grade' : '7th Grade';
 
   var sheet = document.getElementById('sheet');

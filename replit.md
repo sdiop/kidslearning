@@ -1,6 +1,6 @@
 # Diop Yaba Academy
 
-A visual, game-style summer prep app for two students — Cheikh (rising 7th grade) and Seydina (5th grade). No build step or external dependencies required.
+A visual, game-style school-year learning app for two students — Cheikh (7th grade) and Seydina (5th grade). No frontend build step is required.
 
 ## Stack
 
@@ -20,7 +20,7 @@ Key pages: `/` (app with grade switcher), `/parent.html` (parent dashboard),
 ## Key features
 
 - Quest modules with XP, badges, streaks, quizzes, narration (original MVP)
-- 8-week Ohio Learning Standards-aligned weekly homework per grade
+- 36-week Ohio Learning Standards-aligned school-year homework per grade
   (`Cheikh7/data/weekly_grade5.js`, `weekly_grade7.js`, UI in `Cheikh7/weekly.js`)
 - Printable weekly worksheet with parent answer key (browser Print → Save as PDF)
 - Server-side persistence: sanitized merge-on-write state sync (`PUT /api/state/:id`,

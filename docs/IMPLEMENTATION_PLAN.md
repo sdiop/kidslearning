@@ -125,10 +125,10 @@ Structured curriculum schema
 
 ### Phase E — Weekly curriculum and worksheets
 
-- [x] **E1. Author eight weeks for grade 5**  
+- [x] **E1. Author 36 school-year weeks for grade 5**
   **Priority:** P1 · **Effort:** L
 
-- [x] **E2. Author eight weeks for grade 7**  
+- [x] **E2. Author 36 school-year weeks for grade 7**
   **Priority:** P1 · **Effort:** L
 
 - [x] **E3. Add week dropdown and subject/day tabs**  
