@@ -5,7 +5,11 @@
 **Version:** 1.0  
 **Last updated:** 2026-09-15  
 **Status:** Ready for review  
-**Related documents:** [Build PRD](BUILD_PRD.md), [Implementation plan](IMPLEMENTATION_PLAN.md)
+**Related documents:** [Consolidated PRD](PRD.md), [Implementation plan](IMPLEMENTATION_PLAN.md)
+
+> This design predates the consolidated PRD's 2026-09-26 review. Use the PRD
+> for current behavior and proposed account/grade/flash-card requirements;
+> validate this design against those requirements before implementation.
 
 ---
 

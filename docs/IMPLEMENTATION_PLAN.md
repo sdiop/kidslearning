@@ -5,7 +5,12 @@
 **Version:** 1.0  
 **Last updated:** 2026-09-15  
 **Status:** Ready for execution  
-**Related documents:** [Build PRD](BUILD_PRD.md), [Design document](DESIGN.md)
+**Related documents:** [Consolidated PRD](PRD.md), [Design document](DESIGN.md)
+
+> This plan predates the consolidated PRD's 2026-09-26 app review. Its phase
+> statuses may be stale; use the consolidated PRD for current shipped/planned
+> status and re-scope this plan before implementing accounts, grades 6/8 or
+> flash cards.
 
 ---
 

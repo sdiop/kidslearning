@@ -26,9 +26,10 @@ Key pages: `/` (app with grade switcher), `/parent.html` (parent dashboard),
 - Server-side persistence: sanitized merge-on-write state sync (`PUT /api/state/:id`,
   union-merge prevents multi-device overwrites; `replace:true` only for explicit reset)
 - Parent dashboard + awards computed server-side from state and event history
-- Product PRD in `docs/PRD.md`, build PRD in `docs/BUILD_PRD.md`,
-  full design in `docs/DESIGN.md`, implementation plan in
-  `docs/IMPLEMENTATION_PLAN.md`, and solution review in `docs/solution_review.md`
+- Consolidated product/build requirements in `docs/PRD.md`
+  (`docs/BUILD_PRD.md` is a redirect for older links); supporting design in
+  `docs/DESIGN.md`, implementation plan in `docs/IMPLEMENTATION_PLAN.md`,
+  and solution review in `docs/solution_review.md`
 
 ## Project structure
 
