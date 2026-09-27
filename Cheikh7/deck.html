@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Diop Yaba Academy — Presentation</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📽️</text></svg>" />
+<style>
+  :root{
+    --navy:#0f1b3d; --navy2:#081226; --card:#111936;
+    --cyan:#38bdf8; --cyan-soft:#7dd3fc; --yellow:#fde047; --yellow-soft:#fef08a;
+    --text:#f8fafc; --muted:#b6c2d9; --line:#33405e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:radial-gradient(circle at 20% 0%,#233876,#0f1b3d 45%,#050816);
+    color:var(--text);
+    font-family:Inter,system-ui,"Segoe UI",Arial,sans-serif;
+    display:flex;align-items:center;justify-content:center;
+    min-height:100vh;overflow:hidden;
+  }
+  .stage{
+    position:relative;
+    width:min(96vw, calc(96vh * 16 / 9));
+    height:min(96vh, calc(96vw * 9 / 16));
+    background:linear-gradient(160deg,#0f1b3d,#081226);
+    border:1px solid var(--line);
+    border-radius:22px;
+    box-shadow:0 30px 90px #000a;
+    overflow:hidden;
+  }
+  .slide{
+    position:absolute;inset:0;
+    padding:5% 6%;
+    display:none;
+    flex-direction:column;
+    animation:fade .35s ease;
+  }
+  .slide.active{display:flex}
+  @keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+  .eyebrow{color:var(--cyan-soft);text-transform:uppercase;letter-spacing:.2em;font-weight:800;font-size:clamp(11px,1.4vw,15px)}
+  h1{font-size:clamp(30px,5.4vw,68px);line-height:1;margin:.25em 0}
+  h2{font-size:clamp(24px,3.6vw,46px);line-height:1.05;margin:.1em 0 .5em}
+  h1 .hl,h2 .hl{color:var(--yellow)}
+  p,li{color:var(--muted);font-size:clamp(14px,2vw,24px);line-height:1.5}
+  ul{padding-left:1.1em;margin-top:.4em}
+  li{margin:.35em 0}
+  li::marker{color:var(--cyan)}
+  strong{color:var(--text)}
+
+  .center{justify-content:center;align-items:flex-start}
+  .title-slide{justify-content:center;align-items:center;text-align:center;
+    background:radial-gradient(circle at 50% 30%,#1e3a8a55,transparent 60%);}
+  .title-slide .subtitle{max-width:80%;font-size:clamp(15px,2.3vw,26px);margin-top:.6em}
+  .badgeRow{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:26px}
+  .badge{background:rgba(253,224,71,.12);border:1px solid rgba(253,224,71,.45);
+    border-radius:999px;padding:8px 16px;font-weight:700;color:var(--yellow-soft);font-size:clamp(12px,1.6vw,18px)}
+
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:5%;flex:1;align-items:center}
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:8px}
+  .card{background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+  .card h3{color:var(--cyan-soft);font-size:clamp(15px,2vw,22px);margin-bottom:6px}
+  .card p{font-size:clamp(12px,1.6vw,18px)}
+
+  .shotWrap{flex:1;display:flex;flex-direction:column;min-height:0;margin-top:10px}
+  .shot{
+    flex:1;min-height:0;width:100%;
+    object-fit:contain;object-position:center;
+    border-radius:14px;border:1px solid var(--line);
+    background:#050816;box-shadow:0 18px 44px #0007;
+  }
+  .caption{color:var(--muted);font-size:clamp(12px,1.6vw,18px);margin-top:10px;text-align:center}
+
+  .steps{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}
+  .step{flex:1 1 180px;background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.35);
+    border-radius:16px;padding:16px 18px}
+  .step .n{color:var(--yellow);font-weight:900;font-size:clamp(18px,2.4vw,30px)}
+  .step p{margin-top:4px;font-size:clamp(12px,1.6vw,18px)}
+
+  .loop{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:22px;flex-wrap:wrap}
+  .loop .node{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;text-align:center;flex:1}
+  .loop .node b{display:block;color:var(--cyan-soft);font-size:clamp(20px,2.6vw,32px)}
+  .loop .arrow{color:var(--yellow);font-size:clamp(20px,3vw,34px);font-weight:900}
+
+  .cta{margin-top:auto}
+  .ctaBtns{display:flex;gap:14px;flex-wrap:wrap;margin-top:18px}
+  .ctaBtn{background:linear-gradient(135deg,var(--cyan),#818cf8);color:#06101f;font-weight:800;
+    padding:12px 20px;border-radius:999px;text-decoration:none;font-size:clamp(13px,1.8vw,20px)}
+  .ctaBtn.alt{background:#263150;color:#eaf2ff;border:1px solid #51617f}
+
+  /* Controls */
+  .controls{position:absolute;bottom:14px;right:16px;display:flex;align-items:center;gap:10px;z-index:10}
+  .ctrlBtn{background:#263150;color:#eaf2ff;border:1px solid #51617f;border-radius:999px;
+    width:42px;height:42px;font-size:18px;cursor:pointer;display:grid;place-items:center;transition:transform .12s}
+  .ctrlBtn:hover{transform:translateY(-2px);background:#2f4168}
+  .counter{position:absolute;bottom:20px;left:20px;color:var(--muted);font-weight:700;font-size:14px;z-index:10}
+  .brandTag{position:absolute;top:16px;right:22px;color:var(--cyan-soft);font-weight:800;letter-spacing:.12em;
+    font-size:clamp(10px,1.3vw,14px);text-transform:uppercase;opacity:.85;z-index:5}
+  .hint{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:#64748b;font-size:12px;z-index:5}
+  @media (max-width:640px){ .two{grid-template-columns:1fr} .cards{grid-template-columns:1fr} .hint{display:none} }
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+
+  <!-- 1. Title -->
+  <section class="slide active title-slide">
+    <p class="eyebrow">A Family MVP for Every Scholar</p>
+    <h1>Diop Yaba Academy</h1>
+    <p class="subtitle">Turning <span style="color:var(--yellow)">Screen Time</span> into <span style="color:var(--cyan-soft)">Learning Time</span></p>
+    <div class="badgeRow">
+      <span class="badge">🎮 Game-style</span>
+      <span class="badge">👁️ Built for visual learners</span>
+      <span class="badge">📚 Ohio-aligned</span>
+      <span class="badge">📊 Parent visibility</span>
+    </div>
+  </section>
+
+  <!-- 2. The Problem -->
+  <section class="slide center">
+    <p class="eyebrow">The Problem</p>
+    <h2>Capable kids, <span class="hl">wrong format</span></h2>
+    <div class="cards">
+      <div class="card"><h3>📱 Screen-drawn & distracted</h3><p>Static packets lose every time against games and video.</p></div>
+      <div class="card"><h3>👁️ Visual learners</h3><p>They learn from images, color, and short video — not dense text.</p></div>
+      <div class="card"><h3>📉 The summer slide</h3><p>Long breaks erase gains; the next grade starts behind.</p></div>
+      <div class="card"><h3>🤷 No parent visibility</h3><p>Caregivers can't see what was practiced, how much, or how well.</p></div>
+    </div>
+  </section>
+
+  <!-- 3. Our Answer -->
+  <section class="slide center">
+    <p class="eyebrow">Our Answer</p>
+    <h2>Game-style learning, <span class="hl">built for visual kids</span></h2>
+    <div class="two">
+      <ul>
+        <li><strong>Quests, not worksheets</strong> — anime-styled missions per subject.</li>
+        <li><strong>XP, badges, streaks & confetti</strong> keep kids coming back.</li>
+        <li><strong>20-minute sprints</strong> with a visible focus timer.</li>
+        <li><strong>Narration</strong> reads the mission aloud for low-friction starts.</li>
+        <li><strong>Interactive quizzes</strong> give instant feedback.</li>
+      </ul>
+      <ul>
+        <li><strong>Two learners today:</strong> Cheikh (rising 7th) & Seydina (5th).</li>
+        <li>One grade-switcher covers both.</li>
+        <li>Everything is <strong>self-contained</strong> — no build step, no ads.</li>
+        <li>Progress saves automatically across devices.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4a. Product tour: Home -->
+  <section class="slide">
+    <p class="eyebrow">Product Tour · 1 of 4</p>
+    <h2>The <span class="hl">quest home</span></h2>
+    <div class="shotWrap">
+      <img class="shot" src="assets/shots/home.jpg" alt="Diop Yaba Academy home screen with subject quests, XP and focus timer" />
+    </div>
+    <p class="caption">Subject quests, XP dashboard, streaks, and a focus timer — the game hub.</p>
+  </section>
+
+  <!-- 4b. Product tour: Weekly -->
+  <section class="slide">
+    <p class="eyebrow">Product Tour · 2 of 4</p>
+    <h2>The <span class="hl">weekly homework</span></h2>
+    <div class="shotWrap">
+      <img class="shot" src="assets/shots/weekly.jpg" alt="Weekly homework view with four daily subject sprints and quick-checks" />
+    </div>
+    <p class="caption">36 weeks · 4 subjects · one 20-minute sprint a day, each with a video and quick-check.</p>
+  </section>
+
+  <!-- 4c. Product tour: Worksheet -->
+  <section class="slide">
+    <p class="eyebrow">Product Tour · 3 of 4</p>
+    <h2>The <span class="hl">printable worksheet</span></h2>
+    <div class="shotWrap">
+      <img class="shot" src="assets/shots/worksheet.jpg" alt="Printable weekly worksheet with problems and parent answer key" />
+    </div>
+    <p class="caption">Print any week — with a separate <strong>parent answer key</strong> for offline reinforcement.</p>
+  </section>
+
+  <!-- 4d. Product tour: Parent -->
+  <section class="slide">
+    <p class="eyebrow">Product Tour · 4 of 4</p>
+    <h2>The <span class="hl">parent dashboard</span></h2>
+    <div class="shotWrap">
+      <img class="shot" src="assets/shots/parent.jpg" alt="Parent dashboard showing both kids' XP, streaks, quiz averages and awards" />
+    </div>
+    <p class="caption">Both kids at a glance: XP, quests, streaks, quiz average, awards, and weekly activity.</p>
+  </section>
+
+  <!-- 5. Standards -->
+  <section class="slide center">
+    <p class="eyebrow">Curriculum</p>
+    <h2>Aligned to <span class="hl">Ohio Learning Standards</span></h2>
+    <div class="two">
+      <ul>
+        <li>Every weekly subject carries a <strong>standard code</strong> (e.g. <span style="color:var(--cyan-soft)">7.NS.1</span>, <span style="color:var(--cyan-soft)">RL.7.4</span>).</li>
+        <li>Concept → sprint → problem set → quick-check, all mapped to a standard.</li>
+        <li>Four core subjects: <strong>Math, ELA, Science, Social Studies</strong>.</li>
+      </ul>
+      <div class="card">
+        <h3>Why we author our own worksheets</h3>
+        <p>Paid worksheet sites restrict redistribution. Authoring our own content keeps the product <strong>legally clean, self-contained, and fully alignable</strong> — while we link out to free explainers (Khan Academy, CK-12, Nat Geo) for instruction.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Weekly rhythm -->
+  <section class="slide center">
+    <p class="eyebrow">The Weekly Rhythm</p>
+    <h2>Four sprints, <span class="hl">then print on Friday</span></h2>
+    <div class="steps">
+      <div class="step"><div class="n">🧮 Mon</div><p><strong>Math</strong> — 20-min sprint + quick-check</p></div>
+      <div class="step"><div class="n">📚 Tue</div><p><strong>ELA</strong> — 20-min sprint + quick-check</p></div>
+      <div class="step"><div class="n">🔬 Wed</div><p><strong>Science</strong> — 20-min sprint + quick-check</p></div>
+      <div class="step"><div class="n">🌍 Thu</div><p><strong>Social Studies</strong> — 20-min sprint + quick-check</p></div>
+    </div>
+    <p style="margin-top:20px"><strong style="color:var(--yellow)">🖨️ Friday:</strong> print the weekly worksheet + answer key to reinforce offline.</p>
+  </section>
+
+  <!-- 7. Learning science -->
+  <section class="slide center">
+    <p class="eyebrow">Why It Works</p>
+    <h2>The <span class="hl">learning science</span> behind it</h2>
+    <div class="cards">
+      <div class="card"><h3>⏱️ Short sprints</h3><p>Bounded 20-min work fits real attention spans.</p></div>
+      <div class="card"><h3>🎮 Gamification</h3><p>XP, badges & streaks build intrinsic motivation.</p></div>
+      <div class="card"><h3>🎨 Dual coding</h3><p>Words + images + video engage both channels.</p></div>
+      <div class="card"><h3>⚡ Immediate feedback</h3><p>Quick-checks mark answers on the spot.</p></div>
+      <div class="card"><h3>🔁 Retrieval practice</h3><p>Quizzes force recall, not re-reading.</p></div>
+      <div class="card"><h3>📅 Consistency</h3><p>A steady weekly rhythm beats the summer slide.</p></div>
+    </div>
+  </section>
+
+  <!-- 8. Awards & motivation loop -->
+  <section class="slide center">
+    <p class="eyebrow">Motivation Loop</p>
+    <h2>Awards keep the <span class="hl">momentum</span> going</h2>
+    <div class="loop">
+      <div class="node"><b>🎯</b>Do a sprint</div>
+      <span class="arrow">→</span>
+      <div class="node"><b>⭐</b>Earn XP</div>
+      <span class="arrow">→</span>
+      <div class="node"><b>🏆</b>Unlock award</div>
+      <span class="arrow">→</span>
+      <div class="node"><b>🔥</b>Keep the streak</div>
+    </div>
+    <div class="badgeRow" style="justify-content:flex-start;margin-top:26px">
+      <span class="badge">🌟 First Quest</span>
+      <span class="badge">⚔️ Quest Knight</span>
+      <span class="badge">🧙 Focus Wizard</span>
+      <span class="badge">🧠 Quiz Master</span>
+      <span class="badge">🗓️ Weekly Warrior</span>
+      <span class="badge">👑 Quest Champion</span>
+    </div>
+  </section>
+
+  <!-- 9. Parent visibility -->
+  <section class="slide center">
+    <p class="eyebrow">For Parents & Coaches</p>
+    <h2>Honest visibility, <span class="hl">zero hovering</span></h2>
+    <div class="two">
+      <ul>
+        <li>See <strong>both children</strong> on one dashboard.</li>
+        <li>XP, quests done, day streaks, and <strong>quiz averages</strong>.</li>
+        <li>Weekly activity rollups and earned awards.</li>
+        <li>Printable worksheets + answer keys to support offline.</li>
+      </ul>
+      <div class="card">
+        <h3>Reliable by design</h3>
+        <p>Progress is saved to a database with a <strong>merge-on-write</strong> sync, so multi-device use never erases work. A local copy keeps things running even offline.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. Privacy & safety -->
+  <section class="slide center">
+    <p class="eyebrow">Privacy & Safety</p>
+    <h2>Built to be <span class="hl">safe for kids</span></h2>
+    <div class="cards">
+      <div class="card"><h3>🪪 Minimal data</h3><p>First names, grade, and progress only — no email, no photos, no PII.</p></div>
+      <div class="card"><h3>🚫 No ads or trackers</h3><p>We don't advertise to kids or sell data.</p></div>
+      <div class="card"><h3>🛡️ Sanitized input</h3><p>The server clamps and whitelists all saved data.</p></div>
+      <div class="card"><h3>👪 COPPA-mindful roadmap</h3><p>Consent, policy, and deletion controls before onboarding outside the family.</p></div>
+    </div>
+  </section>
+
+  <!-- 11. Roadmap -->
+  <section class="slide center">
+    <p class="eyebrow">Roadmap</p>
+    <h2>From <span class="hl">2 kids</span> to <span class="hl">every scholar</span></h2>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><p><strong>Multi-tenant</strong><br/>Accounts, auth, parental consent</p></div>
+      <div class="step"><div class="n">2</div><p><strong>Educators</strong><br/>Classrooms, rosters, more grades/weeks</p></div>
+      <div class="step"><div class="n">3</div><p><strong>Smarter</strong><br/>Adaptive quick-checks & analytics</p></div>
+      <div class="step"><div class="n">4</div><p><strong>Everywhere</strong><br/>PWA install + production deploy</p></div>
+    </div>
+    <p style="margin-top:18px">The MVP has already validated the core loop with real learners.</p>
+  </section>
+
+  <!-- 12. Closing / CTA -->
+  <section class="slide title-slide">
+    <p class="eyebrow">Join the Quest</p>
+    <h1>Make summer <span style="color:var(--yellow)">count</span>.</h1>
+    <p class="subtitle">Consistent, standards-aligned practice that kids actually want to do — and that parents can see.</p>
+    <div class="ctaBtns">
+      <a class="ctaBtn" href="index.html">🎮 Open Diop Yaba Academy</a>
+      <a class="ctaBtn alt" href="parent.html">📊 View the Parent Dashboard</a>
+    </div>
+  </section>
+
+  <div class="brandTag">⚔️ Diop Yaba Academy</div>
+  <div class="counter"><span id="cur">1</span> / <span id="total">12</span></div>
+  <div class="controls">
+    <button class="ctrlBtn" id="prevBtn" aria-label="Previous slide">‹</button>
+    <button class="ctrlBtn" id="nextBtn" aria-label="Next slide">›</button>
+  </div>
+  <div class="hint">Use ← → arrow keys to navigate</div>
+</div>
+
+<script>
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var idx = 0;
+  var curEl = document.getElementById('cur');
+  var totalEl = document.getElementById('total');
+  totalEl.textContent = slides.length;
+
+  function show(n){
+    idx = Math.max(0, Math.min(n, slides.length - 1));
+    slides.forEach(function(s, i){ s.classList.toggle('active', i === idx); });
+    curEl.textContent = idx + 1;
+  }
+  function next(){ show(idx + 1); }
+  function prev(){ show(idx - 1); }
+
+  document.getElementById('nextBtn').addEventListener('click', next);
+  document.getElementById('prevBtn').addEventListener('click', prev);
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); next(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    else if (e.key === 'Home') { show(0); }
+    else if (e.key === 'End') { show(slides.length - 1); }
+  });
+  // Tap left/right half on touch devices
+  document.getElementById('stage').addEventListener('click', function(e){
+    if (e.target.closest('a, button, .controls')) return;
+    var r = this.getBoundingClientRect();
+    if (e.clientX - r.left > r.width * 0.5) next(); else prev();
+  });
+  show(0);
+</script>
+</body>
+</html>

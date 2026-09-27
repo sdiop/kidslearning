@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Parent Dashboard — Diop Yaba Academy</title>
+<link rel="stylesheet" href="styles.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>" />
+<style>
+  .dashWrap { max-width: 1100px; margin: 0 auto; padding: 24px 20px 60px; }
+  .dashHead { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+  .dashHead h1 { margin: 0; }
+  .kidGrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+  .kidCard { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 16px; padding: 20px; }
+  .kidCard h2 { margin: 0 0 4px; }
+  .kidGradeTag { opacity: .75; font-size: .9rem; margin-bottom: 14px; }
+  .statRow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 14px; }
+  .statBox { background: rgba(0,0,0,.25); border-radius: 10px; padding: 10px 6px; text-align: center; }
+  .statBox b { display: block; font-size: 1.3rem; color: #fde047; }
+  .statBox span { font-size: .75rem; opacity: .8; }
+  .awardChips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .awardChips span { background: rgba(253,224,71,.15); border: 1px solid rgba(253,224,71,.4); border-radius: 999px; padding: 4px 10px; font-size: .8rem; }
+  .weekTable { width: 100%; border-collapse: collapse; font-size: .85rem; }
+  .weekTable th, .weekTable td { text-align: left; padding: 5px 8px; border-bottom: 1px solid rgba(255,255,255,.08); }
+  .lastActive { font-size: .78rem; opacity: .65; margin-top: 10px; }
+  .backLink { color: #7dd3fc; text-decoration: none; font-weight: 600; }
+  .loading { text-align: center; opacity: .7; padding: 60px 0; }
+</style>
+</head>
+<body>
+<div class="dashWrap">
+  <div class="dashHead">
+    <h1>📊 Parent Dashboard</h1>
+    <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap">
+      <a class="backLink" href="leaderboard.html">🏆 Leaderboard</a>
+      <a class="backLink" href="deck.html">📽️ View Presentation</a>
+      <a class="backLink" href="index.html">← Back to Diop Yaba Academy</a>
+    </div>
+  </div>
+  <p>Both kids at a glance — progress is saved automatically and synced across devices.</p>
+  <div id="dash" class="kidGrid"><div class="loading">Loading progress…</div></div>
+</div>
+<script>
+function fmtDate(iso) {
+  if (!iso) return 'No activity yet';
+  return 'Last active: ' + new Date(iso).toLocaleString();
+}
+fetch('/api/dashboard').then(r => r.json()).then(kids => {
+  const dash = document.getElementById('dash');
+  dash.innerHTML = kids.map(k => `
+    <div class="kidCard">
+      <h2>${k.grade === '7' ? '⚔️' : '🛡️'} ${k.name}</h2>
+      <div class="kidGradeTag">${k.grade === '7' ? 'Rising 7th Grade' : '5th Grade'}</div>
+      <div class="statRow">
+        <div class="statBox"><b>${k.xp}</b><span>XP</span></div>
+        <div class="statBox"><b>${k.questsDone}</b><span>Quests</span></div>
+        <div class="statBox"><b>${k.streak}</b><span>Streak</span></div>
+        <div class="statBox"><b>${k.quizAvg === null ? '—' : k.quizAvg + '%'}</b><span>Quiz avg (${k.quizCount})</span></div>
+      </div>
+      <div class="awardChips">${k.awards.length ? k.awards.map(a => `<span>${a.emoji} ${a.label}</span>`).join('') : '<span>No awards yet — first quest earns one!</span>'}</div>
+      <table class="weekTable">
+        <tr><th>Week of</th><th>Activities</th><th>XP earned</th></tr>
+        ${k.weekly.length ? k.weekly.map(w => `<tr><td>${w.week}</td><td>${w.events}</td><td>${w.xp}</td></tr>`).join('') : '<tr><td colspan="3">No weekly activity recorded yet</td></tr>'}
+      </table>
+      <div class="lastActive">${fmtDate(k.lastActive)}</div>
+    </div>`).join('');
+}).catch(() => {
+  document.getElementById('dash').innerHTML = '<div class="loading">Could not load progress. Is the server running?</div>';
+});
+</script>
+</body>
+</html>

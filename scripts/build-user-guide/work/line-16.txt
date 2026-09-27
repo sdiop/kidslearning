@@ -1,0 +1,1 @@
+Leaderboard shows overall standings, this week’s XP, weekly days, and quiz averages; it is a progress view, not a judgement.

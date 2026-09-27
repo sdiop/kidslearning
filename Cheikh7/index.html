@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kids Learning: Diop Yaba Academy</title>
+<meta name="theme-color" content="#5b21b6" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="Diop Yaba Academy" />
+<link rel="manifest" href="/manifest.json" />
+<link rel="apple-touch-icon" href="/assets/icon-192.png" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚔️</text></svg>" />
+</head>
+<body>
+<div class="gradeSelector">
+  <button id="grade5Btn" onclick="switchGrade('5')">5th Grade — Seydina</button>
+  <button id="grade7Btn" onclick="switchGrade('7')">7th Grade — Cheikh</button>
+  <label class="gradeSelectMobile" for="gradeSelect">Grade</label>
+  <select id="gradeSelect" class="gradeSelectMobile" aria-label="Choose grade" onchange="onGradeSelectChange(this)">
+    <option value="5">5th Grade — Seydina</option>
+    <option value="7">7th Grade — Cheikh</option>
+  </select>
+  <button class="progressMenuButton" type="button" aria-label="Open progress report" title="Progress report" onclick="showProgressSheet()">📈</button>
+   <button class="guideTrigger" type="button" onclick="openUserGuide()">How to use this app</button>
+  <a class="parentLink" href="parent.html"><span class="linkFull">📊 Parent</span><span class="linkIcon">📊</span></a>
+  <a class="parentLink" href="leaderboard.html"><span class="linkFull">🏆 Leaderboard</span><span class="linkIcon">🏆</span></a>
+  <span id="syncStatus" class="syncStatus"></span>
+</div>
+<dialog id="userGuideDialog" class="userGuideDialog" aria-labelledby="userGuideTitle" aria-describedby="userGuideIntro">
+  <div class="guideDialogInner">
+    <button class="guideClose" type="button" aria-label="Close user guide" onclick="closeUserGuide()">×</button>
+    <p class="eyebrow">A quick tour</p>
+    <h2 id="userGuideTitle">Welcome to Diop Yaba Academy</h2>
+    <p id="userGuideIntro">See how to choose a quest, earn XP, and find help whenever you need it.</p>
+    <div class="guidePlayer" id="guidePlayerWrap">
+      <video id="userGuideVideo" controls preload="metadata" poster="/assets/user-guide-poster.jpg" playsinline>
+        <source src="/assets/user-guide.mp4" type="video/mp4" />
+        <track kind="captions" src="/assets/user-guide.vtt" srclang="en" label="English captions" default />
+        Your browser cannot play this video.
+      </video>
+      <div id="guideFallback" class="guideFallback" hidden>
+        <strong>The video is not available right now.</strong>
+        <p>Use the chapter guide below to start exploring. The app still works without the video.</p>
+      </div>
+    </div>
+    <nav class="guideChapters" aria-label="Guide chapters">
+      <h3>Jump to a chapter</h3>
+      <button type="button" data-guide-time="0">Choose your grade</button>
+      <button type="button" data-guide-time="8.000">Start a quest</button>
+      <button type="button" data-guide-time="33.289">Use quizzes and earn XP</button>
+       <button type="button" data-guide-time="52.146">Progress and focus timer</button>
+       <button type="button" data-guide-time="73.174">Weekly work and worksheets</button>
+       <button type="button" data-guide-time="102.980">Parent views and leaderboard</button>
+       <button type="button" data-guide-time="122.324">Offline use and installation</button>
+       <button type="button" data-guide-time="139.845">Reopen this guide</button>
+    </nav>
+    <div class="guideActions">
+      <button type="button" onclick="watchUserGuide()">Watch the guide</button>
+      <button type="button" class="secondary" onclick="startExploring()">Start exploring</button>
+    </div>
+  </div>
+</dialog>
+<header class="hero" id="hero7">
+  <div class="heroText">
+    <p class="eyebrow">Rising 7th Grade Summer Prep</p>
+    <h1>Diop Yaba Academy</h1>
+    <p class="subtitle">A visual, game-style, short-sprint course for a bright learner who benefits from movement, clear missions, and lots of visual cues.</p>
+    <div class="heroButtons"><button onclick="document.querySelector('#course').scrollIntoView({behavior:'smooth'})">Start a Quest</button><button class="secondary" onclick="document.querySelector('#focus').scrollIntoView({behavior:'smooth'})">Focus Timer</button></div>
+  </div>
+  <img src="assets/anime_learning_portals.png" alt="Anime-style learning adventure portals" />
+</header>
+<header class="hero hidden" id="hero5">
+  <div class="heroText">
+    <p class="eyebrow">5th Grade Prep</p>
+    <h1>Diop Yaba Academy</h1>
+    <p class="subtitle">A visual, game-style, short-sprint course with narration, progress tracking, quizzes, XP, badges, and parent coaching.</p>
+    <div class="heroButtons"><button onclick="document.querySelector('#course').scrollIntoView({behavior:'smooth'})">Start Learning</button><button class="secondary" onclick="showProgressSheet()">See Progress</button></div>
+  </div>
+  <div class="animeBoard">
+    <div class="portal p1">🧮</div>
+    <div class="portal p2">📚</div>
+    <div class="portal p3">✍️</div>
+    <div class="portal p4">🔬</div>
+    <div class="portal p5">🌍</div>
+    <div class="heroCard">Quest Map</div>
+  </div>
+</header>
+<main>
+<section class="dashboard">
+  <div class="stat"><span id="xp">0</span><label>XP</label></div>
+  <div class="stat"><span id="done">0</span><label>Quests Done</label></div>
+  <div class="stat"><span id="streak">0</span><label>Day Streak</label></div>
+  <div class="stat"><span id="badge">Starter</span><label>Badge</label></div>
+</section>
+<section class="panel progressSheet hidden" id="progressTracker" aria-hidden="true"></section>
+<section class="panel" id="focus">
+  <h2>Focus Mode: 20-Minute Sprint</h2>
+  <p>For scattered attention: pick ONE quest, clear the desk, start the timer, and stop when the bell hits zero. Movement break after every sprint.</p>
+  <div class="timer"><span id="timer">20:00</span><div><button onclick="startTimer()">Start</button><button class="secondary" onclick="resetTimer()">Reset</button></div></div>
+  <div class="rules"><span>1. One tab only</span><span>2. One mission card</span><span>3. Pencil in hand</span><span>4. 3-minute break after</span></div>
+</section>
+<section class="panel audioPanel">
+  <h2>Audio Narration</h2>
+  <p>Use the narration controls on each quest card. The voice uses the browser's built-in speech engine, so no extra app is required. Internet is only needed for optional video links.</p>
+  <div class="voiceControls"><button onclick="stopNarration()">Stop Narration</button><button class="secondary" onclick="replayLastNarration()">Replay Last</button></div>
+</section>
+<nav class="subjectTabs" id="subjectTabs" aria-label="Subject navigation"></nav>
+<section class="course" id="course"></section>
+<div id="weekly"></div>
+<details class="panel collapsiblePanel">
+  <summary>Parent Coach Script</summary>
+  <div class="coachGrid">
+    <div><h3>Before</h3><p>“Pick your quest. What will finished look like?”</p></div>
+    <div><h3>During</h3><p>“Show me your next tiny step. Do not solve the whole thing in your head.”</p></div>
+    <div><h3>After</h3><p>“Tell me one thing that got easier and one thing to retry tomorrow.”</p></div>
+  </div>
+</details>
+<details class="panel sources collapsiblePanel" id="sources7">
+  <summary>Source Map</summary>
+  <ul>
+    <li>Cobb County rising 7th packet topic list: ELA, math, reading, science, and social studies summer resources.</li>
+    <li>CK-12 Characteristics of Life lesson for the science preview.</li>
+    <li>Khan Academy 7th grade readiness pathways for math practice.</li>
+    <li>National Geographic latitude/longitude interactive for geography practice.</li>
+  </ul>
+</details>
+<details class="panel sources hidden collapsiblePanel" id="sources5">
+  <summary>Source Map</summary>
+  <ul>
+    <li>Khan Academy 5th grade math: decimals, fractions, volume, coordinate plane.</li>
+    <li>Grade 5 ELA: quoting accurately, theme, figurative language, context clues.</li>
+    <li>NGSS grade 5 science: matter, energy, ecosystems, Earth systems, space.</li>
+    <li>5th grade social studies: maps, timelines, civics, economics.</li>
+  </ul>
+</details>
+</main>
+<script src="data/grade5_data.js"></script>
+<script src="data/annual_g5_math.js"></script>
+<script src="data/annual_g5_ela.js"></script>
+<script src="data/annual_g5_science.js"></script>
+<script src="data/annual_g5_social.js"></script>
+<script src="data/annual_grade5.js"></script>
+<script src="data/annual_g7_math.js"></script>
+<script src="data/annual_g7_ela.js"></script>
+<script src="data/annual_g7_science.js"></script>
+<script src="data/annual_g7_social.js"></script>
+<script src="data/annual_grade7.js"></script>
+<script src="data/weekly_grade5.js"></script>
+<script src="data/weekly_grade7.js"></script>
+<script src="quiz-rules.js"></script>
+<script src="app.js"></script>
+<script src="weekly.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch(error => {
+        console.error('Service worker registration failed:', error);
+      });
+    });
+  }
+</script>
+</body>
+</html>

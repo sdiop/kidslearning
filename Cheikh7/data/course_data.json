@@ -1,0 +1,1027 @@
+[
+  {
+    "id": "ela",
+    "name": "ELA Skills Lab",
+    "emoji": "\ud83d\udcda",
+    "color": "#ef4444",
+    "source": "Cobb rising 7th grade packet lists 7th Grade ELA Skills Review, 7th ELA Summer Packet, and 7th Grade Figurative Language Packet.",
+    "quests": [
+      {
+        "title": "Figurative Language Anime Detective",
+        "minutes": 20,
+        "mission": "Spot simile, metaphor, personification, hyperbole, idiom, and alliteration in short scenes.",
+        "video": "https://www.youtube.com/results?search_query=figurative+language+middle+school+simile+metaphor",
+        "task": "Create a 6-panel mini comic. Each panel must use one type of figurative language. Label the trick used.",
+        "quiz": [
+          [
+            "A comparison using like or as is a...",
+            "simile"
+          ],
+          [
+            "The sentence 'The classroom was a zoo' is a...",
+            "metaphor"
+          ],
+          [
+            "Giving human traits to a nonhuman thing is...",
+            "personification"
+          ]
+        ],
+        "narration": "Mission briefing. Figurative Language Anime Detective. Spot simile, metaphor, personification, hyperbole, idiom, and alliteration in short scenes. Your artifact is: Create a 6-panel mini comic. Each panel must use one type of figurative language. Label the trick used. First, open the explore link if needed. Then work for one focused sprint. When finished, explain your answer out loud and mark the quest done.",
+        "interactiveQuiz": [
+          {
+            "type": "multiple_choice",
+            "question": "A comparison using like or as is a...",
+            "answer": "simile",
+            "choices": [
+              "simile",
+              "metaphor",
+              "personification",
+              "hyperbole"
+            ]
+          },
+          {
+            "type": "multiple_choice",
+            "question": "The sentence 'The classroom was a zoo' is a...",
+            "answer": "metaphor",
+            "choices": [
+              "simile",
+              "metaphor",
+              "personification",
+              "hyperbole"
+            ]
+          },
+          {
+            "type": "multiple_choice",
+            "question": "Giving human traits to a nonhuman thing is...",
+            "answer": "personification",
+            "choices": [
+              "simile",
+              "metaphor",
+              "personification",
+              "hyperbole"
+            ]
+          },
+          {
+            "type": "true_false",
+            "question": "A strong paragraph usually has a main idea and supporting details.",
+            "answer": "true"
+          },
+          {
+            "type": "drag_match",
+            "question": "Match each term to the best clue.",
+            "pairs": [
+              [
+                "Simile",
+                "uses like or as"
+              ],
+              [
+                "Metaphor",
+                "says one thing is another"
+              ],
+              [
+                "Evidence",
+                "facts or examples"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Paragraph Power-Up",
+        "minutes": 20,
+        "mission": "Build topic sentence, evidence, explanation, and closing sentence.",
+        "video": "https://www.youtube.com/results?search_query=topic+sentence+supporting+details+middle+school",
+        "task": "Write one paragraph about a favorite game, sport, or movie. Highlight topic sentence in yellow and evidence in blue.",
+        "quiz": [
+          [
+            "What sentence tells the main idea of a paragraph?",
+            "topic sentence"
+          ],
+          [
+            "Facts, quotes, or examples are called...",
+            "evidence"
+          ]
+        ],
+        "narration": "Mission briefing. Paragraph Power-Up. Build topic sentence, evidence, explanation, and closing sentence. Your artifact is: Write one paragraph about a favorite game, sport, or movie. Highlight topic sentence in yellow and evidence in blue. First, open the explore link if needed. Then work for one focused sprint. When finished, explain your answer out loud and mark the quest done.",
+        "interactiveQuiz": [
+          {
+            "type": "multiple_choice",
+            "question": "What sentence tells the main idea of a paragraph?",
+            "answer": "topic sentence",
+            "choices": [
+              "topic sentence",
+              "evidence",
+              "context clues",
+              "conclusion"
+            ]
+          },
+          {
+            "type": "multiple_choice",
+            "question": "Facts, quotes, or examples are called...",
+            "answer": "evidence",
+            "choices": [
+              "topic sentence",
+              "evidence",
+              "context clues",
+              "conclusion"
+            ]
+          },
+          {
+            "type": "true_false",
+            "question": "A strong paragraph usually has a main idea and supporting details.",
+            "answer": "true"
+          },
+          {
+            "type": "drag_match",
+            "question": "Match each term to the best clue.",
+            "pairs": [
+              [
+                "Simile",
+                "uses like or as"
+              ],
+              [
+                "Metaphor",
+                "says one thing is another"
+              ],
+              [
+                "Evidence",
+                "facts or examples"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Vocabulary XP",
+        "minutes": 15,
+        "mission": "Use context clues to infer meanings.",
+        "video": "https://www.youtube.com/results?search_query=context+clues+middle+school",
+        "task": "Pick 5 unfamiliar words from a book page. Guess each meaning, then check a dictionary.",
+        "quiz": [
+          [
+            "Words around an unknown word that help you infer meaning are...",
+            "context clues"
+          ]
+        ],
+        "narration": "Mission briefing. Vocabulary XP. Use context clues to infer meanings. Your artifact is: Pick 5 unfamiliar words from a book page. Guess each meaning, then check a dictionary. First, open the explore link if needed. Then work for one focused sprint. When finished, explain your answer out loud and mark the quest done.",
+        "interactiveQuiz": [
+          {
+            "type": "multiple_choice",
+            "question": "Words around an unknown word that help you infer meaning are...",
+            "answer": "context clues",
+            "choices": [
+              "topic sentence",
+              "evidence",
+              "context clues",
+              "conclusion"
+            ]
+          },
+          {
+            "type": "true_false",
+            "question": "A strong paragraph usually has a main idea and supporting details.",
+            "answer": "true"
+          },
+          {
+            "type": "drag_match",
+            "question": "Match each term to the best clue.",
+            "pairs": [
+              [
+                "Simile",
+                "uses like or as"
+              ],
+              [
+                "Metaphor",
+                "says one thing is another"
+              ],
+              [
+                "Evidence",
+                "facts or examples"
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "image": "assets/anime_ela_lab.png",
+    "narrationIntro": "Welcome to ELA Skills Lab. Choose one quest, start the focus timer, and finish one visible artifact before moving on."
+  },
+  {
+    "id": "math",
+    "name": "Math Quest Arena",
+    "emoji": "\ud83e\uddee",
+    "color": "#2563eb",
+    "source": "Cobb packet identifies Advanced and On Level 7th Grade Math and Math 7-8 resources, while Khan Academy lists 'Get ready for 7th grade math' units such as negative numbers, fractions/decimals/percentages, rates/proportions, expressions/equations/inequalities, geometry, and statistics/probability.",
+    "quests": [
+      {
+        "title": "Negative Number Duel",
+        "minutes": 20,
+        "mission": "Master adding and subtracting integers on a number line.",
+        "video": "https://www.khanacademy.org/math/get-ready-for-7th-grade/x54e8d5f5f2c9ef72:get-ready-for-negative-number-operations",
+        "task": "Draw a number line from -10 to 10. Make 8 jumps and write the equation for each jump.",
+        "quiz": [
+          [
+            "-3 + 7 = ?",
+            "4"
+          ],
+          [
+            "5 - 9 = ?",
+            "-4"
+          ],
+          [
+            "The distance from 0 is called...",
+            "absolute value"
+          ]
+        ],
+        "narration": "Mission briefing. Negative Number Duel. Master adding and subtracting integers on a number line. Your artifact is: Draw a number line from -10 to 10. Make 8 jumps and write the equation for each jump. First, open the explore link if needed. Then work for one focused sprint. When finished, explain your answer out loud and mark the quest done.",
+        "interactiveQuiz": [
+          {
+            "type": "multiple_choice",
+            "question": "-3 + 7 = ?",
+            "answer": "4",
+            "choices": [
+              "4",
+              "0",
+              "-2",
+              "10"
+            ]
+          },
+          {
+            "type": "multiple_choice",
+            "question": "5 - 9 = ?",
+            "answer": "-4",
+            "choices": [
+              "-4",
+              "0",
+              "-2",
+              "10"
+            ]
+          },
+          {
+            "type": "multiple_choice",
+            "question": "The distance from 0 is called...",
+            "answer": "absolute value",
+            "choices": [
+              "absolute value",
+              "ratio",
+              "latitude",
+              "theme"
+            ]
+          },
+          {
+            "type": "true_false",
+            "question": "A unit rate compares a quantity to one unit.",
+            "answer": "true"
+          },
+          {
+            "type": "drag_match",
+            "question": "Match each term to the best clue.",
+            "pairs": [
+              [
+                "Absolute value",
+                "distance from zero"
+              ],
+              [
+                "Unit rate",
+                "per one"
+              ],
+              [
+                "Area",
+                "space inside a shape"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Ratio Ramen Shop",
+        "minutes": 25,
+        "mission": "Use ratios, rates, and unit rates in a food-shop simulation.",
+        "video": "https://www.khanacademy.org/math/get-ready-for-7th-grade/x54e8d5f5f2c9ef72:get-ready-for-rates-proportional-relationships",
+        "task": "If 3 bowls use 6 eggs, build a table for 1, 2, 5, and 10 bowls. Find eggs per bowl.",
+        "quiz": [
+          [
+            "A rate with denominator 1 is a...",
+            "unit rate"
+          ],
+          [
+            "3 bowls need 6 eggs. Eggs per bowl?",
+            "2"
+          ]
+        ],
+        "narration": "Mission briefing. Ratio Ramen Shop. Use ratios, rates, and unit rates in a food-shop simulation. Your artifact is: If 3 bowls use 6 eggs, build a table for 1, 2, 5, and 10 bowls. Find eggs per bowl. First, open the explore link if needed. Then work for one focused sprint. When finished, explain your answer out loud and mark the quest done.",
+        "interactiveQuiz": [
+          {
+            "type": "multiple_choice",
+            "question": "A rate with denominator 1 is a...",
+            "answer": "unit rate",
+            "choices": [
+              "unit rate",
+              "ratio",
+              "latitude",
+              "theme"
+            ]
+          },
+          {
+            "type": "multiple_choice",
+            "question": "3 bowls need 6 eggs. Eggs per bowl?",
+            "answer": "2",
+            "choices": [
+              "2",
+              "0",
+              "-2",
+              "10"
+            ]
+          },
+          {
+            "type": "true_false",
+            "question": "A unit rate compares a quantity to one unit.",
+            "answer": "true"
+          },
+          {
+            "type": "drag_match",
+            "question": "Match each term to the best clue.",
+            "pairs": [
+              [
+                "Absolute value",
+                "distance from zero"
+              ],
+              [
+                "Unit rate",
+                "per one"
+              ],
+              [
+                "Area",
+                "space inside a shape"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Equation Escape Room",
+        "minutes": 25,
+        "mission": "Solve one-step and two-step equations.",
+        "video": "https://www.khanacademy.org/math/get-ready-for-7th-grade/x54e8d5f5f2c9ef72:get-ready-for-expressions-equations-inequalities",
+        "task": "Solve 6 puzzle locks: x+7=15, 3x=24, x/4=6, 2x+3=11, 5x-2=18, x-9=-2.",
+        "quiz": [
+          [
+            "x + 7 = 15, x = ?",
+            "8"
+          ],
+          [
+            "3x = 24, x = ?",
+            "8"
+          ],
+          [
+            "2x + 3 = 11, x = ?",
+            "4"
+          ]
+        ],
+        "narration": "Mission briefing. Equation Escape Room. Solve one-step and two-step equations. Your artifact is: Solve 6 puzzle locks: x+7=15, 3x=24, x/4=6, 2x+3=11, 5x-2=18, x-9=-2. First, open the explore link if needed. Then work for one focused sprint. When finished, explain your answer out loud and mark the quest done.",
+        "interactiveQuiz": [
+          {
+            "type": "multiple_choice",
+            "question": "x + 7 = 15, x = ?",
+            "answer": "8",
+            "choices": [
+              "8",
+              "0",
+              "-2",
+              "10"
+            ]
+          },
+          {
+            "type": "multiple_choice",
+            "question": "3x = 24, x = ?",
+            "answer": "8",
+            "choices": [
+              "8",
+              "0",
+              "-2",
+              "10"
+            ]
+          },
+          {
+            "type": "multiple_choice",
+            "question": "2x + 3 = 11, x = ?",
+            "answer": "4",
+            "choices": [
+              "4",
+              "0",
+              "-2",
+              "10"
+            ]
+          },
+          {
+            "type": "true_false",
+            "question": "A unit rate compares a quantity to one unit.",
+            "answer": "true"
+          },
+          {
+            "type": "drag_match",
+            "question": "Match each term to the best clue.",
+            "pairs": [
+              [
+                "Absolute value",
+                "distance from zero"
+              ],
+              [
+                "Unit rate",
+                "per one"
+              ],
+              [
+                "Area",
+                "space inside a shape"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Geometry Builder",
+        "minutes": 20,
+        "mission": "Review area, perimeter, angles, and volume with a design challenge.",
+        "video": "https://www.khanacademy.org/math/get-ready-for-7th-grade/x54e8d5f5f2c9ef72:get-ready-for-geometry",
+        "task": "Design a tiny room on graph paper and calculate perimeter and area.",
+        "quiz": [
+          [
+            "Area of rectangle 7 by 4?",
+            "28"
+          ],
+          [
+            "Perimeter of rectangle 7 by 4?",
+            "22"
+          ]
+        ],
+        "narration": "Mission briefing. Geometry Builder. Review area, perimeter, angles, and volume with a design challenge. Your artifact is: Design a tiny room on graph paper and calculate perimeter and area. First, open the explore link if needed. Then work for one focused sprint. When finished, explain your answer out loud and mark the quest done.",
+        "interactiveQuiz": [
+          {
+            "type": "multiple_choice",
+            "question": "Area of rectangle 7 by 4?",
+            "answer": "28",
+            "choices": [
+              "28",
+              "0",
+              "-2",
+              "10"
+            ]
+          },
+          {
+            "type": "multiple_choice",
+            "question": "Perimeter of rectangle 7 by 4?",
+            "answer": "22",
+            "choices": [
+              "22",
+              "0",
+              "-2",
+              "10"
+            ]
+          },
+          {
+            "type": "true_false",
+            "question": "A unit rate compares a quantity to one unit.",
+            "answer": "true"
+          },
+          {
+            "type": "drag_match",
+            "question": "Match each term to the best clue.",
+            "pairs": [
+              [
+                "Absolute value",
+                "distance from zero"
+              ],
+              [
+                "Unit rate",
+                "per one"
+              ],
+              [
+                "Area",
+                "space inside a shape"
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "image": "assets/anime_math_arena.png",
+    "narrationIntro": "Welcome to Math Quest Arena. Choose one quest, start the focus timer, and finish one visible artifact before moving on."
+  },
+  {
+    "id": "reading",
+    "name": "Reading Adventure Guild",
+    "emoji": "\ud83d\udde1\ufe0f",
+    "color": "#7c3aed",
+    "source": "Cobb packet includes a Rising 7th Grade Summer Reading Guide, and a Cobb reading PDF says rising 7th graders are required to read at least two books, one fiction and one nonfiction.",
+    "quests": [
+      {
+        "title": "Fiction Character Tracker",
+        "minutes": 25,
+        "mission": "Track setting, conflict, character choices, and theme.",
+        "video": "https://www.youtube.com/results?search_query=theme+plot+conflict+middle+school+reading",
+        "task": "Read 15 pages. Fill the character tracker in the app: goal, obstacle, choice, consequence.",
+        "quiz": [
+          [
+            "The lesson or big idea of a story is the...",
+            "theme"
+          ],
+          [
+            "A struggle between forces is a...",
+            "conflict"
+          ]
+        ],
+        "narration": "Mission briefing. Fiction Character Tracker. Track setting, conflict, character choices, and theme. Your artifact is: Read 15 pages. Fill the character tracker in the app: goal, obstacle, choice, consequence. First, open the explore link if needed. Then work for one focused sprint. When finished, explain your answer out loud and mark the quest done.",
+        "interactiveQuiz": [
+          {
+            "type": "multiple_choice",
+            "question": "The lesson or big idea of a story is the...",
+            "answer": "theme",
+            "choices": [
+              "theme",
+              "setting",
+              "plot twist",
+              "opinion"
+            ]
+          },
+          {
+            "type": "multiple_choice",
+            "question": "A struggle between forces is a...",
+            "answer": "conflict",
+            "choices": [
+              "conflict",
+              "setting",
+              "plot twist",
+              "opinion"
+            ]
+          },
+          {
+            "type": "true_false",
+            "question": "Evidence from the text should support an answer.",
+            "answer": "true"
+          },
+          {
+            "type": "drag_match",
+            "question": "Match each term to the best clue.",
+            "pairs": [
+              [
+                "Theme",
+                "lesson or big idea"
+              ],
+              [
+                "Conflict",
+                "struggle"
+              ],
+              [
+                "Main idea",
+                "central point"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Nonfiction Evidence Hunter",
+        "minutes": 25,
+        "mission": "Identify main idea, key details, and data points.",
+        "video": "https://www.youtube.com/results?search_query=main+idea+supporting+details+nonfiction+middle+school",
+        "task": "Read one article. Collect 3 facts and explain what each fact proves.",
+        "quiz": [
+          [
+            "The central point of a nonfiction text is the...",
+            "main idea"
+          ],
+          [
+            "Specific facts that prove the main idea are...",
+            "details"
+          ]
+        ],
+        "narration": "Mission briefing. Nonfiction Evidence Hunter. Identify main idea, key details, and data points. Your artifact is: Read one article. Collect 3 facts and explain what each fact proves. First, open the explore link if needed. Then work for one focused sprint. When finished, explain your answer out loud and mark the quest done.",
+        "interactiveQuiz": [
+          {
+            "type": "multiple_choice",
+            "question": "The central point of a nonfiction text is the...",
+            "answer": "main idea",
+            "choices": [
+              "main idea",
+              "setting",
+              "plot twist",
+              "opinion"
+            ]
+          },
+          {
+            "type": "multiple_choice",
+            "question": "Specific facts that prove the main idea are...",
+            "answer": "details",
+            "choices": [
+              "details",
+              "setting",
+              "plot twist",
+              "opinion"
+            ]
+          },
+          {
+            "type": "true_false",
+            "question": "Evidence from the text should support an answer.",
+            "answer": "true"
+          },
+          {
+            "type": "drag_match",
+            "question": "Match each term to the best clue.",
+            "pairs": [
+              [
+                "Theme",
+                "lesson or big idea"
+              ],
+              [
+                "Conflict",
+                "struggle"
+              ],
+              [
+                "Main idea",
+                "central point"
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "image": "assets/anime_reading_guild.png",
+    "narrationIntro": "Welcome to Reading Adventure Guild. Choose one quest, start the focus timer, and finish one visible artifact before moving on."
+  },
+  {
+    "id": "science",
+    "name": "Life Science Lab",
+    "emoji": "\ud83d\udd2c",
+    "color": "#16a34a",
+    "source": "The Cobb packet points students to CK-12 Middle School Life Science 2.0, section 1.8, Characteristics of Life. CK-12 states living organisms need energy, are composed of cells, respond to their environment, grow and reproduce, and maintain a stable internal environment.",
+    "quests": [
+      {
+        "title": "Is Fire Alive? Investigation",
+        "minutes": 25,
+        "mission": "Compare living vs nonliving things using evidence.",
+        "video": "https://flexbooks.ck12.org/cbook/ck-12-middle-school-life-science-2.0/section/1.8/primary/lesson/characteristics-of-life-ms-ls/",
+        "task": "Make a T-chart for fire, a plant, a phone, and a mushroom. Score each against the five characteristics of life.",
+        "quiz": [
+          [
+            "Smallest structural and functional unit of life?",
+            "cell"
+          ],
+          [
+            "Stable internal condition is called...",
+            "homeostasis"
+          ],
+          [
+            "Living things react to surroundings. This is response to...",
+            "environment"
+          ]
+        ],
+        "narration": "Mission briefing. Is Fire Alive? Investigation. Compare living vs nonliving things using evidence. Your artifact is: Make a T-chart for fire, a plant, a phone, and a mushroom. Score each against the five characteristics of life. First, open the explore link if needed. Then work for one focused sprint. When finished, explain your answer out loud and mark the quest done.",
+        "interactiveQuiz": [
+          {
+            "type": "multiple_choice",
+            "question": "Smallest structural and functional unit of life?",
+            "answer": "cell",
+            "choices": [
+              "cell",
+              "atom",
+              "organ",
+              "tissue"
+            ]
+          },
+          {
+            "type": "multiple_choice",
+            "question": "Stable internal condition is called...",
+            "answer": "homeostasis",
+            "choices": [
+              "homeostasis",
+              "ratio",
+              "latitude",
+              "theme"
+            ]
+          },
+          {
+            "type": "multiple_choice",
+            "question": "Living things react to surroundings. This is response to...",
+            "answer": "environment",
+            "choices": [
+              "environment",
+              "ratio",
+              "latitude",
+              "theme"
+            ]
+          },
+          {
+            "type": "true_false",
+            "question": "Living things are made of one or more cells.",
+            "answer": "true"
+          },
+          {
+            "type": "drag_match",
+            "question": "Match each term to the best clue.",
+            "pairs": [
+              [
+                "Cell",
+                "basic unit of life"
+              ],
+              [
+                "Homeostasis",
+                "stable internal condition"
+              ],
+              [
+                "Photosynthesis",
+                "plants make food using sunlight"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Energy Flow Comic",
+        "minutes": 20,
+        "mission": "Explain how organisms get energy.",
+        "video": "https://www.youtube.com/results?search_query=middle+school+life+science+energy+organisms+photosynthesis+food+chain",
+        "task": "Draw a 4-step energy comic: Sun -> plant -> animal -> decomposer.",
+        "quiz": [
+          [
+            "Plants make food using sunlight by...",
+            "photosynthesis"
+          ],
+          [
+            "Fungi that break down dead material are...",
+            "decomposers"
+          ]
+        ],
+        "narration": "Mission briefing. Energy Flow Comic. Explain how organisms get energy. Your artifact is: Draw a 4-step energy comic: Sun -> plant -> animal -> decomposer. First, open the explore link if needed. Then work for one focused sprint. When finished, explain your answer out loud and mark the quest done.",
+        "interactiveQuiz": [
+          {
+            "type": "multiple_choice",
+            "question": "Plants make food using sunlight by...",
+            "answer": "photosynthesis",
+            "choices": [
+              "photosynthesis",
+              "ratio",
+              "latitude",
+              "theme"
+            ]
+          },
+          {
+            "type": "multiple_choice",
+            "question": "Fungi that break down dead material are...",
+            "answer": "decomposers",
+            "choices": [
+              "decomposers",
+              "ratio",
+              "latitude",
+              "theme"
+            ]
+          },
+          {
+            "type": "true_false",
+            "question": "Living things are made of one or more cells.",
+            "answer": "true"
+          },
+          {
+            "type": "drag_match",
+            "question": "Match each term to the best clue.",
+            "pairs": [
+              [
+                "Cell",
+                "basic unit of life"
+              ],
+              [
+                "Homeostasis",
+                "stable internal condition"
+              ],
+              [
+                "Photosynthesis",
+                "plants make food using sunlight"
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "image": "assets/anime_science_lab.png",
+    "narrationIntro": "Welcome to Life Science Lab. Choose one quest, start the focus timer, and finish one visible artifact before moving on."
+  },
+  {
+    "id": "social",
+    "name": "World Explorer Ops",
+    "emoji": "\ud83c\udf0d",
+    "color": "#0891b2",
+    "source": "The Cobb packet lists social studies resources including Latitude and Longitude, Factors that Affect Climate, SW Asia Economics, Why Was Israel Created as a Jewish State, and World Studies chapters/puzzles. National Geographic explains latitude and longitude as a gridded coordinate system for pinpointing exact locations on Earth.",
+    "quests": [
+      {
+        "title": "Latitude/Longitude Treasure Map",
+        "minutes": 25,
+        "mission": "Use coordinates to locate places around the world.",
+        "video": "https://education.nationalgeographic.org/resource/mapmaker-latitude-longitude/",
+        "task": "Use a map to find 5 cities. Write each city with latitude first and longitude second.",
+        "quiz": [
+          [
+            "Latitude measures north/south from the...",
+            "equator"
+          ],
+          [
+            "Longitude measures east/west from the...",
+            "prime meridian"
+          ],
+          [
+            "0 degrees latitude is the...",
+            "equator"
+          ]
+        ],
+        "narration": "Mission briefing. Latitude/Longitude Treasure Map. Use coordinates to locate places around the world. Your artifact is: Use a map to find 5 cities. Write each city with latitude first and longitude second. First, open the explore link if needed. Then work for one focused sprint. When finished, explain your answer out loud and mark the quest done.",
+        "interactiveQuiz": [
+          {
+            "type": "multiple_choice",
+            "question": "Latitude measures north/south from the...",
+            "answer": "equator",
+            "choices": [
+              "equator",
+              "latitude",
+              "longitude",
+              "elevation"
+            ]
+          },
+          {
+            "type": "multiple_choice",
+            "question": "Longitude measures east/west from the...",
+            "answer": "prime meridian",
+            "choices": [
+              "prime meridian",
+              "latitude",
+              "longitude",
+              "elevation"
+            ]
+          },
+          {
+            "type": "multiple_choice",
+            "question": "0 degrees latitude is the...",
+            "answer": "equator",
+            "choices": [
+              "equator",
+              "latitude",
+              "longitude",
+              "elevation"
+            ]
+          },
+          {
+            "type": "true_false",
+            "question": "Latitude measures north or south from the equator.",
+            "answer": "true"
+          },
+          {
+            "type": "drag_match",
+            "question": "Match each term to the best clue.",
+            "pairs": [
+              [
+                "Equator",
+                "zero degrees latitude"
+              ],
+              [
+                "Prime meridian",
+                "zero degrees longitude"
+              ],
+              [
+                "Trade",
+                "exchange across places"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "title": "Climate Factor Boss Battle",
+        "minutes": 25,
+        "mission": "Explain how latitude, elevation, water, and wind affect climate.",
+        "video": "https://www.youtube.com/results?search_query=factors+that+affect+climate+middle+school",
+        "task": "Pick two cities with different climates. Compare latitude, elevation, and distance from water.",
+        "quiz": [
+          [
+            "Higher elevation usually means temperature is...",
+            "cooler"
+          ],
+          [
+            "Areas near the equator generally get more direct...",
+            "sunlight"
+          ]
+        ],
+        "narration": "Mission briefing. Climate Factor Boss Battle. Explain how latitude, elevation, water, and wind affect climate. Your artifact is: Pick two cities with different climates. Compare latitude, elevation, and distance from water. First, open the explore link if needed. Then work for one focused sprint. When finished, explain your answer out loud and mark the quest done.",
+        "interactiveQuiz": [
+          {
+            "type": "multiple_choice",
+            "question": "Higher elevation usually means temperature is...",
+            "answer": "cooler",
+            "choices": [
+              "cooler",
+              "latitude",
+              "longitude",
+              "elevation"
+            ]
+          },
+          {
+            "type": "multiple_choice",
+            "question": "Areas near the equator generally get more direct...",
+            "answer": "sunlight",
+            "choices": [
+              "sunlight",
+              "latitude",
+              "longitude",
+              "elevation"
+            ]
+          },
+          {
+            "type": "true_false",
+            "question": "Latitude measures north or south from the equator.",
+            "answer": "true"
+          },
+          {
+            "type": "drag_match",
+            "question": "Match each term to the best clue.",
+            "pairs": [
+              [
+                "Equator",
+                "zero degrees latitude"
+              ],
+              [
+                "Prime meridian",
+                "zero degrees longitude"
+              ],
+              [
+                "Trade",
+                "exchange across places"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "title": "SW Asia Economics Snapshot",
+        "minutes": 25,
+        "mission": "Connect natural resources, trade, and specialization.",
+        "video": "https://www.youtube.com/results?search_query=southwest+asia+economics+middle+school+oil+trade",
+        "task": "Create a 3-box flow: resource -> industry -> trade impact.",
+        "quiz": [
+          [
+            "When countries focus on what they produce well, this is...",
+            "specialization"
+          ],
+          [
+            "Buying and selling across borders is...",
+            "trade"
+          ]
+        ],
+        "narration": "Mission briefing. SW Asia Economics Snapshot. Connect natural resources, trade, and specialization. Your artifact is: Create a 3-box flow: resource -> industry -> trade impact. First, open the explore link if needed. Then work for one focused sprint. When finished, explain your answer out loud and mark the quest done.",
+        "interactiveQuiz": [
+          {
+            "type": "multiple_choice",
+            "question": "When countries focus on what they produce well, this is...",
+            "answer": "specialization",
+            "choices": [
+              "specialization",
+              "latitude",
+              "longitude",
+              "elevation"
+            ]
+          },
+          {
+            "type": "multiple_choice",
+            "question": "Buying and selling across borders is...",
+            "answer": "trade",
+            "choices": [
+              "trade",
+              "latitude",
+              "longitude",
+              "elevation"
+            ]
+          },
+          {
+            "type": "true_false",
+            "question": "Latitude measures north or south from the equator.",
+            "answer": "true"
+          },
+          {
+            "type": "drag_match",
+            "question": "Match each term to the best clue.",
+            "pairs": [
+              [
+                "Equator",
+                "zero degrees latitude"
+              ],
+              [
+                "Prime meridian",
+                "zero degrees longitude"
+              ],
+              [
+                "Trade",
+                "exchange across places"
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "image": "assets/anime_world_explorer.png",
+    "narrationIntro": "Welcome to World Explorer Ops. Choose one quest, start the focus timer, and finish one visible artifact before moving on."
+  }
+]

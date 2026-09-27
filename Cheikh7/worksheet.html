@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Diop Yaba Academy Weekly Worksheet</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>" />
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #ffffff; color: #111111; font-family: Georgia, "Times New Roman", serif; line-height: 1.5; }
+  .sheet { max-width: 820px; margin: 0 auto; padding: 40px 48px 80px; }
+  .wsHeader { border-bottom: 3px solid #111; padding-bottom: 12px; margin-bottom: 8px; }
+  .wsHeader h1 { margin: 0 0 4px; font-size: 26px; }
+  .wsHeader .wk { font-size: 18px; font-weight: bold; }
+  .wsMeta { display: flex; flex-wrap: wrap; gap: 24px; margin: 14px 0 6px; font-size: 15px; }
+  .wsMeta .line { flex: 1 1 240px; }
+  .wsMeta .blank { display: inline-block; border-bottom: 1px solid #111; min-width: 180px; height: 1.1em; }
+  .stds { font-size: 13px; color: #333; margin: 6px 0 20px; }
+  .stds span { display: inline-block; border: 1px solid #555; border-radius: 4px; padding: 2px 8px; margin: 2px 4px 2px 0; }
+  .subject { margin: 0 0 26px; page-break-inside: avoid; }
+  .subject h2 { font-size: 19px; border-bottom: 1px solid #999; padding-bottom: 4px; margin: 0 0 4px; }
+  .subject .meta { font-size: 13px; color: #444; margin: 0 0 10px; }
+  ol.problems { margin: 0; padding-left: 26px; }
+  ol.problems li { margin: 0 0 16px; }
+  ol.problems .qtext { display: block; margin-bottom: 8px; }
+  .answerLine { display: block; border-bottom: 1px solid #111; height: 1.4em; width: 100%; }
+  .answerKeyPage { display: none; break-before: page; page-break-before: always; padding-top: 20px; }
+  body.answer-key-visible .answerKeyPage { display: block; }
+  .answerKeyPage h1 { font-size: 24px; border-bottom: 3px solid #111; padding-bottom: 8px; }
+  .answerKeyPage .subject h2 { border-bottom: 1px solid #ccc; }
+  ol.keyList { margin: 0; padding-left: 26px; }
+  ol.keyList li { margin: 0 0 6px; font-size: 14px; }
+  ol.keyList .a { font-weight: bold; }
+  .printActions { position: fixed; right: 20px; bottom: 20px; display: flex; gap: 10px; z-index: 999; }
+  .printBtn { padding: 14px 18px; font-size: 15px; font-weight: bold; background: #111; color: #fff; border: 1px solid #111; border-radius: 8px; cursor: pointer; box-shadow: 0 6px 18px rgba(0,0,0,.3); }
+  .printBtn.secondary { background: #fff; color: #111; }
+  .parentCheckToggle[aria-pressed="true"] { border-width: 2px; }
+  .backLink { position: fixed; left: 20px; bottom: 20px; font-size: 14px; color: #333; text-decoration: none; border: 1px solid #999; border-radius: 8px; padding: 10px 16px; background: #fff; z-index: 999; }
+  .missionNote { font-style: italic; font-size: 13px; color: #444; margin: 2px 0 10px; }
+  .err { color: #900; font-size: 16px; }
+  @media (max-width: 720px) {
+    .sheet { padding: 24px 20px 150px; }
+    .printActions { left: 12px; right: 12px; bottom: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .answerKeyToggle, .parentCheckToggle { grid-column: 1 / -1; }
+    .printBtn { padding: 12px 8px; font-size: 13px; }
+    .backLink { position: static; display: block; width: fit-content; margin: 0 20px 20px; }
+  }
+  @media print {
+    .printActions, .backLink { display: none !important; }
+    .answerKeyPage { display: none !important; }
+    body.print-with-answers .answerKeyPage { display: block !important; }
+    .sheet { padding: 0; max-width: none; }
+    body { font-size: 12pt; }
+  }
+</style>
+</head>
+<body>
+<div class="sheet" id="sheet"></div>
+<a class="backLink" href="index.html">← Back to Diop Yaba Academy</a>
+<div class="printActions" aria-label="Worksheet controls">
+  <button class="printBtn secondary answerKeyToggle" type="button" aria-controls="answer-key" aria-expanded="false">Show answer key (parents/educators)</button>
+  <button class="printBtn secondary parentCheckToggle" type="button" aria-pressed="false">Turn on parent check</button>
+  <button class="printBtn" type="button" data-print-mode="worksheet-only">🖨️ Print worksheet only</button>
+  <button class="printBtn secondary" type="button" data-print-mode="with-answers">Print with answer key</button>
+</div>
+
+<script src="data/annual_g5_math.js"></script>
+<script src="data/annual_g5_ela.js"></script>
+<script src="data/annual_g5_science.js"></script>
+<script src="data/annual_g5_social.js"></script>
+<script src="data/annual_grade5.js"></script>
+<script src="data/annual_g7_math.js"></script>
+<script src="data/annual_g7_ela.js"></script>
+<script src="data/annual_g7_science.js"></script>
+<script src="data/annual_g7_social.js"></script>
+<script src="data/annual_grade7.js"></script>
+<script src="data/weekly_grade5.js"></script>
+<script src="data/weekly_grade7.js"></script>
+<script>
+(function () {
+  function escHtml(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+  var SUBJECT_LABELS = { math: 'Math', ela: 'English Language Arts', science: 'Science', social: 'Social Studies' };
+  var SUBJECT_ORDER = ['math', 'ela', 'science', 'social'];
+
+  var params = new URLSearchParams(window.location.search);
+  var grade = params.get('grade') === '5' ? '5' : '7';
+  var week = parseInt(params.get('week') || '1', 10);
+
+  var data = grade === '5'
+    ? (typeof WEEKLY_G5 !== 'undefined' ? WEEKLY_G5 : [])
+    : (typeof WEEKLY_G7 !== 'undefined' ? WEEKLY_G7 : []);
+  var validWeeks = data.map(function (item) { return item.week; });
+  if (validWeeks.indexOf(week) === -1) week = validWeeks[0] || 1;
+  var gradeLabel = grade === '5' ? '5th Grade' : '7th Grade';
+
+  var sheet = document.getElementById('sheet');
+  var unit = data.filter(function (w) { return w.week === week; })[0] || data[0];
+  if (!unit) {
+    sheet.innerHTML = '<p class="err">Sorry, that week could not be found.</p>';
+    return;
+  }
+
+  function orderedSubjects() {
+    var out = [];
+    SUBJECT_ORDER.forEach(function (s) {
+      var subj = unit.subjects.filter(function (x) { return x.s === s; })[0];
+      if (subj) out.push(subj);
+    });
+    return out;
+  }
+
+  var subjects = orderedSubjects();
+
+  // Standards codes chips
+  var stds = subjects.map(function (s) { return '<span>' + escHtml(s.std) + '</span>'; }).join('');
+
+  // Header + worksheet
+  var html = '' +
+    '<div class="wsHeader">' +
+      '<h1>Diop Yaba Academy — Weekly Worksheet</h1>' +
+      '<div class="wk">' + gradeLabel + ' · Week ' + unit.week + ': ' + escHtml(unit.title) + '</div>' +
+    '</div>' +
+    '<div class="wsMeta">' +
+      '<div class="line">Name: <span class="blank"></span></div>' +
+      '<div class="line">Date: <span class="blank"></span></div>' +
+    '</div>' +
+    '<div class="stds"><strong>Ohio Standards:</strong> ' + stds + '</div>';
+
+  subjects.forEach(function (subj) {
+    html += '<section class="subject">' +
+      '<h2>' + escHtml(SUBJECT_LABELS[subj.s] || subj.s) + ' — ' + escHtml(subj.concept) + '</h2>' +
+      '<p class="meta">Standard: ' + escHtml(subj.std) + '</p>' +
+      '<p class="missionNote">Mission: ' + escHtml(subj.sprint) + '</p>' +
+      '<ol class="problems">';
+    subj.problems.forEach(function (p) {
+      html += '<li><span class="qtext">' + escHtml(p[0]) + '</span><span class="answerLine"></span></li>';
+    });
+    html += '</ol></section>';
+  });
+
+  // Answer key page
+  html += '<div class="answerKeyPage" id="answer-key" aria-hidden="true">' +
+    '<h1>Answer Key — ' + gradeLabel + ' Week ' + unit.week + '</h1>' +
+    '<p class="missionNote">For parents/educators. Answers are sample responses for open-ended items.</p>';
+  subjects.forEach(function (subj) {
+    html += '<section class="subject">' +
+      '<h2>' + escHtml(SUBJECT_LABELS[subj.s] || subj.s) + ' — ' + escHtml(subj.concept) + '</h2>' +
+      '<ol class="keyList">';
+    subj.problems.forEach(function (p) {
+      html += '<li>' + escHtml(p[0]) + ' <span class="a">→ ' + escHtml(p[1]) + '</span></li>';
+    });
+    html += '</ol></section>';
+  });
+  html += '</div>';
+
+  sheet.innerHTML = html;
+  document.title = 'Worksheet — ' + gradeLabel + ' Week ' + unit.week;
+
+  var answerKeyToggle = document.querySelector('.answerKeyToggle');
+  var parentCheckToggle = document.querySelector('.parentCheckToggle');
+  var answerKey = document.getElementById('answer-key');
+  var PARENT_PIN_KEY = 'diop-yaba-answer-key-parent-pin';
+
+  function getParentPin() {
+    try {
+      return window.localStorage.getItem(PARENT_PIN_KEY) || '';
+    } catch (error) {
+      return '';
+    }
+  }
+
+  function setParentPin(pin) {
+    try {
+      if (pin) {
+        window.localStorage.setItem(PARENT_PIN_KEY, pin);
+      } else {
+        window.localStorage.removeItem(PARENT_PIN_KEY);
+      }
+      return true;
+    } catch (error) {
+      window.alert('This browser could not save the parent check setting.');
+      return false;
+    }
+  }
+
+  function updateParentCheckControl() {
+    var isEnabled = Boolean(getParentPin());
+    parentCheckToggle.setAttribute('aria-pressed', String(isEnabled));
+    parentCheckToggle.textContent = isEnabled
+      ? 'Parent check: on'
+      : 'Turn on parent check';
+  }
+
+  function parentCheckPasses() {
+    var savedPin = getParentPin();
+    if (!savedPin) return true;
+    var enteredPin = window.prompt('Parent check: enter the 4-digit PIN to access answers.');
+    if (enteredPin === savedPin) return true;
+    if (enteredPin !== null) {
+      window.alert('That PIN did not match. The answers will stay hidden.');
+    }
+    return false;
+  }
+
+  function setAnswerKeyVisibility(isVisible) {
+    document.body.classList.toggle('answer-key-visible', isVisible);
+    answerKeyToggle.setAttribute('aria-expanded', String(isVisible));
+    answerKeyToggle.textContent = isVisible
+      ? 'Hide answer key'
+      : 'Show answer key (parents/educators)';
+    answerKey.setAttribute('aria-hidden', String(!isVisible));
+  }
+
+  answerKeyToggle.addEventListener('click', function () {
+    var isCurrentlyVisible = document.body.classList.contains('answer-key-visible');
+    if (!isCurrentlyVisible && !parentCheckPasses()) return;
+    setAnswerKeyVisibility(!isCurrentlyVisible);
+  });
+
+  parentCheckToggle.addEventListener('click', function () {
+    var savedPin = getParentPin();
+    if (savedPin) {
+      var enteredPin = window.prompt('Enter the current 4-digit PIN to turn off the parent check.');
+      if (enteredPin !== savedPin) {
+        if (enteredPin !== null) window.alert('That PIN did not match. The parent check is still on.');
+        return;
+      }
+      if (setParentPin('')) updateParentCheckControl();
+      return;
+    }
+
+    var newPin = window.prompt('Choose a 4-digit PIN for parents and educators.');
+    if (newPin === null) return;
+    if (!/^\d{4}$/.test(newPin)) {
+      window.alert('Please enter exactly 4 digits.');
+      return;
+    }
+    if (setParentPin(newPin)) {
+      setAnswerKeyVisibility(false);
+      updateParentCheckControl();
+    }
+  });
+
+  function printWorksheet(mode) {
+    if (mode === 'with-answers' && !parentCheckPasses()) return;
+    document.body.classList.toggle('print-with-answers', mode === 'with-answers');
+    window.print();
+  }
+
+  document.querySelectorAll('[data-print-mode]').forEach(function (button) {
+    button.addEventListener('click', function () {
+      printWorksheet(button.getAttribute('data-print-mode'));
+    });
+  });
+
+  window.addEventListener('afterprint', function () {
+    document.body.classList.remove('print-with-answers');
+  });
+
+  updateParentCheckControl();
+})();
+</script>
+</body>
+</html>
